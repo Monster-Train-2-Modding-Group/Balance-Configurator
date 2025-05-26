@@ -1,0 +1,49 @@
+{
+	"settings": {
+		"cardRarityTicketValues": {
+			"common": 940,
+			"uncommon": 55,
+			"rare": 5,
+			"champion": 0
+		},
+		"enhancerRarityTicketValues": {
+			"common": 70,
+			"uncommon": 30,
+			"rare": 0,
+			"champion": 0
+		},
+		"relicRarityTicketValues": {
+			"common": 80,
+			"uncommon": 20,
+			"rare": 0,
+			"champion": 0
+		},
+		"startingGold": 50,
+		"maxHandSize": 10,
+		"startOfTurnEnergy": 3,
+		"startOfDeploymentPhaseEnergy": 1,
+		"maxEnergy": 99,
+		"initialDragonsHoardCap": 8,
+		"maxDragonsHoard": 13,
+		"startOfTurnCards": 5,
+		"unitUpgradeSlots": 2,
+		"spellUpgradeSlots": 2,
+		"equipmentUpgradeSlots": 0,
+		"numSpawnPointsPerFloor": 7,
+		"characterCapacityPerFloor": 5,
+		"maxMutatorCount": 3,
+		"championUpgradesShown": 2,
+		"mainClanXpFactor": 1,
+		"subClanXpFactor": 0.5,
+		"alternateChampionUnlockLevel": 5,
+		"goldForSkippingRewards": {
+			"cardDraft": 10,
+			"blessingDraft": 25,
+			"championUpgradeDraft": 0,
+			"individualBlessing": 25,
+			"individualCard": 10,
+			"purge": 0,
+			"levelUpUnit": 0
+		}
+	}
+}
