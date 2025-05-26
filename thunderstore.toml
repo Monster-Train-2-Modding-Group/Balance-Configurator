@@ -4,7 +4,7 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "Conductor"
 name = "BalanceConfigurator"
-versionNumber = "0.0.1"
+versionNumber = "1.0.0"
 description = "Mod that allows one to edit fields from BalanceData, and as an example of a mod using Trainworks Reloaded that has user editable configuration."
 websiteUrl = "https://thunderstore.io"
 containsNsfwContent = false
