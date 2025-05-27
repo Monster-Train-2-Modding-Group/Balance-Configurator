@@ -35,11 +35,14 @@ namespace BalanceConfigurator.Plugin
             Logger = base.Logger;
 
             var builder = Railhead.GetBuilder();
+            // Give configuration for Trainworks Reloaded to consume
             builder.Configure(
                 MyPluginInfo.PLUGIN_GUID,
                 c =>
                 {
-                    // Be sure to include all of your json files if you add more.
+                    // The framework will parse the json file to an IConfiguration object that we can retrieve later
+                    // Technically only json files following our official schema should be used here, so avoid conflicts in terms of properties with the official schema
+                    // https://github.com/Monster-Train-2-Modding-Group/Trainworks-Reloaded/blob/main/schemas/base.json
                     c.AddMergedJsonFile(
                         "json/settings.json"
                     );
@@ -47,6 +50,7 @@ namespace BalanceConfigurator.Plugin
             );
 
             // The action gets called later after all mods are initialized, json parsed, and injected into the game data.
+            // Here I just want the configuration I passed in earlier so I can parse it myself.
             Railend.ConfigurePostAction(
                 c =>
                 {
@@ -54,14 +58,17 @@ namespace BalanceConfigurator.Plugin
                     var atlas = c.GetInstance<PluginAtlas>();
                     var definition = atlas.PluginDefinitions[MyPluginInfo.PLUGIN_GUID];
                     
-                    // GameDataClient has all of the relevant Provider Objects
+                    // GameDataClient has all of the relevant Provider Objects, We get the instance from the SimpleInjector Container object.
                     var client = c.GetInstance<GameDataClient>();
 
+                    // Get a provider (SaveManager) from GameDataClient.
                     if (!client.TryGetProvider<SaveManager>(out var saveManager))
                     {
                         Logger.LogError("Failed to get SaveManager instance please report this https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/issues");
                         return;
                     }
+
+                    // Do the magic
                     var allGameData = saveManager.GetAllGameData().GetBalanceData();
                     ReconfigureBalance(allGameData, definition.Configuration.GetSection("settings"));
                 }
@@ -101,11 +108,17 @@ namespace BalanceConfigurator.Plugin
             SafeSetField(balanceData, "alternateChampionUnlockLevel",   configuration.GetSection("alternateChampionUnlockLevel").ParseInt());
         }
 
+        /// <summary>
+        /// Function to use reflection to set a field on BalanceData without throwing an exception if it fails.
+        /// </summary>
+        /// <param name="balanceData"></param>
+        /// <param name="field"></param>
+        /// <param name="obj"></param>
         private void SafeSetField(BalanceData balanceData, string field, object? obj)
         {
             if (obj == null)
             {
-                Logger.LogInfo($"Not setting BalanceData field {field} because the value to set is null");
+                Logger.LogWarning($"Not setting BalanceData field {field} because the value to set is null");
                 return;
             }
             try
