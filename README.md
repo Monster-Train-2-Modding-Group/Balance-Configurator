@@ -2,6 +2,13 @@
 
 Noncosmetic mod that allows one to edit fields from BalanceData, and as an example of a mod using Trainworks Reloaded that has user editable configuration.
 
+![starting](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/starting.png)
+![relic_draft](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/relic_reward.png)
+![champion_upgrade](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/champion_upgrade.png)
+![deployment](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/deployment.png)
+![battle](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/battle.png)
+![card_draft](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/card_draft.png)
+
 ## Features
 
  Ability to edit particular starting details of runs among other things:
