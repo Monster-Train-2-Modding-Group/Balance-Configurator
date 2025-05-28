@@ -2,12 +2,25 @@
 
 Noncosmetic mod that allows one to edit fields from BalanceData, and as an example of a mod using Trainworks Reloaded that has user editable configuration.
 
-![starting](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/starting.png)
-![relic_draft](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/relic_reward.png)
-![champion_upgrade](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/champion_upgrade.png)
-![deployment](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/deployment.png)
-![battle](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/battle.png)
-![card_draft](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/screenshots/card_draft.png)
+![starting](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/starting.png)
+<sub>Adjusted starting gold amount from 50 to 500, and set the initial dragons hoard count to 10 from 8</sub>
+
+![relic_draft](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/relic_reward.png)
+<sub>The reward for skipping an artifact was adjusted from 25 to 75 gold</sub>
+
+![champion_upgrade](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/champion_upgrades.png)
+<sub>All three champion upgrades are available! (The UI doesn't handle this well)</sub>
+
+![deployment](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/deployment.png)
+<sub>You can change ember amount and the extra deployment ember</sub>
+
+![battle](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/battle.png)
+<sub>You can change your hand size and the maximum hand size. Here its 10. Along with 5 ember</sub>
+
+![card_draft](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/card_draft.png)
+<sub>Reward for skipping card drafts can also be adjusted</sub>
+
+ 
 
 ## Features
 
@@ -35,7 +48,7 @@ Noncosmetic mod that allows one to edit fields from BalanceData, and as an examp
 * Alternate champion unlock level
 * Gold for skipping rewards.
 
-
+ 
 
 ## Usage
 
@@ -50,21 +63,23 @@ Once installed via thunderstore or manually. The file to edit is `json/settings.
 
 ## Warning
 
-As with all non cosmetic mods and as a warning **do not** do anything online such as community challenges or the daily challenge with modded content. Getting an unfair advantage and setting a high score will surely get you banned.
+As with all non cosmetic mods and as a warning **do not** do anything online such as community challenges or the daily challenge with modded content. Getting an unfair advantage and setting a high score will surely get you banned ([Steam forums post - Don't anger ShinySteve!](https://steamcommunity.com/app/2742830/discussions/0/599653789035669752/)).
 
 The default configuration in the mod (see usage below) is the same as how the game was configured.
 
 The only ***probably safe*** fields you can modify without giving an yourself an unfair advantage in online play are
 
 - main class Xp factor
-
 - subclass Xp factor
-
 - alternate champion unlock level
 
 
 
-**Important** F8 bug reports will be disabled (you can still open the menu, but submitting a report won't send it anywhere). This feature was asked for directly from Shiny Shoe and should be present in most mods. If you find a bug in the game and suspect that it isn't due to your use of mods, file a report  at [Monster Train 2 Bugs and Technical issues :: Steam Community](https://steamcommunity.com/app/2742830/discussions/1/) or on the Shiny Shoe discord.
+### **Important**
+
+F8 bug reports will be disabled with this mod enabled (you can still open the menu, but submitting a report won't send it anywhere). This feature was asked for directly from Shiny Shoe and should be present in most mods. If you find a bug in the game and suspect that it isn't due to your use of mods, file a report  at [Monster Train 2 Bugs and Technical issues :: Steam Community](https://steamcommunity.com/app/2742830/discussions/1/) or on the Shiny Shoe discord.
+
+
 
 ## Lastly
 

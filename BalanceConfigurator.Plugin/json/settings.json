@@ -33,7 +33,7 @@
 		"characterCapacityPerFloor": 5,
 		"maxMutatorCount": 3,
 		"championUpgradesShown": 2,
-		"mainClanXpFactor": 1,
+		"mainClanXpFactor": 1.0,
 		"subClanXpFactor": 0.5,
 		"alternateChampionUnlockLevel": 5,
 		"goldForSkippingRewards": {

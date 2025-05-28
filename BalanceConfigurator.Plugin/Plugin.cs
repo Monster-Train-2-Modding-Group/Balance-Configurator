@@ -69,8 +69,9 @@ namespace BalanceConfigurator.Plugin
                     }
 
                     // Do the magic
-                    var allGameData = saveManager.GetAllGameData().GetBalanceData();
-                    ReconfigureBalance(allGameData, definition.Configuration.GetSection("settings"));
+                    var allGameData = saveManager.GetAllGameData();
+                    var balanceData = allGameData.GetBalanceData();
+                    ReconfigureBalance(balanceData, definition.Configuration.GetSection("settings"));
                 }
             );
 
@@ -103,8 +104,8 @@ namespace BalanceConfigurator.Plugin
             SafeSetField(balanceData, "characterCapacityPerFloor",      configuration.GetSection("characterCapacityPerFloor").ParseInt());
             SafeSetField(balanceData, "maxMutatorCount",                configuration.GetSection("maxMutatorCount").ParseInt());
             SafeSetField(balanceData, "championUpgradesShown",          configuration.GetSection("championUpgradesShown").ParseInt());
-            SafeSetField(balanceData, "mainClanXpFactor",               configuration.GetSection("mainClanXpFactor").ParseInt());
-            SafeSetField(balanceData, "subClanXpFactor",                configuration.GetSection("subClanXpFactor").ParseInt());
+            SafeSetField(balanceData, "mainClanXpFactor",               configuration.GetSection("mainClanXpFactor").ParseFloat());
+            SafeSetField(balanceData, "subClanXpFactor",                configuration.GetSection("subClanXpFactor").ParseFloat());
             SafeSetField(balanceData, "alternateChampionUnlockLevel",   configuration.GetSection("alternateChampionUnlockLevel").ParseInt());
         }
 
@@ -118,7 +119,7 @@ namespace BalanceConfigurator.Plugin
         {
             if (obj == null)
             {
-                Logger.LogWarning($"Not setting BalanceData field {field} because the value to set is null");
+                Logger.LogWarning($"Not setting BalanceData field {field} because the value to set is null (value specified may be invalid or field not present)");
                 return;
             }
             try
