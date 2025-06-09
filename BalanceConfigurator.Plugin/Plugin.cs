@@ -140,7 +140,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Starting hand size.",
-                    Chinese = "修改初始手牌数量。"
+                    Chinese = "修改每回合的初始抽牌数量。"
                 }.ToString());
             maxHandSize = Config.Bind<int>("Hand Size", "Max Hand Size", 10,
                 new ConfigDescriptionBuilder
@@ -190,7 +190,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Initial amount of unit upgrade slots available.",
-                    Chinese = "修改单位的初始升级栏位数量。。"
+                    Chinese = "修改单位的初始升级栏位数量。"
                 }.ToString());
             spellUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Spell Upgrade Slots", 2,
                 new ConfigDescriptionBuilder
