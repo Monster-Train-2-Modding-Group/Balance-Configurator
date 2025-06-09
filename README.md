@@ -1,5 +1,7 @@
 # BalanceConfigurator
 
+Support language: English | [简体中文](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/README_zh.md)
+
 ![icon](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/icon.png)
 
 Noncosmetic mod that allows one to edit fields from BalanceData, and as an example of a mod using Trainworks Reloaded that has user editable configuration.
@@ -51,7 +53,7 @@ Noncosmetic mod that allows one to edit fields from BalanceData, and as an examp
 
 Once installed via thunderstore or manually. The file to edit is `BalanceConfigurator.Plugin.cfg`. The default values are those used within the game. Edit to your liking.
 
-* If installed via thunderstore. The file settings.json can be edited in the thunderstore config editor. If you want to edit the file in another text editor it should be located `C:\Users\<user>\AppData\Roaming\Thunderstore Mod Manager\DataFolder\MonsterTrain2\profiles\<test>\BepInEx\config\BalanceConfigurator.Plugin.cfg`
+* If installed via thunderstore. The file can be edited in the thunderstore config editor. If you want to edit the file in another text editor it should be located `C:\Users\<user>\AppData\Roaming\Thunderstore Mod Manager\DataFolder\MonsterTrain2\profiles\<test>\BepInEx\config\BalanceConfigurator.Plugin.cfg`
 
 * If installed manually it should be placed where you installed BepinEx. Normally such an install would be placed in the same directory as the game's executable.
   `C:\Program Files (x86)\Steam\steamapps\common\Monster Train 2\BepInEx\config\BalanceConfigurator.Plugin.cfg`
