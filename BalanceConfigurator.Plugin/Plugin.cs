@@ -8,6 +8,7 @@ using TrainworksReloaded.Base;
 using TrainworksReloaded.Core;
 using TrainworksReloaded.Core.Extensions;
 using TrainworksReloaded.Core.Impl;
+using UnityEngine;
 using static BalanceData;
 
 namespace BalanceConfigurator.Plugin
@@ -92,6 +93,33 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<int>? goldSkipIndividualCard;
         ConfigEntry<int>? goldSkipPurge;
         ConfigEntry<int>? goldSkipLevelUpUnit;
+
+        // new entries
+        ConfigEntry<int>? chanceOfOptionalOutpostDialogue;
+        ConfigEntry<float>? fastDialogueMultiplier;
+
+        // draft costs
+        ConfigEntry<int>? draftCostCommonCardMin;
+        ConfigEntry<int>? draftCostCommonCardMax;
+        ConfigEntry<int>? draftCostUncommonCardMin;
+        ConfigEntry<int>? draftCostUncommonCardMax;
+        ConfigEntry<int>? draftCostRareCardMin;
+        ConfigEntry<int>? draftCostRareCardMax;
+
+        ConfigEntry<int>? draftCostCommonRelicMin;
+        ConfigEntry<int>? draftCostCommonRelicMax;
+        ConfigEntry<int>? draftCostUncommonRelicMin;
+        ConfigEntry<int>? draftCostUncommonRelicMax;
+        ConfigEntry<int>? draftCostRareRelicMin;
+        ConfigEntry<int>? draftCostRareRelicMax;
+
+        ConfigEntry<int>? draftCostCommonEnhancerMin;
+        ConfigEntry<int>? draftCostCommonEnhancerMax;
+        ConfigEntry<int>? draftCostUncommonEnhancerMin;
+        ConfigEntry<int>? draftCostUncommonEnhancerMax;
+        ConfigEntry<int>? draftCostRareEnhancerMin;
+        ConfigEntry<int>? draftCostRareEnhancerMax;
+
 
         public void Awake()
         {
@@ -378,6 +406,114 @@ namespace BalanceConfigurator.Plugin
                     English = "(Unused) Gold for skipping a Level Up Unit.",
                     Chinese = "（未使用）修改跳过升级单位时获得的金钱。"
                 }.ToString());
+
+
+            chanceOfOptionalOutpostDialogue = Config.Bind<int>("Dialogues", "Chance of Optional Output Dialogue", 30,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Percentage chance of getting an optional outpost dialogue after a run (0-100).",
+                }.ToString());
+            fastDialogueMultiplier = Config.Bind<float>("Dialogues", "Fast Dialog Multiplier", 2.0f,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Multiplier for fast dialogues.",
+                }.ToString());
+
+
+            draftCostCommonCardMin = Config.Bind<int>("Card Draft Costs", "Minimum Cost Common Card", 20,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Minimum cost of a common card.",
+                }.ToString());
+            draftCostCommonCardMax = Config.Bind<int>("Card Draft Costs", "Maximum Cost Common Card", 20,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum cost of an common card.",
+                }.ToString());
+            draftCostUncommonCardMin = Config.Bind<int>("Card Draft Costs", "Minimum Cost Uncommon Card", 40,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Minimum cost of a uncommon card.",
+                }.ToString());
+            draftCostUncommonCardMax = Config.Bind<int>("Card Draft Costs", "Maximum Cost Uncommon Card", 40,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum cost of an uncommon card.",
+                }.ToString());
+            draftCostRareCardMin = Config.Bind<int>("Card Draft Costs", "Minimum Cost Rare Card", 90,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Minimum cost of a rare card.",
+                }.ToString());
+            draftCostRareCardMax = Config.Bind<int>("Card Draft Costs", "Maximum Cost Rare Card", 90,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum cost of a rare card.",
+                }.ToString());
+
+
+            draftCostCommonRelicMin = Config.Bind<int>("Relic Draft Costs", "Minimum Cost Common Relic", 125,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Minimum cost of a common artifact.",
+                }.ToString());
+            draftCostCommonRelicMax = Config.Bind<int>("Relic Draft Costs", "Maximum Cost Common Relic", 175,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum cost of an common artifact.",
+                }.ToString());
+            draftCostUncommonRelicMin = Config.Bind<int>("Relic Draft Costs", "Minimum Cost Uncommon Relic", 125,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Minimum cost of a uncommon artifact.",
+                }.ToString());
+            draftCostUncommonRelicMax = Config.Bind<int>("Relic Draft Costs", "Maximum Cost Uncommon Relic", 175,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum cost of an uncommon artifact.",
+                }.ToString());
+            draftCostRareRelicMin = Config.Bind<int>("Relic Draft Costs", "Minimum Cost Rare Relic", 999,
+                new ConfigDescriptionBuilder
+                {
+                    English = "(Unused) Minimum cost of a rare shop artifact.",
+                }.ToString());
+            draftCostRareRelicMax = Config.Bind<int>("Relic Draft Costs", "Maximum Cost Rare Relic", 999,
+                new ConfigDescriptionBuilder
+                {
+                    English = "(Unused) Maximum cost of a rare artifact.",
+                }.ToString());
+
+
+            draftCostCommonEnhancerMin = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Minimum Cost Common Enhancer", 15,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Minimum cost of a common shop upgrade.",
+                }.ToString());
+            draftCostCommonEnhancerMax = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Maximum Cost Common Enhancer", 25,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum cost of an common shop upgrade.",
+                }.ToString());
+            draftCostUncommonEnhancerMin = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Minimum Cost Uncommon Enhancer", 35,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Minimum cost of a uncommon shop upgrade.",
+                }.ToString());
+            draftCostUncommonEnhancerMax = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Maximum Cost Uncommon Enhancer", 35,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum cost of an uncommon shop upgrade.",
+                }.ToString());
+            draftCostRareEnhancerMin = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Minimum Cost Rare Enhancer", 80,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Minimum cost of a rare shop upgrade.",
+                }.ToString());
+            draftCostRareEnhancerMax = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Maximum Cost Rare Enhancer", 110,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum cost of a rare shop upgrade.",
+                }.ToString());
         }
 
         private void ReconfigureBalance(BalanceData balanceData)
@@ -387,28 +523,45 @@ namespace BalanceConfigurator.Plugin
             var relicTicketValues    =  GetRarityTicket(relicRarityTicketCommon!,       relicRarityTicketUncommon!,     relicRarityTicketRare!,     relicRarityTicketChampion!);
             var skipRewardValues     =  GetGoldForSkippingRewards();
 
-            SafeSetField(balanceData, "cardRarityTicketValues",         cardTicketValues);
-            SafeSetField(balanceData, "enhancerRarityTicketValues",     enhancerTicketValues);
-            SafeSetField(balanceData, "relicRarityTicketValues",        relicTicketValues);
-            SafeSetField(balanceData, "goldForSkippingRewards",         skipRewardValues);
-            SafeSetField(balanceData, "startingGold",                   startingGold!.Value);
-            SafeSetField(balanceData, "maxHandSize",                    maxHandSize!.Value);
-            SafeSetField(balanceData, "startOfTurnEnergy",              startOfTurnEnergy!.Value);
-            SafeSetField(balanceData, "startOfDeploymentPhaseEnergy",   startOfDeploymentPhaseEnergy!.Value);
-            SafeSetField(balanceData, "maxEnergy",                      maxEnergy!.Value);
-            SafeSetField(balanceData, "initialDragonsHoardCap",         initialDragonsHoardCap!.Value);
-            SafeSetField(balanceData, "maxDragonsHoard",                maxDragonsHoard!.Value);
-            SafeSetField(balanceData, "startOfTurnCards",               startOfTurnCards!.Value);
-            SafeSetField(balanceData, "unitUpgradeSlots",               unitUpgradeSlots!.Value);
-            SafeSetField(balanceData, "spellUpgradeSlots",              spellUpgradeSlots!.Value);
-            SafeSetField(balanceData, "equipmentUpgradeSlots",          equipmentUpgradeSlots!.Value);
-            SafeSetField(balanceData, "numSpawnPointsPerFloor",         numSpawnPointsPerFloor!.Value);
-            SafeSetField(balanceData, "characterCapacityPerFloor",      characterCapacityPerFloor!.Value);
-            SafeSetField(balanceData, "maxMutatorCount",                maxMutatorCount!.Value);
-            SafeSetField(balanceData, "championUpgradesShown",          championUpgradesShown!.Value);
-            SafeSetField(balanceData, "mainClanXpFactor",               mainClanXpFactor!.Value);
-            SafeSetField(balanceData, "subClanXpFactor",                subClanXpFactor!.Value);
-            SafeSetField(balanceData, "alternateChampionUnlockLevel",   alternateChampionUnlockLevel!.Value);
+            SafeSetField<BalanceData>(balanceData, "cardRarityTicketValues",          cardTicketValues);
+            SafeSetField<BalanceData>(balanceData, "enhancerRarityTicketValues",      enhancerTicketValues);
+            SafeSetField<BalanceData>(balanceData, "relicRarityTicketValues",         relicTicketValues);
+            SafeSetField<BalanceData>(balanceData, "goldForSkippingRewards",          skipRewardValues);
+            SafeSetField<BalanceData>(balanceData, "startingGold",                    startingGold!.Value);
+            SafeSetField<BalanceData>(balanceData, "maxHandSize",                     maxHandSize!.Value);
+            SafeSetField<BalanceData>(balanceData, "startOfTurnEnergy",               startOfTurnEnergy!.Value);
+            SafeSetField<BalanceData>(balanceData, "startOfDeploymentPhaseEnergy",    startOfDeploymentPhaseEnergy!.Value);
+            SafeSetField<BalanceData>(balanceData, "maxEnergy",                       maxEnergy!.Value);
+            SafeSetField<BalanceData>(balanceData, "initialDragonsHoardCap",          initialDragonsHoardCap!.Value);
+            SafeSetField<BalanceData>(balanceData, "maxDragonsHoard",                 maxDragonsHoard!.Value);
+            SafeSetField<BalanceData>(balanceData, "startOfTurnCards",                startOfTurnCards!.Value);
+            SafeSetField<BalanceData>(balanceData, "unitUpgradeSlots",                unitUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "spellUpgradeSlots",               spellUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "equipmentUpgradeSlots",           equipmentUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "numSpawnPointsPerFloor",          numSpawnPointsPerFloor!.Value);
+            SafeSetField<BalanceData>(balanceData, "characterCapacityPerFloor",       characterCapacityPerFloor!.Value);
+            SafeSetField<BalanceData>(balanceData, "maxMutatorCount",                 maxMutatorCount!.Value);
+            SafeSetField<BalanceData>(balanceData, "championUpgradesShown",           championUpgradesShown!.Value);
+            SafeSetField<BalanceData>(balanceData, "mainClanXpFactor",                mainClanXpFactor!.Value);
+            SafeSetField<BalanceData>(balanceData, "subClanXpFactor",                 subClanXpFactor!.Value);
+            SafeSetField<BalanceData>(balanceData, "alternateChampionUnlockLevel",    alternateChampionUnlockLevel!.Value);
+            SafeSetField<BalanceData>(balanceData, "chanceOfOptionalOutpostDialogue", chanceOfOptionalOutpostDialogue!.Value);
+            SafeSetField<BalanceData>(balanceData, "fastDialogueMultiplier",          fastDialogueMultiplier!.Value);
+
+
+            DraftCost[]? draftCosts = SafeGetField(balanceData, "draftCosts") as DraftCost[];
+            if (draftCosts == null)
+                return;
+
+            SafeSetField<DraftCost>(draftCosts[0], "costRange", new Vector2Int(draftCostCommonCardMin!.Value,       draftCostCommonCardMax!.Value));
+            SafeSetField<DraftCost>(draftCosts[1], "costRange", new Vector2Int(draftCostUncommonCardMin!.Value,     draftCostUncommonCardMax!.Value));
+            SafeSetField<DraftCost>(draftCosts[2], "costRange", new Vector2Int(draftCostRareCardMin!.Value,         draftCostRareCardMax!.Value));
+            SafeSetField<DraftCost>(draftCosts[3], "costRange", new Vector2Int(draftCostCommonRelicMin!.Value,      draftCostCommonRelicMax!.Value));
+            SafeSetField<DraftCost>(draftCosts[4], "costRange", new Vector2Int(draftCostUncommonRelicMin!.Value,    draftCostUncommonRelicMax!.Value));
+            SafeSetField<DraftCost>(draftCosts[5], "costRange", new Vector2Int(draftCostRareRelicMin!.Value,        draftCostRareRelicMax!.Value));
+            SafeSetField<DraftCost>(draftCosts[6], "costRange", new Vector2Int(draftCostCommonEnhancerMin!.Value,   draftCostCommonEnhancerMax!.Value));
+            SafeSetField<DraftCost>(draftCosts[7], "costRange", new Vector2Int(draftCostUncommonEnhancerMin!.Value, draftCostUncommonEnhancerMax!.Value));
+            SafeSetField<DraftCost>(draftCosts[8], "costRange", new Vector2Int(draftCostRareEnhancerMin!.Value,     draftCostRareEnhancerMax!.Value));
         }
 
         /// <summary>
@@ -417,22 +570,46 @@ namespace BalanceConfigurator.Plugin
         /// <param name="balanceData"></param>
         /// <param name="field"></param>
         /// <param name="obj"></param>
-        private void SafeSetField(BalanceData balanceData, string field, object? obj)
+        private void SafeSetField<T>(T? data, string field, object? obj)
         {
-            if (obj == null)
+            if (data == null)
             {
-                Logger.LogWarning($"Not setting BalanceData field {field} because the value to set is null (value specified may be invalid or field not present)");
+                Logger.LogError($"Internal Error data is null");
+                throw new ArgumentNullException(nameof(data));
+            }
+            else if (obj == null)
+            {
+                Logger.LogWarning($"Not setting {typeof(T).Name} field {field} because the value to set is null (value specified may be invalid or field not present)");
                 return;
             }
             try
             {
-                Logger.LogDebug($"Setting BalanceData field {field} to {obj}");
-                AccessTools.Field(balanceData.GetType(), field).SetValue(balanceData, obj);
+                Logger.LogDebug($"Setting {typeof(T).Name} field {field} to {obj}");
+                AccessTools.Field(data.GetType(), field).SetValue(data, obj);
             }
             catch (Exception ex)
             {
-                Logger.LogError($"Could not set BalanceData field {field} because of an exception {ex.Message}");
+                Logger.LogError($"Could not set {typeof(T).Name} field {field} because of an exception {ex.Message}");
             }
+        }
+
+        /// Function to use reflection to set a field on BalanceData without throwing an exception if it fails.
+        /// </summary>
+        /// <param name="balanceData"></param>
+        /// <param name="field"></param>
+        /// <param name="obj"></param>
+        private object? SafeGetField(BalanceData balanceData, string field)
+        {
+            try
+            {
+                Logger.LogDebug($"Getting BalanceData field {field}");
+                return AccessTools.Field(balanceData.GetType(), field).GetValue(balanceData);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError($"Could not get BalanceData field {field} because of an exception {ex.Message}");
+            }
+            return null;
         }
 
         private List<RarityTicket>? GetRarityTicket(ConfigEntry<int> common, ConfigEntry<int> uncommon, ConfigEntry<int> rare, ConfigEntry<int> champion)
