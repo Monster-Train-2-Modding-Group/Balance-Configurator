@@ -5,7 +5,7 @@ schemaVersion = "0.0.1"
 namespace = "Conductor"
 name = "BalanceConfigurator"
 versionNumber = "1.2.0"
-description = "Mod that allows one to edit fields from BalanceData, and as an example of a mod using Trainworks Reloaded that has user editable configuration."
+description = "Mod that allows one to edit many aspects of the game (starting gold, max upgrade limits, max units per floor, experience gained, starting/max hand size, starting/max ember, and more!)."
 websiteUrl = "https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator"
 containsNsfwContent = false
 
