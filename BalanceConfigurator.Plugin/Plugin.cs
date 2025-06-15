@@ -386,13 +386,13 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Gold for skipping a singular Relic Draft.",
-                    Chinese = "修改跳过单张卡牌时获得的金钱。"
+                    Chinese = "修改跳过单件神器时获得的金钱。"
                 }.ToString());
             goldSkipIndividualCard = Config.Bind<int>("Gold For Skipping Rewards", "Individual Card", 10,
                 new ConfigDescriptionBuilder
                 {
                     English = "Gold for skipping a singular Card Draft.",
-                    Chinese = "修改跳过单件神器时获得的金钱。"
+                    Chinese = "修改跳过单张卡牌时获得的金钱。"
                 }.ToString());
             goldSkipPurge = Config.Bind<int>("Gold For Skipping Rewards", "Purge", 0,
                 new ConfigDescriptionBuilder
@@ -412,11 +412,13 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Percentage chance of getting an optional outpost dialogue after a run (0-100).",
+                    Chinese = "修改在一轮游戏结束之后，契约前哨站可选对话的出现概率百分比（0-100）。"
                 }.ToString());
             fastDialogueMultiplier = Config.Bind<float>("Dialogues", "Fast Dialog Multiplier", 2.0f,
                 new ConfigDescriptionBuilder
                 {
                     English = "Multiplier for fast dialogues.",
+                    Chinese = "修改对话的速度倍率。"
                 }.ToString());
 
 
@@ -424,31 +426,37 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Minimum cost of a common card.",
+                    Chinese = "修改普通卡牌的最低价格。"
                 }.ToString());
             draftCostCommonCardMax = Config.Bind<int>("Card Draft Costs", "Maximum Cost Common Card", 20,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum cost of an common card.",
+                    Chinese = "修改普通卡牌的最高价格。"
                 }.ToString());
             draftCostUncommonCardMin = Config.Bind<int>("Card Draft Costs", "Minimum Cost Uncommon Card", 40,
                 new ConfigDescriptionBuilder
                 {
                     English = "Minimum cost of a uncommon card.",
+                    Chinese = "修改高级卡牌的最低价格。"
                 }.ToString());
             draftCostUncommonCardMax = Config.Bind<int>("Card Draft Costs", "Maximum Cost Uncommon Card", 40,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum cost of an uncommon card.",
+                    Chinese = "修改高级卡牌的最高价格。"
                 }.ToString());
             draftCostRareCardMin = Config.Bind<int>("Card Draft Costs", "Minimum Cost Rare Card", 90,
                 new ConfigDescriptionBuilder
                 {
                     English = "Minimum cost of a rare card.",
+                    Chinese = "修改稀有卡牌的最低价格。"
                 }.ToString());
             draftCostRareCardMax = Config.Bind<int>("Card Draft Costs", "Maximum Cost Rare Card", 90,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum cost of a rare card.",
+                    Chinese = "修改稀有卡牌的最高价格。"
                 }.ToString());
 
 
@@ -456,31 +464,37 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Minimum cost of a common artifact.",
+                    Chinese = "修改普通神器的最低价格。"
                 }.ToString());
             draftCostCommonRelicMax = Config.Bind<int>("Relic Draft Costs", "Maximum Cost Common Relic", 175,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum cost of an common artifact.",
+                    Chinese = "修改普通神器的最高价格。"
                 }.ToString());
             draftCostUncommonRelicMin = Config.Bind<int>("Relic Draft Costs", "Minimum Cost Uncommon Relic", 125,
                 new ConfigDescriptionBuilder
                 {
                     English = "Minimum cost of a uncommon artifact.",
+                    Chinese = "修改高级神器的最低价格。"
                 }.ToString());
             draftCostUncommonRelicMax = Config.Bind<int>("Relic Draft Costs", "Maximum Cost Uncommon Relic", 175,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum cost of an uncommon artifact.",
+                    Chinese = "修改高级神器的最高价格。"
                 }.ToString());
             draftCostRareRelicMin = Config.Bind<int>("Relic Draft Costs", "Minimum Cost Rare Relic", 999,
                 new ConfigDescriptionBuilder
                 {
                     English = "(Unused) Minimum cost of a rare shop artifact.",
+                    Chinese = "（未使用）修改稀有神器的最低价格。"
                 }.ToString());
             draftCostRareRelicMax = Config.Bind<int>("Relic Draft Costs", "Maximum Cost Rare Relic", 999,
                 new ConfigDescriptionBuilder
                 {
                     English = "(Unused) Maximum cost of a rare artifact.",
+                    Chinese = "（未使用）修改稀有神器的最高价格。"
                 }.ToString());
 
 
@@ -488,31 +502,37 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Minimum cost of a common shop upgrade.",
+                    Chinese = "修改普通升级石的最低价格。"
                 }.ToString());
             draftCostCommonEnhancerMax = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Maximum Cost Common Enhancer", 25,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum cost of an common shop upgrade.",
+                    Chinese = "修改普通升级石的最高价格。"
                 }.ToString());
             draftCostUncommonEnhancerMin = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Minimum Cost Uncommon Enhancer", 35,
                 new ConfigDescriptionBuilder
                 {
                     English = "Minimum cost of a uncommon shop upgrade.",
+                    Chinese = "修改高级升级石的最低价格。"
                 }.ToString());
             draftCostUncommonEnhancerMax = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Maximum Cost Uncommon Enhancer", 35,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum cost of an uncommon shop upgrade.",
+                    Chinese = "修改高级升级石的最高价格。"
                 }.ToString());
             draftCostRareEnhancerMin = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Minimum Cost Rare Enhancer", 80,
                 new ConfigDescriptionBuilder
                 {
                     English = "Minimum cost of a rare shop upgrade.",
+                    Chinese = "修改稀有升级石的最低价格。"
                 }.ToString());
             draftCostRareEnhancerMax = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Maximum Cost Rare Enhancer", 110,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum cost of a rare shop upgrade.",
+                    Chinese = "修改稀有升级石的最高价格。"
                 }.ToString());
         }
 
