@@ -419,7 +419,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "Percentage chance of getting an optional outpost dialogue after a run.",
-                    Chinese = "修改在一轮游戏结束之后，契约前哨站可选对话的出现概率百分比 。"
+                    Chinese = "修改在一轮游戏结束之后，契约前哨站可选对话的出现概率百分比。"
                 }.ToString(), new AcceptableValueRange<int>(0, 100)));
             fastDialogueMultiplier = Config.Bind<float>("Dialogues", "Fast Dialog Multiplier", 2.0f,
                 new ConfigDescriptionBuilder
@@ -545,7 +545,8 @@ namespace BalanceConfigurator.Plugin
             runHistoryMaxEntries = Config.Bind<int>("Run History Max Entries", "Run History", 100,
                 new ConfigDescriptionBuilder
                 {
-                    English = "Maximum number of entries allowed in Run History."
+                    English = "Maximum number of entries allowed in Run History.",
+                    Chinese = "修改历史记录的条目数量上限。"
                 }.ToString());
             PatchRunHistory1.RunHistoryMaxEntries = runHistoryMaxEntries.Value;
         }
