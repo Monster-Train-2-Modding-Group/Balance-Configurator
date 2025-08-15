@@ -4,7 +4,7 @@
 
 ![icon](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/icon.png)
 
-该非装扮类模组允许玩家修改一些平衡性相关的数据，是一个使用 Trainworks Reloaded 实现用户可编辑配置的示例模组。
+本非装扮类模组允许玩家修改一些平衡性相关的数据，是一个使用 Trainworks Reloaded 实现用户可编辑配置的示例模组。
 
 ![starting](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/starting.png)
 
@@ -74,8 +74,8 @@
 
 ### **重要内容**
 
-当启用该模组时，按 F8 进行 bug 汇报的功能将无法使用 (仍然可以打开界面，但是提交内容不会发送给游戏开发者)，以防止对游戏开发组 Shiny Shoe 产生困扰。如果你在使用模组时发现了游戏本体的 bug，请通过其他途径汇报，比如 [Steam 社区](https://steamcommunity.com/app/2742830/discussions/1/)或者 discord。
+当启用本模组时，按 F8 进行 bug 汇报的功能将无法使用 (仍然可以打开界面，但是提交内容不会发送给游戏开发者)，以防止对游戏开发组 Shiny Shoe 产生困扰。如果你在使用模组时发现了游戏本体的 bug，请通过其他途径汇报，比如 [Steam 社区](https://steamcommunity.com/app/2742830/discussions/1/)或者 discord。
 
 ## 免责声明
 
-我们对使用该模组导致的非预期行为或者文件损坏等概不负责，请慎重使用。
+我们对使用本模组导致的非预期行为或者文件损坏等概不负责，请慎重使用。
