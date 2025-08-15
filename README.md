@@ -51,6 +51,7 @@ Noncosmetic mod that allows one to edit fields from BalanceData, and as an examp
 * (New 1.2.0) Chance of optional outpost dialogue after a run
 * (New 1.2.0) Fast dialogue multiplier
 * (New 1.2.0) Costs of items in shops by rarity (Cards, Enhancers, and Artifacts)
+* (New 1.3.0) Maximum number of entries present in Run History
 
 ## Usage
 

@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using Microsoft.Extensions.Configuration;
+using ShinyShoe;
 using System.Text;
 using TrainworksReloaded.Base;
 using TrainworksReloaded.Core;
@@ -120,6 +121,8 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<int>? draftCostRareEnhancerMin;
         ConfigEntry<int>? draftCostRareEnhancerMax;
 
+        ConfigEntry<int>? runHistoryMaxEntries;
+
 
         public void Awake()
         {
@@ -148,6 +151,10 @@ namespace BalanceConfigurator.Plugin
                     ReconfigureBalance(balanceData);
                 }
             );
+
+
+            var harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
+            harmony.PatchAll();
 
             Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
         }
@@ -275,11 +282,11 @@ namespace BalanceConfigurator.Plugin
                     Chinese = "修改在一轮游戏结束之后，盟友氏族获得经验的倍率。"
                 }.ToString());
             alternateChampionUnlockLevel = Config.Bind<int>("XP and Unlocks", "Alternate Champion Unlock Level", 5,
-                new ConfigDescriptionBuilder
+                new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "The level at which the alternate champion is available.",
                     Chinese = "修改备选勇者的解锁等级。"
-                }.ToString());
+                }.ToString(), new AcceptableValueRange<int>(0, 10)));
 
 
             //cardRarityTicketValues
@@ -331,7 +338,7 @@ namespace BalanceConfigurator.Plugin
             enhancerRarityTicketChampion = Config.Bind<int>("Enhancer (Shop Upgrade) Rarity Ticket Counts", "Champion", 0,
                 new ConfigDescriptionBuilder
                 {
-                    English = "(Unused) number of tickets that will produce a champion enahncer when finding an enhancer.",
+                    English = "(Unused) number of tickets that will produce a champion enhancer when finding an enhancer.",
                     Chinese = "（未使用）修改商店升级时，勇者升级石出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
 
@@ -409,11 +416,11 @@ namespace BalanceConfigurator.Plugin
 
 
             chanceOfOptionalOutpostDialogue = Config.Bind<int>("Dialogues", "Chance of Optional Output Dialogue", 30,
-                new ConfigDescriptionBuilder
+                new ConfigDescription(new ConfigDescriptionBuilder
                 {
-                    English = "Percentage chance of getting an optional outpost dialogue after a run (0-100).",
-                    Chinese = "修改在一轮游戏结束之后，契约前哨站可选对话的出现概率百分比（0-100）。"
-                }.ToString());
+                    English = "Percentage chance of getting an optional outpost dialogue after a run.",
+                    Chinese = "修改在一轮游戏结束之后，契约前哨站可选对话的出现概率百分比 。"
+                }.ToString(), new AcceptableValueRange<int>(0, 100)));
             fastDialogueMultiplier = Config.Bind<float>("Dialogues", "Fast Dialog Multiplier", 2.0f,
                 new ConfigDescriptionBuilder
                 {
@@ -534,6 +541,13 @@ namespace BalanceConfigurator.Plugin
                     English = "Maximum cost of a rare shop upgrade.",
                     Chinese = "修改稀有升级石的最高价格。"
                 }.ToString());
+
+            runHistoryMaxEntries = Config.Bind<int>("Run History Max Entries", "Run History", 100,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum number of entries allowed in Run History."
+                }.ToString());
+            PatchRunHistory1.RunHistoryMaxEntries = runHistoryMaxEntries.Value;
         }
 
         private void ReconfigureBalance(BalanceData balanceData)
@@ -654,6 +668,27 @@ namespace BalanceConfigurator.Plugin
                 purge                = goldSkipPurge!.Value,
                 levelUpUnit          = goldSkipLevelUpUnit!.Value
             };
+        }
+    }
+
+    // Patch to increase Run History limit
+    [HarmonyPatch(typeof(SteamPlatformServices), nameof(SteamPlatformServices.CreateEmptyRunHistory))]
+    class PatchRunHistory1
+    {
+        public static int RunHistoryMaxEntries;
+        public static void Postfix(ref IRunHistoryData __result)
+        {
+            __result = new RunHistoryDataJson(RunHistoryMaxEntries);
+        }
+    }
+
+    // This patch is here just in case. SteamPlatformServices patch should be good enough but if for some reason not on Steam then catch that too.
+    [HarmonyPatch(typeof(StandalonePlatformServices), nameof(StandalonePlatformServices.CreateEmptyRunHistory))]
+    class PatchRunHistory2
+    {
+        public static void Postfix(ref IRunHistoryData __result)
+        {
+            __result = new RunHistoryDataJson(PatchRunHistory1.RunHistoryMaxEntries);
         }
     }
 }
