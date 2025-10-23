@@ -4,7 +4,7 @@ Support language: English | [简体中文](https://github.com/Monster-Train-2-Mo
 
 ![icon](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/icon.png)
 
-Noncosmetic mod that allows one to edit fields from BalanceData, and as an example of a mod using Trainworks Reloaded that has user editable configuration.
+Non-cosmetic mod that allows one to edit fields from BalanceData, and as an example of a mod using Trainworks Reloaded that has user editable configuration.
 
 ![starting](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/starting.png)
 
@@ -52,6 +52,12 @@ Noncosmetic mod that allows one to edit fields from BalanceData, and as an examp
 * (New 1.2.0) Fast dialogue multiplier
 * (New 1.2.0) Costs of items in shops by rarity (Cards, Enhancers, and Artifacts)
 * (New 1.3.0) Maximum number of entries present in Run History
+* (New 1.4.0) Story priority ticket counts
+* (New 1.4.0) Enable Shattered Halo forcing rares for Banner Drafts
+* (New 1.4.0) Number of options for Clan Banner Drafts
+* (New 1.4.0) Eliminate Run Rarity Floors (Allow Common Drafts to be found past ring 2)
+* (New 1.4.0) Eliminate Run Rarity Floor For Equipment Merchant (Equipment Merchant sells common equipment/rooms)
+* (New 1.4.0) Enable Card Mastery for all run types (Can master cards from Dimensional Challenges, Mutators, and Community Challenges)
 
 ## Usage
 
@@ -70,9 +76,13 @@ The default configuration in the mod (see usage below) is the same as how the ga
 
 The only ***probably safe*** fields you can modify without giving an yourself an unfair advantage in online play are
 
-- main class Xp factor
-- subclass Xp factor
-- alternate champion unlock level
+- Main class Xp factor
+- Subclass Xp factor
+- Alternate champion unlock level
+- Chance of optional outpost dialogue after a run
+- Fast dialogue multiplier
+- Maximum number of entries present in Run History
+- Card Mastery for other run types
 
 ### **Important**
 

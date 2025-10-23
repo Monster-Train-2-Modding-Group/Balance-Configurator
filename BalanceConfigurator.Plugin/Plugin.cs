@@ -2,15 +2,14 @@
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
-using Microsoft.Extensions.Configuration;
+using Malee;
 using ShinyShoe;
 using System.Text;
 using TrainworksReloaded.Base;
 using TrainworksReloaded.Core;
-using TrainworksReloaded.Core.Extensions;
-using TrainworksReloaded.Core.Impl;
 using UnityEngine;
 using static BalanceData;
+using static PoolRewardData;
 
 namespace BalanceConfigurator.Plugin
 {
@@ -121,6 +120,41 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<int>? draftCostRareEnhancerMin;
         ConfigEntry<int>? draftCostRareEnhancerMax;
 
+        // Event ticket counts
+        ConfigEntry<int>? cultOfTheLambEvent;
+        ConfigEntry<int>? penanceFields;
+        ConfigEntry<int>? pathOfTheAngel;
+        ConfigEntry<int>? boneDogTitan;
+        ConfigEntry<int>? moreOrLessArtifacts;
+        ConfigEntry<int>? pyreHeartUpgrade;
+        ConfigEntry<int>? trainRoomInstall;
+        ConfigEntry<int>? clippedWings;
+        ConfigEntry<int>? danteReturns;
+        ConfigEntry<int>? classPotionsTitan;
+        ConfigEntry<int>? lazarusLeagueLab;
+        ConfigEntry<int>? corruptedAngels;
+        ConfigEntry<int>? classTomes;
+        ConfigEntry<int>? inscryptionEvent;
+        ConfigEntry<int>? classSpikes;
+        ConfigEntry<int>? titanDominion;
+        ConfigEntry<int>? titanSavagery;
+        ConfigEntry<int>? titanEntropy;
+        ConfigEntry<int>? inkboundEvent;
+        ConfigEntry<int>? nonclassCards;
+        ConfigEntry<int>? copier;
+        ConfigEntry<int>? garfieldBoxes;
+        ConfigEntry<int>? balatroEvent;
+
+        // Banner Drafts
+        ConfigEntry<bool>? shatteredHaloAffectsBanners;
+        ConfigEntry<uint>? numberOfBannerDraftCards;
+
+        // Miscellaneous
+        ConfigEntry<bool>? eliminateRunRarityFloor;
+        ConfigEntry<bool>? eliminateRarityFloorArmsShop;
+        //ConfigEntry<bool>? allowPurgingChampionAtUnstableVortex;
+        ConfigEntry<bool>? allowCardMasteryForAllRunTypes;
+
         ConfigEntry<int>? runHistoryMaxEntries;
 
 
@@ -147,8 +181,7 @@ namespace BalanceConfigurator.Plugin
 
                     // Do the magic
                     var allGameData = saveManager.GetAllGameData();
-                    var balanceData = allGameData.GetBalanceData();
-                    ReconfigureBalance(balanceData);
+                    ReconfigureBalance(allGameData);
                 }
             );
 
@@ -549,10 +582,91 @@ namespace BalanceConfigurator.Plugin
                     Chinese = "修改历史记录的条目数量上限。"
                 }.ToString());
             PatchRunHistory1.RunHistoryMaxEntries = runHistoryMaxEntries.Value;
+
+
+            // story ticket counts
+            ConfigDescription genericDescription = new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = $"Number of tickets that will produce this event.",
+                    Chinese = ""
+                }.ToString(), new AcceptableValueRange<int>(0, 100));
+
+            cultOfTheLambEvent  = Config.Bind<int>("Story Ticket Counts", "Cult of the Lamb",        7, genericDescription);
+            pathOfTheAngel      = Config.Bind<int>("Story Ticket Counts", "Path of the Angel",      10, genericDescription);
+            penanceFields       = Config.Bind<int>("Story Ticket Counts", "Penitent Suits",         10, genericDescription);
+            
+            boneDogTitan        = Config.Bind<int>("Story Ticket Counts", "Bone Dog",               10, genericDescription);
+            moreOrLessArtifacts = Config.Bind<int>("Story Ticket Counts", "Historian Records",      10, genericDescription);
+            pyreHeartUpgrade    = Config.Bind<int>("Story Ticket Counts", "Divine Shards",          10, genericDescription);
+            trainRoomInstall    = Config.Bind<int>("Story Ticket Counts", "Heph Blueprints",        10, genericDescription);
+            clippedWings        = Config.Bind<int>("Story Ticket Counts", "Clipped Wings",          10, genericDescription);
+            danteReturns        = Config.Bind<int>("Story Ticket Counts", "Dante Returns",          10, genericDescription);
+            classPotionsTitan   = Config.Bind<int>("Story Ticket Counts", "Gremlin Looter",         10, genericDescription);
+            lazarusLeagueLab    = Config.Bind<int>("Story Ticket Counts", "Plague Doctor",          10, genericDescription);
+            corruptedAngels     = Config.Bind<int>("Story Ticket Counts", "Archus",                 10, genericDescription);
+            classTomes          = Config.Bind<int>("Story Ticket Counts", "Library",                15, genericDescription);
+            inscryptionEvent    = Config.Bind<int>("Story Ticket Counts", "Inscryption",            15, genericDescription);
+            classSpikes         = Config.Bind<int>("Story Ticket Counts", "Railspikes",             15, genericDescription);
+            titanDominion       = Config.Bind<int>("Story Ticket Counts", "Fountain of Dominion",   15, genericDescription);
+            titanSavagery       = Config.Bind<int>("Story Ticket Counts", "Savagery Statue",        15, genericDescription);
+            titanEntropy        = Config.Bind<int>("Story Ticket Counts", "Entropy Crystals",       15, genericDescription);
+            inkboundEvent       = Config.Bind<int>("Story Ticket Counts", "Inkbound",               15, genericDescription);
+            nonclassCards       = Config.Bind<int>("Story Ticket Counts", "Wreckage Remains",       20, genericDescription);
+            copier              = Config.Bind<int>("Story Ticket Counts", "Mysterious Mirror",      25, genericDescription);
+            garfieldBoxes       = Config.Bind<int>("Story Ticket Counts", "Wondrous Boxes",         25, genericDescription);
+            balatroEvent        = Config.Bind<int>("Story Ticket Counts", "Balatro",                25, genericDescription);
+
+            // Banner Drafts
+            shatteredHaloAffectsBanners = Config.Bind<bool>("Unit Banner Drafts", "Shattered Halo Applies To Banner Drafts", false,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Force Shattered Halo to apply to Banner Drafts as well as Card Drafts.",
+                    Chinese = ""
+                }.ToString());
+
+            numberOfBannerDraftCards = Config.Bind<uint>("Unit Banner Drafts", "Number of Cards Offered For Unit Banner Drafts", 2,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Number of unit cards offered for a clan banner map node.",
+                    Chinese = ""
+                }.ToString(), new AcceptableValueRange<uint>(1u, 3u)));
+
+            // Card Drats
+            eliminateRunRarityFloor = Config.Bind<bool>("Card Drafts", "Allow Common Cards After Ring 2", false,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Eliminates the rarity floor for card drafts for battle rewards after ring 2. Highly recommended to adjust the Card Rarity Ticket Counts and lower the common rarity ticket count if you enable this.",
+                    Chinese = ""
+                }.ToString());
+
+            // Arms Shop
+            eliminateRarityFloorArmsShop = Config.Bind<bool>("Arms shop", "Allow Sale of Common Cards", false,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Allows common rarity equipment and room cards to be sold at the arms shop.",
+                    Chinese = ""
+                }.ToString());
+
+            allowCardMasteryForAllRunTypes = Config.Bind<bool>("Card Mastery", "Allow Cards to be Mastered From Any Run Type", false,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Allows cards to be mastered in Dimensional Challenges, Custom Runs, and Community Challenges.",
+                    Chinese = ""
+                }.ToString());
+            PatchCardMastery.OverrideCardMasteryRuns = allowCardMasteryForAllRunTypes.Value;
+
+            /*allowPurgingChampionAtUnstableVortex = Config.Bind<bool>("Miscellaneous", "Allow Purging Champion", false,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Allows unstable vortex to purge your champion.",
+                    Chinese = ""
+                }.ToString());*/
         }
 
-        private void ReconfigureBalance(BalanceData balanceData)
+        private void ReconfigureBalance(AllGameData allGameData)
         {
+            var balanceData = allGameData.GetBalanceData();
+
             var cardTicketValues     =  GetRarityTicket(cardRarityTicketCommon!,        cardRarityTicketUncommon!,      cardRarityTicketRare!,      cardRarityTicketChampion!);
             var enhancerTicketValues =  GetRarityTicket(enhancerRarityTicketCommon!,    enhancerRarityTicketUncommon!,  enhancerRarityTicketRare!,  enhancerRarityTicketChampion!);
             var relicTicketValues    =  GetRarityTicket(relicRarityTicketCommon!,       relicRarityTicketUncommon!,     relicRarityTicketRare!,     relicRarityTicketChampion!);
@@ -584,19 +698,111 @@ namespace BalanceConfigurator.Plugin
             SafeSetField<BalanceData>(balanceData, "fastDialogueMultiplier",          fastDialogueMultiplier!.Value);
 
 
-            DraftCost[]? draftCosts = SafeGetField(balanceData, "draftCosts") as DraftCost[];
-            if (draftCosts == null)
-                return;
+            DraftCost[]? draftCosts = SafeGetField<BalanceData>(balanceData, "draftCosts") as DraftCost[];
+            if (draftCosts != null)
+            {
+                SafeSetField<DraftCost>(draftCosts[0], "costRange", new Vector2Int(draftCostCommonCardMin!.Value, draftCostCommonCardMax!.Value));
+                SafeSetField<DraftCost>(draftCosts[1], "costRange", new Vector2Int(draftCostUncommonCardMin!.Value, draftCostUncommonCardMax!.Value));
+                SafeSetField<DraftCost>(draftCosts[2], "costRange", new Vector2Int(draftCostRareCardMin!.Value, draftCostRareCardMax!.Value));
+                SafeSetField<DraftCost>(draftCosts[3], "costRange", new Vector2Int(draftCostCommonRelicMin!.Value, draftCostCommonRelicMax!.Value));
+                SafeSetField<DraftCost>(draftCosts[4], "costRange", new Vector2Int(draftCostUncommonRelicMin!.Value, draftCostUncommonRelicMax!.Value));
+                SafeSetField<DraftCost>(draftCosts[5], "costRange", new Vector2Int(draftCostRareRelicMin!.Value, draftCostRareRelicMax!.Value));
+                SafeSetField<DraftCost>(draftCosts[6], "costRange", new Vector2Int(draftCostCommonEnhancerMin!.Value, draftCostCommonEnhancerMax!.Value));
+                SafeSetField<DraftCost>(draftCosts[7], "costRange", new Vector2Int(draftCostUncommonEnhancerMin!.Value, draftCostUncommonEnhancerMax!.Value));
+                SafeSetField<DraftCost>(draftCosts[8], "costRange", new Vector2Int(draftCostRareEnhancerMin!.Value, draftCostRareEnhancerMax!.Value));
+            }
 
-            SafeSetField<DraftCost>(draftCosts[0], "costRange", new Vector2Int(draftCostCommonCardMin!.Value,       draftCostCommonCardMax!.Value));
-            SafeSetField<DraftCost>(draftCosts[1], "costRange", new Vector2Int(draftCostUncommonCardMin!.Value,     draftCostUncommonCardMax!.Value));
-            SafeSetField<DraftCost>(draftCosts[2], "costRange", new Vector2Int(draftCostRareCardMin!.Value,         draftCostRareCardMax!.Value));
-            SafeSetField<DraftCost>(draftCosts[3], "costRange", new Vector2Int(draftCostCommonRelicMin!.Value,      draftCostCommonRelicMax!.Value));
-            SafeSetField<DraftCost>(draftCosts[4], "costRange", new Vector2Int(draftCostUncommonRelicMin!.Value,    draftCostUncommonRelicMax!.Value));
-            SafeSetField<DraftCost>(draftCosts[5], "costRange", new Vector2Int(draftCostRareRelicMin!.Value,        draftCostRareRelicMax!.Value));
-            SafeSetField<DraftCost>(draftCosts[6], "costRange", new Vector2Int(draftCostCommonEnhancerMin!.Value,   draftCostCommonEnhancerMax!.Value));
-            SafeSetField<DraftCost>(draftCosts[7], "costRange", new Vector2Int(draftCostUncommonEnhancerMin!.Value, draftCostUncommonEnhancerMax!.Value));
-            SafeSetField<DraftCost>(draftCosts[8], "costRange", new Vector2Int(draftCostRareEnhancerMin!.Value,     draftCostRareEnhancerMax!.Value));
+            IReadOnlyDictionary<string, ConfigEntry<int>?> storyConfig = new Dictionary<string, ConfigEntry<int>?> {
+                ["CultOfTheLambEvent"] = cultOfTheLambEvent,
+                ["PenanceFields"] = penanceFields,
+                ["PathOfTheAngel"] = pathOfTheAngel,
+                ["BoneDogTitan"] = boneDogTitan,
+                ["MoreOrLessArtifacts"] = moreOrLessArtifacts,
+                ["PyreHeartUpgrade"] = pyreHeartUpgrade,
+                ["TrainRoomInstall"] = trainRoomInstall,
+                ["ClippedWings"] = clippedWings,
+                ["DanteReturns"] = danteReturns,
+                ["ClassPotionsTitan"] = classPotionsTitan,
+                ["LazarusLeagueLab"] = lazarusLeagueLab,
+                ["CorruptedAngels"] = corruptedAngels,
+                ["ClassTomes"] = classTomes,
+                ["InscryptionEvent"] = inscryptionEvent,
+                ["ClassSpikes"] = classSpikes,
+                ["TitanDominion"] = titanDominion,
+                ["TitanSavagery"] = titanSavagery,
+                ["TitanEntropy"] = titanEntropy,
+                ["InkboundEvent"] = inkboundEvent,
+                ["NonclassCards"] = nonclassCards,
+                ["Copier"] = copier,
+                ["GarfieldBoxes"] = garfieldBoxes,
+                ["BalatroEvent"] = balatroEvent
+            };
+
+            foreach (var story_option in storyConfig)
+            {
+                var storyEvent = allGameData.FindStoryEventDataByName(story_option.Key);
+                if (storyEvent == null)
+                    continue;
+                SafeSetField<StoryEventData>(storyEvent, "priorityTicketCount", story_option.Value!.Value);
+            }
+
+            // Change Options for Clan Banner Drafts For the Map Nodes
+            // This chunk of code required due to custom clans.
+            var clanBannerContainer = allGameData.FindMapNodeData("79d643b3-08e5-4114-8d04-feb8723bd49f") as RandomMapDataContainer;
+            if (clanBannerContainer != null)
+            {
+                var list = SafeGetField<RandomMapDataContainer>(clanBannerContainer, "mapNodeDataList") as ReorderableArray<MapNodeData>;
+                if (list != null)
+                {
+                    foreach (var mapNodeData in list)
+                    {
+                        var clanBanner = mapNodeData as RewardNodeData;
+                        if (clanBanner == null || !clanBanner.GetIsBannerNode())
+                            continue;
+                        foreach (var reward in clanBanner.GetRewards())
+                        {
+                            if (reward is not DraftRewardData draftRewardData)
+                            {
+                                continue;
+                            }
+                            SafeSetField<DraftRewardData>(draftRewardData, "ignoreRelicRarityOverride", !shatteredHaloAffectsBanners!.Value);
+                            SafeSetField<DraftRewardData>(draftRewardData, "draftOptionsCount", numberOfBannerDraftCards!.Value);
+                        }
+                    }
+                }
+            }
+
+            // Change Options for Arkion Reward.
+            var clanRewardBoss = allGameData.FindRewardDataByName("CardDraftLevelUpUnitMainOrAllied") as DraftRewardData;
+            SafeSetField<DraftRewardData>(clanRewardBoss, "ignoreRelicRarityOverride", !shatteredHaloAffectsBanners!.Value);
+
+            // Miscellaneous
+            var cardDraftMain = allGameData.FindRewardDataByName("CardDraftMainClassReward") as DraftRewardData;
+            SafeSetField<DraftRewardData>(cardDraftMain, "useRunRarityFloors", !eliminateRunRarityFloor!.Value);
+            var cardDraftSub = allGameData.FindRewardDataByName("CardDraftSubClassReward") as DraftRewardData;
+            SafeSetField<DraftRewardData>(cardDraftSub, "useRunRarityFloors", !eliminateRunRarityFloor!.Value);
+
+            var equipmentMerchant = allGameData.FindMapNodeData(/*EquipmentMerchant*/"e2c67b52-4d52-48b5-b20a-c6f4c12e44fa") as MerchantData;
+            var equipmentReward = equipmentMerchant?.GetReward(0).RewardData as CardPoolRewardData;
+            var roomReward = equipmentMerchant?.GetReward(1).RewardData as CardPoolRewardData;
+            if (eliminateRarityFloorArmsShop!.Value)
+            {
+                SafeSetField<CardPoolRewardData>(equipmentReward, "rarityFilter", GrantableRarity.Common | GrantableRarity.Uncommon | GrantableRarity.Rare);
+                SafeSetField<CardPoolRewardData>(roomReward, "rarityFilter", GrantableRarity.Common | GrantableRarity.Uncommon | GrantableRarity.Rare);
+            }
+            
+            /*if (allowPurgingChampionAtUnstableVortex!.Value)
+            {
+                IReadOnlyList<string> rewards = ["PurgeRewardMerchant", "PurgeThreeReward", "PurgeReward", "PurgeTwoReward", "PurgeMandatoryReward"];
+                foreach (var rewardName in rewards)
+                {
+                    var reward = allGameData.FindRewardDataByName(rewardName) as PurgeRewardData;
+                    if (reward != null)
+                    {
+                        SafeSetField<PurgeRewardData>(reward, "allowPurgeChampion", true);
+                    }
+                }
+            }*/
         }
 
         /// <summary>
@@ -633,16 +839,21 @@ namespace BalanceConfigurator.Plugin
         /// <param name="balanceData"></param>
         /// <param name="field"></param>
         /// <param name="obj"></param>
-        private object? SafeGetField(BalanceData balanceData, string field)
+        private object? SafeGetField<T>(T? data, string field)
         {
+            if (data == null)
+            {
+                Logger.LogError($"Internal Error data is null");
+                throw new ArgumentNullException(nameof(data));
+            }
             try
             {
-                Logger.LogDebug($"Getting BalanceData field {field}");
-                return AccessTools.Field(balanceData.GetType(), field).GetValue(balanceData);
+                Logger.LogDebug($"Getting {typeof(T).Name} field {field}");
+                return AccessTools.Field(data.GetType(), field).GetValue(data);
             }
             catch (Exception ex)
             {
-                Logger.LogError($"Could not get BalanceData field {field} because of an exception {ex.Message}");
+                Logger.LogError($"Could not get {typeof(T).Name} field {field} because of an exception {ex.Message}");
             }
             return null;
         }
@@ -690,6 +901,21 @@ namespace BalanceConfigurator.Plugin
         public static void Postfix(ref IRunHistoryData __result)
         {
             __result = new RunHistoryDataJson(PatchRunHistory1.RunHistoryMaxEntries);
+        }
+    }
+
+    [HarmonyPatch(typeof(RunTypeUtil), nameof(RunTypeUtil.AllowCardMastery))]
+    class PatchCardMastery
+    {
+        public static bool OverrideCardMasteryRuns = false;
+        public static bool Prefix(ref bool __result)
+        {
+            if (OverrideCardMasteryRuns)
+            {
+                __result = true;
+                return false;
+            }
+            return true;
         }
     }
 }
