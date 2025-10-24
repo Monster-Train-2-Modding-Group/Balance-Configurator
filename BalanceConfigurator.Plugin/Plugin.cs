@@ -588,7 +588,7 @@ namespace BalanceConfigurator.Plugin
             ConfigDescription genericDescription = new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = $"Number of tickets that will produce this event.",
-                    Chinese = ""
+                    Chinese = "修改这个事件出现的权重。"
                 }.ToString(), new AcceptableValueRange<int>(0, 100));
 
             cultOfTheLambEvent  = Config.Bind<int>("Story Ticket Counts", "Cult of the Lamb",        7, genericDescription);
@@ -621,14 +621,14 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Force Shattered Halo to apply to Banner Drafts as well as Card Drafts.",
-                    Chinese = ""
+                    Chinese = "修改破碎光环是否也对自选战旗生效。"
                 }.ToString());
 
             numberOfBannerDraftCards = Config.Bind<uint>("Unit Banner Drafts", "Number of Cards Offered For Unit Banner Drafts", 2,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "Number of unit cards offered for a clan banner map node.",
-                    Chinese = ""
+                    Chinese = "修改自选战旗出现的单位数量。"
                 }.ToString(), new AcceptableValueRange<uint>(1u, 3u)));
 
             // Card Drats
@@ -636,7 +636,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Eliminates the rarity floor for card drafts for battle rewards after ring 2. Highly recommended to adjust the Card Rarity Ticket Counts and lower the common rarity ticket count if you enable this.",
-                    Chinese = ""
+                    Chinese = "修改从3层开始是否会出现普通卡牌。如果启用，强烈建议修改各稀有度卡牌的出现权重，尤其是普通卡牌的出现权重。"
                 }.ToString());
 
             // Arms Shop
@@ -644,14 +644,14 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Allows common rarity equipment and room cards to be sold at the arms shop.",
-                    Chinese = ""
+                    Chinese = "修改武器商人是否会售卖普通稀有度的装备或房间卡。"
                 }.ToString());
 
             allowCardMasteryForAllRunTypes = Config.Bind<bool>("Card Mastery", "Allow Cards to be Mastered From Any Run Type", false,
                 new ConfigDescriptionBuilder
                 {
                     English = "Allows cards to be mastered in Dimensional Challenges, Custom Runs, and Community Challenges.",
-                    Chinese = ""
+                    Chinese = "修改位面挑战、自定义游戏和社区挑战是否也会精通卡牌。"
                 }.ToString());
             PatchCardMastery.OverrideCardMasteryRuns = allowCardMasteryForAllRunTypes.Value;
 
@@ -659,7 +659,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Allows unstable vortex to purge your champion.",
-                    Chinese = ""
+                    Chinese = "修改不稳定旋涡是否可以移除勇者。"
                 }.ToString());*/
         }
 
