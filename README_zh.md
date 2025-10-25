@@ -25,7 +25,7 @@
 
 ## 功能
 
-可以修改下方这些开始一轮游戏时的初始数值：
+可以修改下方这些在开始一轮游戏时的初始情况或数值：
 
 * 卡牌、商店升级、神器的各稀有度的出现权重
   * 示例: 假设普通升级石的出现权重为 70，高级升级石的出现权重为 30，那么就有 $`\frac{70}{70 + 30}`$ 的概率刷新普通升级石，$`\frac{30}{70 + 30}`$ 的概率刷新高级升级石。
@@ -52,10 +52,18 @@
 * (1.2.0 版本新增) 对话的速度倍率
 * (1.2.0 版本新增) 商店各物品各稀有度的价格区间 (卡牌、升级石、神器)
 * (1.3.0 版本新增) 历史记录的条目数量上限
+* (1.4.0 版本新增) 各个事件的出现权重（对于每个事件对应的英文名称，请参考[wiki](https://monstertrain2.miraheze.org/wiki/Celestial_Alcove)）
+* (1.4.0 版本新增) 破碎光环是否也对自选战旗生效
+* (1.4.0 版本新增) 自选战旗出现的单位数量
+* (1.4.0 版本新增) 从3层开始是否会出现普通卡牌
+* (1.4.0 版本新增) 武器商人是否会售卖普通稀有度的装备或房间卡
+* (1.4.0 版本新增) 位面挑战、自定义游戏和社区挑战是否也会精通卡牌
 
 ## 使用方法
 
-使用 thunderstore 安装或者手动安装之后，将通过编辑 `BalanceConfigurator.Plugin.cfg` 文件来修改游戏内数值，默认数值是游戏原版所使用的数值。
+**强烈**建议使用一个模组管理器（Thunderstore Mod Manager、Gale Mod Manager或r2modman）来安装这个模组。如果手动安装，则需要同时安装[Trainworks Reloaded](https://github.com/Monster-Train-2-Modding-Group/Trainworks-Reloaded)。
+
+使用模组管理器安装或者手动安装之后，将通过编辑 `BalanceConfigurator.Plugin.cfg` 文件来修改游戏内数值，默认数值是游戏原版所使用的数值。
 
 * 如果使用 thunderstore 安装，可以在 thunderstore 的 config editor 里编辑该文件。如果你想在其他文本编辑器内编辑，该文件的位置在 `C:\Users\<user>\AppData\Roaming\Thunderstore Mod Manager\DataFolder\MonsterTrain2\profiles\<test>\BepInEx\config\BalanceConfigurator.Plugin.cfg`
 
@@ -72,6 +80,10 @@
 - 主氏族获得经验的倍率
 - 盟友氏族获得经验的倍率
 - 备选勇者的解锁等级
+- 契约前哨站可选剧情对话的出现概率
+- 对话的速度倍率
+- 历史记录的条目数量上限
+- 位面挑战、自定义游戏和社区挑战是否也会精通卡牌
 
 ### **重要内容**
 
