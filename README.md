@@ -65,7 +65,7 @@ It is **highly** recommended to use a mod manager (Thunderstore Mod Manager, Gal
 
 Once installed via mod manager or manually. The file to edit is `BalanceConfigurator.Plugin.cfg`. The default values are those used within the game. Edit to your liking.
 
-* If installed via thunderstore. The file can be edited in the thunderstore config editor. If you want to edit the file in another text editor it should be located `C:\Users\<user>\AppData\Roaming\Thunderstore Mod Manager\DataFolder\MonsterTrain2\profiles\<test>\BepInEx\config\BalanceConfigurator.Plugin.cfg`
+* If installed via a Mod Manager. The file can be edited in the config editor
 
 * If installed manually it should be placed where you installed BepinEx. Normally such an install would be placed in the same directory as the game's executable.
   `C:\Program Files (x86)\Steam\steamapps\common\Monster Train 2\BepInEx\config\BalanceConfigurator.Plugin.cfg`
