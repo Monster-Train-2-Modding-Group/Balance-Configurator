@@ -759,7 +759,11 @@ namespace BalanceConfigurator.Plugin
                         var clanBanner = mapNodeData as RewardNodeData;
                         if (clanBanner == null || !clanBanner.GetIsBannerNode())
                             continue;
-                        foreach (var reward in clanBanner.GetRewards())
+                        // Do not use GetRewards as its not the same data as of the Echoes update.
+                        var rewards = SafeGetField<RewardNodeData>(clanBanner, "rewards") as List<RewardData>;
+                        if (rewards == null)
+                            continue;
+                        foreach (var reward in rewards)
                         {
                             if (reward is not DraftRewardData draftRewardData)
                             {
