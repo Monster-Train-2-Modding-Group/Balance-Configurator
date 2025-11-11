@@ -65,7 +65,7 @@
 
 使用模组管理器安装或者手动安装之后，将通过编辑 `BalanceConfigurator.Plugin.cfg` 文件来修改游戏内数值，默认数值是游戏原版所使用的数值。
 
-* 如果使用 thunderstore 安装，可以在 thunderstore 的 config editor 里编辑该文件。如果你想在其他文本编辑器内编辑，该文件的位置在 `C:\Users\<user>\AppData\Roaming\Thunderstore Mod Manager\DataFolder\MonsterTrain2\profiles\<test>\BepInEx\config\BalanceConfigurator.Plugin.cfg`
+* 如果使用模组管理器安装，可以在 config editor 里编辑该文件。
 
 * 如果手动安装，该文件正常会出现在游戏根目录的 BepInEx 文件夹内，一般该文件的位置在类似于 `C:\Program Files (x86)\Steam\steamapps\common\Monster Train 2\BepInEx\config\BalanceConfigurator.Plugin.cfg` 的地方
 
