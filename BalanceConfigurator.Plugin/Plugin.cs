@@ -121,29 +121,32 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<int>? draftCostRareEnhancerMax;
 
         // Event ticket counts
-        ConfigEntry<int>? cultOfTheLambEvent;
-        ConfigEntry<int>? penanceFields;
-        ConfigEntry<int>? pathOfTheAngel;
-        ConfigEntry<int>? boneDogTitan;
-        ConfigEntry<int>? moreOrLessArtifacts;
-        ConfigEntry<int>? pyreHeartUpgrade;
-        ConfigEntry<int>? trainRoomInstall;
-        ConfigEntry<int>? clippedWings;
-        ConfigEntry<int>? danteReturns;
-        ConfigEntry<int>? classPotionsTitan;
-        ConfigEntry<int>? lazarusLeagueLab;
-        ConfigEntry<int>? corruptedAngels;
-        ConfigEntry<int>? classTomes;
-        ConfigEntry<int>? inscryptionEvent;
-        ConfigEntry<int>? classSpikes;
-        ConfigEntry<int>? titanDominion;
-        ConfigEntry<int>? titanSavagery;
-        ConfigEntry<int>? titanEntropy;
-        ConfigEntry<int>? inkboundEvent;
-        ConfigEntry<int>? nonclassCards;
-        ConfigEntry<int>? copier;
-        ConfigEntry<int>? garfieldBoxes;
         ConfigEntry<int>? balatroEvent;
+        ConfigEntry<int>? boneDogTitan;
+        ConfigEntry<int>? classPotionsTitan;
+        ConfigEntry<int>? classSpikes;
+        ConfigEntry<int>? classTomes;
+        ConfigEntry<int>? clippedWings;
+        ConfigEntry<int>? copier;
+        ConfigEntry<int>? corruptedAngels;
+        ConfigEntry<int>? cultOfTheLambEvent;
+        ConfigEntry<int>? danteReturns;
+        ConfigEntry<int>? garfieldBoxes;
+        ConfigEntry<int>? inkboundEvent;
+        ConfigEntry<int>? inscryptionEvent;
+        ConfigEntry<int>? lazarusLeagueLab;
+        ConfigEntry<int>? mothersRemnant;
+        ConfigEntry<int>? moreOrLessArtifacts;
+        ConfigEntry<int>? nonclassCards;
+        ConfigEntry<int>? pathOfTheAngel;
+        ConfigEntry<int>? penanceFields;
+        ConfigEntry<int>? purifyingFlame;
+        ConfigEntry<int>? pyreHeartUpgrade;
+        ConfigEntry<int>? theOldOrder;
+        ConfigEntry<int>? titanDominion;
+        ConfigEntry<int>? titanEntropy;
+        ConfigEntry<int>? titanSavagery;
+        ConfigEntry<int>? trainRoomInstall;
 
         // Banner Drafts
         ConfigEntry<bool>? shatteredHaloAffectsBanners;
@@ -615,6 +618,11 @@ namespace BalanceConfigurator.Plugin
             copier              = Config.Bind<int>("Story Ticket Counts", "Mysterious Mirror",      25, genericDescription);
             garfieldBoxes       = Config.Bind<int>("Story Ticket Counts", "Wondrous Boxes",         25, genericDescription);
             balatroEvent        = Config.Bind<int>("Story Ticket Counts", "Balatro",                25, genericDescription);
+            mothersRemnant      = Config.Bind<int>("Story Ticket Counts", "Mothers Remnant",        10, genericDescription);
+            theOldOrder         = Config.Bind<int>("Story Ticket Counts", "The Old Order",          10, genericDescription);
+            purifyingFlame      = Config.Bind<int>("Story Ticket Counts", "Purifying Flame",        10, genericDescription);
+
+
 
             // Banner Drafts
             shatteredHaloAffectsBanners = Config.Bind<bool>("Unit Banner Drafts", "Shattered Halo Applies To Banner Drafts", false,
@@ -735,7 +743,10 @@ namespace BalanceConfigurator.Plugin
                 ["NonclassCards"] = nonclassCards,
                 ["Copier"] = copier,
                 ["GarfieldBoxes"] = garfieldBoxes,
-                ["BalatroEvent"] = balatroEvent
+                ["BalatroEvent"] = balatroEvent,
+                ["PurifyingFlame"] = purifyingFlame,
+                ["TheOldOrder"] = theOldOrder,
+                ["MothersRemnant1"] = mothersRemnant,
             };
 
             foreach (var story_option in storyConfig)
