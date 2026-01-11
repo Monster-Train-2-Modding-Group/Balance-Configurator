@@ -606,12 +606,6 @@ namespace BalanceConfigurator.Plugin
                 }.ToString());
             PatchDeckScreen.OverrideSortMode = deckSortDefaultOption.Value;
 
-            deckSortDefaultOption = Config.Bind<ConfigSortOption>("Deck Options", "Default Sort Option", ConfigSortOption.DoNotOverrideDeckSort,
-                new ConfigDescriptionBuilder
-                {
-                    English = "Default sort option for the Deck. The default does not override the default sorting method of the deck.",
-                }.ToString());
-            
             persistentDeckSort = Config.Bind<bool>("Deck Options", "Persistent Deck Sort", false,
                 new ConfigDescriptionBuilder
                 {
