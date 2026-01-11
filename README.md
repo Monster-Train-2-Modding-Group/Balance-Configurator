@@ -62,6 +62,7 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 * (New 1.4.0) Eliminate Run Rarity Floors (Allow Common Drafts to be found past ring 2)
 * (New 1.4.0) Eliminate Run Rarity Floor For Equipment Merchant (Equipment Merchant sells common equipment/rooms)
 * (New 1.4.0) Enable Card Mastery for all run types (Can master cards from Dimensional Challenges, Mutators, and Community Challenges)
+* (New 2.2.0) Options for default Deck Sort / Persistent Deck Sort.
 
 ## Usage
 
@@ -73,7 +74,6 @@ Once installed via mod manager or manually. The file to edit is `BalanceConfigur
 
 * If installed manually it should be placed where you installed BepinEx. Normally such an install would be placed in the same directory as the game's executable.
   `C:\Program Files (x86)\Steam\steamapps\common\Monster Train 2\BepInEx\config\BalanceConfigurator.Plugin.cfg`
-
 
 ## Warning
 
@@ -90,6 +90,7 @@ The only ***probably safe*** fields you can modify without giving an yourself an
 - Fast dialogue multiplier
 - Maximum number of entries present in Run History
 - Card Mastery for other run types
+- Deck sort options
 
 ### **Important**
 
