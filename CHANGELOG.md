@@ -6,7 +6,7 @@
 - Added missing event ticket count option for Shardsoul (PurgeChampion)
 
 ## v2.1.0
-- Added event ticket count for Mothers Remnent, TheOldOrder, and Purifying Flame
+- Added event ticket count for Mothers Remnant, TheOldOrder, and Purifying Flame
 
 ## v2.0.0
 - Fixes for Echoes from the Void.
