@@ -4,14 +4,14 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "Conductor"
 name = "BalanceConfigurator"
-versionNumber = "2.1.0"
+versionNumber = "2.2.0"
 description = "Mod that allows one to edit many aspects of the game (starting gold, max upgrade limits, max units per floor, experience gained, starting/max hand size, starting/max ember, and more!)."
 websiteUrl = "https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator"
 containsNsfwContent = false
 
 [package.dependencies]
 BepInEx-BepInExPack = "5.4.2100"
-MT2-Trainworks_Reloaded = "0.6.0"
+MT2-Trainworks_Reloaded = "0.6.5"
 
 [build]
 icon = "./icon.png"

@@ -13,6 +13,17 @@ using static PoolRewardData;
 
 namespace BalanceConfigurator.Plugin
 {
+    enum ConfigSortOption
+    {
+        DoNotOverrideDeckSort,
+        Default,
+        Name,
+        CardType,
+        Ember,
+        Upgrades,
+        Rarity
+    }
+
     class ConfigDescriptionBuilder
     {
         public string English { get; set; } = "";
@@ -140,6 +151,7 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<int>? nonclassCards;
         ConfigEntry<int>? pathOfTheAngel;
         ConfigEntry<int>? penanceFields;
+        ConfigEntry<int>? purgeChampion;
         ConfigEntry<int>? purifyingFlame;
         ConfigEntry<int>? pyreHeartUpgrade;
         ConfigEntry<int>? theOldOrder;
@@ -157,9 +169,10 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<bool>? eliminateRarityFloorArmsShop;
         //ConfigEntry<bool>? allowPurgingChampionAtUnstableVortex;
         ConfigEntry<bool>? allowCardMasteryForAllRunTypes;
+        ConfigEntry<ConfigSortOption>? deckSortDefaultOption;
+        ConfigEntry<bool>? persistentDeckSort;
 
         ConfigEntry<int>? runHistoryMaxEntries;
-
 
         public void Awake()
         {
@@ -586,6 +599,26 @@ namespace BalanceConfigurator.Plugin
                 }.ToString());
             PatchRunHistory1.RunHistoryMaxEntries = runHistoryMaxEntries.Value;
 
+            deckSortDefaultOption = Config.Bind<ConfigSortOption>("Deck Options", "Default Sort Option", ConfigSortOption.DoNotOverrideDeckSort,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Default sort option for the Deck. The default does not override the default sorting method of the deck.",
+                }.ToString());
+            PatchDeckScreen.OverrideSortMode = deckSortDefaultOption.Value;
+
+            deckSortDefaultOption = Config.Bind<ConfigSortOption>("Deck Options", "Default Sort Option", ConfigSortOption.DoNotOverrideDeckSort,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Default sort option for the Deck. The default does not override the default sorting method of the deck.",
+                }.ToString());
+            
+            persistentDeckSort = Config.Bind<bool>("Deck Options", "Persistent Deck Sort", false,
+                new ConfigDescriptionBuilder
+                {
+                    English = "The selected deck sort option persists, the game remembers the last selected deck sort option and will store it in \"Default Sort Option\"",
+                }.ToString());
+            PatchDeckScreenPersistSort.config = deckSortDefaultOption;
+            PatchDeckScreenPersistSort.SortOptionShouldPersist = persistentDeckSort.Value;
 
             // story ticket counts
             ConfigDescription genericDescription = new ConfigDescription(new ConfigDescriptionBuilder
@@ -621,6 +654,7 @@ namespace BalanceConfigurator.Plugin
             mothersRemnant      = Config.Bind<int>("Story Ticket Counts", "Mothers Remnant",        10, genericDescription);
             theOldOrder         = Config.Bind<int>("Story Ticket Counts", "The Old Order",          10, genericDescription);
             purifyingFlame      = Config.Bind<int>("Story Ticket Counts", "Purifying Flame",        10, genericDescription);
+            purgeChampion       = Config.Bind<int>("Story Ticket Counts", "Purge Champion",         10, genericDescription);
 
 
 
@@ -747,6 +781,7 @@ namespace BalanceConfigurator.Plugin
                 ["PurifyingFlame"] = purifyingFlame,
                 ["TheOldOrder"] = theOldOrder,
                 ["MothersRemnant1"] = mothersRemnant,
+                ["PurgeChampion"] = purgeChampion,
             };
 
             foreach (var story_option in storyConfig)
@@ -931,6 +966,52 @@ namespace BalanceConfigurator.Plugin
                 return false;
             }
             return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(DeckScreen), "InitSortDropdown")]
+    class PatchDeckScreen
+    {
+        public static ConfigSortOption OverrideSortMode = ConfigSortOption.DoNotOverrideDeckSort;
+        private readonly static Dictionary<ConfigSortOption, DeckScreen.SortOrder> SortOrderDictionary = new()
+        {
+            [ConfigSortOption.Default] = DeckScreen.SortOrder.Default,
+            [ConfigSortOption.Name] = DeckScreen.SortOrder.Name,
+            [ConfigSortOption.CardType] = DeckScreen.SortOrder.CardType,
+            [ConfigSortOption.Ember] = DeckScreen.SortOrder.EmberCost,
+            [ConfigSortOption.Upgrades] = DeckScreen.SortOrder.Upgrades,
+            [ConfigSortOption.Rarity] = DeckScreen.SortOrder.Rarity
+        };
+
+        public static void Prefix(ref DeckScreen.SortOrder ___sortOrder)
+        {
+            if (OverrideSortMode == ConfigSortOption.DoNotOverrideDeckSort)
+                return;
+
+            ___sortOrder = SortOrderDictionary[OverrideSortMode];
+        }
+    }
+
+    [HarmonyPatch(typeof(DeckScreen), "ChangeSort")]
+    class PatchDeckScreenPersistSort
+    {
+        public static bool SortOptionShouldPersist = false;
+        public static ConfigEntry<ConfigSortOption>? config;
+        private readonly static Dictionary<DeckScreen.SortOrder, ConfigSortOption> SortOrderDictionary = new()
+        {
+            [DeckScreen.SortOrder.Default] = ConfigSortOption.Default,
+            [DeckScreen.SortOrder.Name] = ConfigSortOption.Name,
+            [DeckScreen.SortOrder.CardType] = ConfigSortOption.CardType,
+            [DeckScreen.SortOrder.EmberCost] = ConfigSortOption.Ember,
+            [DeckScreen.SortOrder.Upgrades] = ConfigSortOption.Upgrades,
+            [DeckScreen.SortOrder.Rarity] = ConfigSortOption.Rarity
+        };
+        public static void Postfix(DeckScreen.SortOrder ___sortOrder)
+        {
+            if (SortOptionShouldPersist)
+            {
+                PatchDeckScreen.OverrideSortMode = config!.Value = SortOrderDictionary[___sortOrder];
+            }
         }
     }
 }
