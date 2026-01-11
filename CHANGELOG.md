@@ -1,3 +1,6 @@
+## v2.2.1
+- README touchups.
+
 ## v2.2.0
 - Added options for Overriding / Persisting the Deck Sort Option.
 - Added missing event ticket count option for Shardsoul (PurgeChampion)
