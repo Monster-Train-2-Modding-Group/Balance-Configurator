@@ -603,6 +603,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Default sort option for the Deck. The default does not override the default sorting method of the deck.",
+                    Chinese = "修改卡组默认采用哪种排序方式。不会修改游戏本体“默认”选项对应的排序方式。可供选择的选项分别为：该功能不生效、默认、名字、卡牌类型、余烬费用、升级、稀有度。"
                 }.ToString());
             PatchDeckScreen.OverrideSortMode = deckSortDefaultOption.Value;
 
@@ -610,6 +611,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "The selected deck sort option persists, the game remembers the last selected deck sort option and will store it in \"Default Sort Option\"",
+                    Chinese = "修改游戏本体“默认”选项对应的卡组排序方式。如果启用，则修改为上次选择的卡组排序方式。"
                 }.ToString());
             PatchDeckScreenPersistSort.config = deckSortDefaultOption;
             PatchDeckScreenPersistSort.SortOptionShouldPersist = persistentDeckSort.Value;

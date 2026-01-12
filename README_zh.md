@@ -1,5 +1,9 @@
 # 平衡性数值编辑
 
+[![GitHub Release](https://img.shields.io/github/v/release/Monster-Train-2-Modding-Group/Balance-Configurator?color=4CAF50&label=latest)](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/releases)
+[![Trainworks Reloaded](https://img.shields.io/badge/framework-Trainworks--Reloaded-blue?logo=github)](https://github.com/Monster-Train-2-Modding-Group/Trainworks-Reloaded)
+[![License](https://img.shields.io/github/license/Monster-Train-2-Modding-Group/Balance-Configurator?color=lightgrey)](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/LICENSE)
+
 支持的语言: [English](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/README.md) | 简体中文
 
 ![icon](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/icon.png)
@@ -58,6 +62,7 @@
 * (1.4.0 版本新增) 从3层开始是否会出现普通卡牌
 * (1.4.0 版本新增) 武器商人是否会售卖普通稀有度的装备或房间卡
 * (1.4.0 版本新增) 位面挑战、自定义游戏和社区挑战是否也会精通卡牌
+* (2.2.0 版本新增) 默认采用的/游戏本体“默认”选项对应的卡组排序方式
 
 ## 使用方法
 
@@ -84,6 +89,7 @@
 - 对话的速度倍率
 - 历史记录的条目数量上限
 - 位面挑战、自定义游戏和社区挑战是否也会精通卡牌
+- 默认采用的/游戏本体“默认”选项对应的卡组排序方式
 
 ### **重要内容**
 
