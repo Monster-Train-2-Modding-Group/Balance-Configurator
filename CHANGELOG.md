@@ -1,3 +1,7 @@
+## v2.2.2
+- README touchups.
+- Update chinese translations
+
 ## v2.2.1
 - README touchups.
 
