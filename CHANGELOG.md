@@ -1,3 +1,6 @@
+## v2.3.0
+- Ability to sort deck by deployment phase hand
+
 ## v2.2.2
 - README touchups.
 - Update chinese translations

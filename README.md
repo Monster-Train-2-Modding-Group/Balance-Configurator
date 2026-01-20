@@ -3,6 +3,7 @@
 [![GitHub Release](https://img.shields.io/github/v/release/Monster-Train-2-Modding-Group/Balance-Configurator?color=4CAF50&label=latest)](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/releases)
 [![Trainworks Reloaded](https://img.shields.io/badge/framework-Trainworks--Reloaded-blue?logo=github)](https://github.com/Monster-Train-2-Modding-Group/Trainworks-Reloaded)
 [![License](https://img.shields.io/github/license/Monster-Train-2-Modding-Group/Balance-Configurator?color=lightgrey)](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/LICENSE)
+[![Donate](https://img.shields.io/badge/Ko--Fi-brandonandzeus-000000?logo=ko-fi&style=flat&labelColor=F16061&logoColor=FFFFFF)](https://ko-fi.com/brandonandzeus)
 
 Support language: English | [简体中文](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/README_zh.md)
 
@@ -63,6 +64,7 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 * (New 1.4.0) Eliminate Run Rarity Floor For Equipment Merchant (Equipment Merchant sells common equipment/rooms)
 * (New 1.4.0) Enable Card Mastery for all run types (Can master cards from Dimensional Challenges, Mutators, and Community Challenges)
 * (New 2.2.0) Options for default Deck Sort / Persistent Deck Sort.
+* (New 2.3.0) Option to sort deck by deployment phase hand.
 
 ## Usage
 

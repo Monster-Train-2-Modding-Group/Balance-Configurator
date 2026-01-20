@@ -700,13 +700,6 @@ namespace BalanceConfigurator.Plugin
                     Chinese = "修改位面挑战、自定义游戏和社区挑战是否也会精通卡牌。"
                 }.ToString());
             PatchCardMastery.OverrideCardMasteryRuns = allowCardMasteryForAllRunTypes.Value;
-
-            /*allowPurgingChampionAtUnstableVortex = Config.Bind<bool>("Miscellaneous", "Allow Purging Champion", false,
-                new ConfigDescriptionBuilder
-                {
-                    English = "Allows unstable vortex to purge your champion.",
-                    Chinese = "修改不稳定旋涡是否可以移除勇者。"
-                }.ToString());*/
         }
 
         private void ReconfigureBalance(AllGameData allGameData)
@@ -844,19 +837,6 @@ namespace BalanceConfigurator.Plugin
                 SafeSetField<CardPoolRewardData>(equipmentReward, "rarityFilter", GrantableRarity.Common | GrantableRarity.Uncommon | GrantableRarity.Rare);
                 SafeSetField<CardPoolRewardData>(roomReward, "rarityFilter", GrantableRarity.Common | GrantableRarity.Uncommon | GrantableRarity.Rare);
             }
-            
-            /*if (allowPurgingChampionAtUnstableVortex!.Value)
-            {
-                IReadOnlyList<string> rewards = ["PurgeRewardMerchant", "PurgeThreeReward", "PurgeReward", "PurgeTwoReward", "PurgeMandatoryReward"];
-                foreach (var rewardName in rewards)
-                {
-                    var reward = allGameData.FindRewardDataByName(rewardName) as PurgeRewardData;
-                    if (reward != null)
-                    {
-                        SafeSetField<PurgeRewardData>(reward, "allowPurgeChampion", true);
-                    }
-                }
-            }*/
         }
 
         /// <summary>
@@ -1023,11 +1003,13 @@ namespace BalanceConfigurator.Plugin
     class DeckScreenHandleDeployableSort
     {
         public static bool DefaultIsDeployableSort = false;
-        public static void Postfix(ref List<DeckScreen.CardInfo> ___cardInfos, RelicManager ___relicManager)
+        public static void Postfix(ref List<DeckScreen.CardInfo> ___cardInfos, RelicManager ___relicManager, SortOrder ___sortOrder)
         {
             if (!DefaultIsDeployableSort)
                 return;
             if (___relicManager != null && ___relicManager.GetRelicEffect<ISortDeckRelicEffect>() != null)
+                return;
+            if (___sortOrder != SortOrder.Default)
                 return;
 
             IOrderedEnumerable<CardInfo> source = ___cardInfos.OrderBy(c =>
