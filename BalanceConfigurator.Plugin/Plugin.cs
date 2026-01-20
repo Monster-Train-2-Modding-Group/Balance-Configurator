@@ -9,6 +9,7 @@ using TrainworksReloaded.Base;
 using TrainworksReloaded.Core;
 using UnityEngine;
 using static BalanceData;
+using static DeckScreen;
 using static PoolRewardData;
 
 namespace BalanceConfigurator.Plugin
@@ -171,6 +172,7 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<bool>? allowCardMasteryForAllRunTypes;
         ConfigEntry<ConfigSortOption>? deckSortDefaultOption;
         ConfigEntry<bool>? persistentDeckSort;
+        ConfigEntry<bool>? defaultDeployableSort;
 
         ConfigEntry<int>? runHistoryMaxEntries;
 
@@ -616,6 +618,14 @@ namespace BalanceConfigurator.Plugin
             PatchDeckScreenPersistSort.config = deckSortDefaultOption;
             PatchDeckScreenPersistSort.SortOptionShouldPersist = persistentDeckSort.Value;
 
+            defaultDeployableSort = Config.Bind<bool>("Deck Options", "Change Default Sort to Deployment Hand", false,
+                new ConfigDescriptionBuilder
+                {
+                    English = "The \"Default\" (in game) sort option now sorts the deck by Deployment Hand (total attack by each priority) then alphabetically",
+                    Chinese = ""
+                }.ToString());
+            DeckScreenHandleDeployableSort.DefaultIsDeployableSort = defaultDeployableSort.Value;
+
             // story ticket counts
             ConfigDescription genericDescription = new ConfigDescription(new ConfigDescriptionBuilder
                 {
@@ -651,8 +661,6 @@ namespace BalanceConfigurator.Plugin
             theOldOrder         = Config.Bind<int>("Story Ticket Counts", "The Old Order",          10, genericDescription);
             purifyingFlame      = Config.Bind<int>("Story Ticket Counts", "Purifying Flame",        10, genericDescription);
             purgeChampion       = Config.Bind<int>("Story Ticket Counts", "Purge Champion",         10, genericDescription);
-
-
 
             // Banner Drafts
             shatteredHaloAffectsBanners = Config.Bind<bool>("Unit Banner Drafts", "Shattered Halo Applies To Banner Drafts", false,
@@ -1008,6 +1016,70 @@ namespace BalanceConfigurator.Plugin
             {
                 PatchDeckScreen.OverrideSortMode = config!.Value = SortOrderDictionary[___sortOrder];
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(DeckScreen), "SortCards")]
+    class DeckScreenHandleDeployableSort
+    {
+        public static bool DefaultIsDeployableSort = false;
+        public static void Postfix(ref List<DeckScreen.CardInfo> ___cardInfos, RelicManager ___relicManager)
+        {
+            if (!DefaultIsDeployableSort)
+                return;
+            if (___relicManager != null && ___relicManager.GetRelicEffect<ISortDeckRelicEffect>() != null)
+                return;
+
+            IOrderedEnumerable<CardInfo> source = ___cardInfos.OrderBy(c =>
+                c.purged ? -1 :
+                c.cardState.IsChampionCard() ? 0 :
+                IsBannerCard(c.cardState) ? 1 :
+                IsDeployableCard(c.cardState) ? 2 : 3
+            );
+            source = source.ThenBy((CardInfo c) => c.cardState.IsCurrentlyDisabled())
+             .ThenBy(c => c.cardState.IsChampionCard() ? c.cardState.GetTitle() : null)
+             .ThenByDescending(c => IsBannerCard(c.cardState) ? c.cardState.GetTotalAttackDamage() : -1)
+             .ThenByDescending(c => IsDeployableCard(c.cardState) ? c.cardState.GetTotalAttackDamage() : -1);
+
+            ___cardInfos = source.ToList();
+        }
+
+        public static bool IsBannerCard(CardState card)
+        {
+            CharacterData? spawnCharacterData = card.GetSpawnCharacterData();
+            if (spawnCharacterData != null)
+            {
+                foreach (SubtypeData subtype in spawnCharacterData.GetSubtypes())
+                {
+                    if (subtype.Key == "SubtypesData_BannerUnit")
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static bool IsDeployableCard(CardState card)
+        {
+            foreach (CardUpgradeState cardUpgrade in card.GetCardStateModifiers().GetCardUpgrades())
+            {
+                foreach (CardTraitData traitDataUpgrade in cardUpgrade.GetTraitDataUpgrades())
+                {
+                    if (traitDataUpgrade.GetDrawInDeploymentPhase())
+                    {
+                        return true;
+                    }
+                }
+            }
+            foreach (CardTraitState traitState in card.GetTraitStates())
+            {
+                if (traitState.DrawOnDeploymentPhase)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
