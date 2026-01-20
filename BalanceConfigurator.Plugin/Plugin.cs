@@ -1003,7 +1003,7 @@ namespace BalanceConfigurator.Plugin
     class DeckScreenHandleDeployableSort
     {
         public static bool DefaultIsDeployableSort = false;
-        public static void Postfix(ref List<DeckScreen.CardInfo> ___cardInfos, RelicManager ___relicManager, SortOrder ___sortOrder)
+        public static void Postfix(ref List<DeckScreen.CardInfo> ___cardInfos, RelicManager ___relicManager, CardManager ___cardManager, SortOrder ___sortOrder)
         {
             if (!DefaultIsDeployableSort)
                 return;
@@ -1015,53 +1015,15 @@ namespace BalanceConfigurator.Plugin
             IOrderedEnumerable<CardInfo> source = ___cardInfos.OrderBy(c =>
                 c.purged ? -1 :
                 c.cardState.IsChampionCard() ? 0 :
-                IsBannerCard(c.cardState) ? 1 :
-                IsDeployableCard(c.cardState) ? 2 : 3
+                ___cardManager.IsBannerCard(c.cardState) ? 1 :
+                ___cardManager.IsDeployableCard(c.cardState) ? 2 : 3
             );
             source = source.ThenBy((CardInfo c) => c.cardState.IsCurrentlyDisabled())
              .ThenBy(c => c.cardState.IsChampionCard() ? c.cardState.GetTitle() : null)
-             .ThenByDescending(c => IsBannerCard(c.cardState) ? c.cardState.GetTotalAttackDamage() : -1)
-             .ThenByDescending(c => IsDeployableCard(c.cardState) ? c.cardState.GetTotalAttackDamage() : -1);
+             .ThenByDescending(c => ___cardManager.IsBannerCard(c.cardState) ? c.cardState.GetTotalAttackDamage() : -1)
+             .ThenByDescending(c => ___cardManager.IsDeployableCard(c.cardState) ? c.cardState.GetTotalAttackDamage() : -1);
 
             ___cardInfos = source.ToList();
-        }
-
-        public static bool IsBannerCard(CardState card)
-        {
-            CharacterData? spawnCharacterData = card.GetSpawnCharacterData();
-            if (spawnCharacterData != null)
-            {
-                foreach (SubtypeData subtype in spawnCharacterData.GetSubtypes())
-                {
-                    if (subtype.Key == "SubtypesData_BannerUnit")
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public static bool IsDeployableCard(CardState card)
-        {
-            foreach (CardUpgradeState cardUpgrade in card.GetCardStateModifiers().GetCardUpgrades())
-            {
-                foreach (CardTraitData traitDataUpgrade in cardUpgrade.GetTraitDataUpgrades())
-                {
-                    if (traitDataUpgrade.GetDrawInDeploymentPhase())
-                    {
-                        return true;
-                    }
-                }
-            }
-            foreach (CardTraitState traitState in card.GetTraitStates())
-            {
-                if (traitState.DrawOnDeploymentPhase)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }
