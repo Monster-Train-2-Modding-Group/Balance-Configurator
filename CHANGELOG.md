@@ -1,9 +1,12 @@
+## v2.3.1
+- Fix broken Deck Screen out of battle when using Deployment sort.
+
 ## v2.3.0
 - Ability to sort deck by deployment phase hand
 
 ## v2.2.2
 - README touchups.
-- Update chinese translations
+- Update Chinese translations
 
 ## v2.2.1
 - README touchups.
