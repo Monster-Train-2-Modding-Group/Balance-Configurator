@@ -1,3 +1,6 @@
+## v2.3.2
+- Update Chinese translations
+
 ## v2.3.1
 - Fix broken Deck Screen out of battle when using Deployment sort.
 
