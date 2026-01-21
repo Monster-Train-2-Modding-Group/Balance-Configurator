@@ -622,7 +622,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "The \"Default\" (in game) sort option now sorts the deck by Deployment Hand (total attack by each priority) then alphabetically",
-                    Chinese = ""
+                    Chinese = "修改游戏本体“默认”选项对应的卡组排序方式。如果启用，则将修改为可部署卡牌在前。"
                 }.ToString());
             DeckScreenHandleDeployableSort.DefaultIsDeployableSort = defaultDeployableSort.Value;
 
