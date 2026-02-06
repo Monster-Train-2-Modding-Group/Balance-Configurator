@@ -71,6 +71,9 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<int>? unitUpgradeSlots;
         ConfigEntry<int>? spellUpgradeSlots;
         ConfigEntry<int>? equipmentUpgradeSlots;
+        ConfigEntry<int>? unitMaxUpgradeSlots;
+        ConfigEntry<int>? spellMaxUpgradeSlots;
+        ConfigEntry<int>? equipmentMaxUpgradeSlots;
         ConfigEntry<int>? numSpawnPointsPerFloor;
         ConfigEntry<int>? characterCapacityPerFloor;
         ConfigEntry<int>? maxMutatorCount;
@@ -166,6 +169,14 @@ namespace BalanceConfigurator.Plugin
         // Banner Drafts
         ConfigEntry<bool>? shatteredHaloAffectsBanners;
         ConfigEntry<uint>? numberOfBannerDraftCards;
+
+        // Soul Savior
+        ConfigEntry<int>? unlocksForRunStartSelectButton2;
+        ConfigEntry<int>? unlocksForRunStartSelectButton3;
+        ConfigEntry<int>? draftRerollCount;
+        ConfigEntry<int>? draftRerollUnlocksForBonus1;
+        ConfigEntry<int>? draftRerollUnlocksForBonus2;
+        ConfigEntry<int>? draftRerollUnlocksForBonus3;
 
         // Miscellaneous
         ConfigEntry<bool>? eliminateRunRarityFloor;
@@ -274,23 +285,41 @@ namespace BalanceConfigurator.Plugin
                 }.ToString());
 
             // Upgrades and Slots
-            unitUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Unit Upgrade Slots", 2,
+            unitUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Unit Initial Upgrade Slots", 2,
                 new ConfigDescriptionBuilder
                 {
                     English = "Initial amount of unit upgrade slots available.",
                     Chinese = "修改单位的初始升级栏位数量。"
                 }.ToString());
-            spellUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Spell Upgrade Slots", 2,
+            unitMaxUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Unit Max Upgrade Slots", 4,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum amount of unit upgrade slots.",
+                    Chinese = ""
+                }.ToString());
+            spellUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Spell Initial Upgrade Slots", 2,
                 new ConfigDescriptionBuilder
                 {
                     English = "Initial amount of spell upgrade slots available.",
                     Chinese = "修改法术的初始升级栏位数量。"
                 }.ToString());
-            equipmentUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Equipment Upgrade Slots", 0,
+            spellMaxUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Spell Max Upgrade Slots", 4,
                 new ConfigDescriptionBuilder
                 {
-                    English = "Initial amount of equipment upgrade slots available (Currently equipment can't be upgraded).",
+                    English = "Maximum amount of spell upgrade slots.",
+                    Chinese = ""
+                }.ToString());
+            equipmentUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Equipment Initial Upgrade Slots", 2,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Initial amount of equipment upgrade slots available.",
                     Chinese = "修改装备的初始升级栏位数量（目前装备无法升级）。"
+                }.ToString());
+            equipmentMaxUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Equipment Max Upgrade Slots", 4,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum amount of equipment upgrade slots.",
+                    Chinese = ""
                 }.ToString());
             championUpgradesShown = Config.Bind<int>("Upgrades and Slots", "Champion Upgrades Shown", 2,
                 new ConfigDescriptionBuilder
@@ -692,7 +721,7 @@ namespace BalanceConfigurator.Plugin
                     Chinese = "修改自选战旗出现的单位数量。"
                 }.ToString(), new AcceptableValueRange<uint>(1u, 3u)));
 
-            // Card Drats
+            // Card Drafts
             eliminateRunRarityFloor = Config.Bind<bool>("Card Drafts", "Allow Common Cards After Ring 2", false,
                 new ConfigDescriptionBuilder
                 {
@@ -715,6 +744,48 @@ namespace BalanceConfigurator.Plugin
                     Chinese = "修改位面挑战、自定义游戏和社区挑战是否也会精通卡牌。"
                 }.ToString());
             PatchCardMastery.OverrideCardMasteryRuns = allowCardMasteryForAllRunTypes.Value;
+
+            unlocksForRunStartSelectButton2 = Config.Bind<int>("Soul Savior Options", "Upgrade Selection 1", 11,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Soul Unlocks Required For 2 At Run Start.",
+                    Chinese = ""
+                }.ToString(), new AcceptableValueRange<int>(2, 33)));
+
+            unlocksForRunStartSelectButton3 = Config.Bind<int>("Soul Savior Options", "Upgrade Selection 2", 33,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Soul Unlocks Required For 3 At Run Start.",
+                    Chinese = ""
+                }.ToString(), new AcceptableValueRange<int>(3, 33)));
+
+            draftRerollCount = Config.Bind<int>("Soul Savior Options", "Draft Reroll Count", 1,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Base number of rerolls for soul drafting.",
+                    Chinese = ""
+                }.ToString()));
+
+            draftRerollUnlocksForBonus1 = Config.Bind<int>("Soul Savior Options", "Upgrade Rerolls 1", 5,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Number of souls unlocked to get 1 extra reroll.",
+                    Chinese = ""
+                }.ToString()));
+
+            draftRerollUnlocksForBonus2 = Config.Bind<int>("Soul Savior Options", "Upgrade Rerolls 2", 15,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Number of souls unlocked to get 2 extra rerolls.",
+                    Chinese = ""
+                }.ToString()));
+
+            draftRerollUnlocksForBonus3 = Config.Bind<int>("Soul Savior Options", "Upgrade Rerolls 3", 25,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Number of souls unlocked to get 3 extra rerolls.",
+                    Chinese = ""
+                }.ToString()));
         }
 
         private void ReconfigureBalance(AllGameData allGameData)
@@ -739,8 +810,11 @@ namespace BalanceConfigurator.Plugin
             SafeSetField<BalanceData>(balanceData, "maxDragonsHoard",                 maxDragonsHoard!.Value);
             SafeSetField<BalanceData>(balanceData, "startOfTurnCards",                startOfTurnCards!.Value);
             SafeSetField<BalanceData>(balanceData, "unitUpgradeSlots",                unitUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "unitMaxUpgradeSlots",             unitMaxUpgradeSlots!.Value);
             SafeSetField<BalanceData>(balanceData, "spellUpgradeSlots",               spellUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "spellMaxUpgradeSlots",            spellMaxUpgradeSlots!.Value);
             SafeSetField<BalanceData>(balanceData, "equipmentUpgradeSlots",           equipmentUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "equipmentMaxUpgradeSlots",        equipmentMaxUpgradeSlots!.Value);
             SafeSetField<BalanceData>(balanceData, "numSpawnPointsPerFloor",          numSpawnPointsPerFloor!.Value);
             SafeSetField<BalanceData>(balanceData, "characterCapacityPerFloor",       characterCapacityPerFloor!.Value);
             SafeSetField<BalanceData>(balanceData, "maxMutatorCount",                 maxMutatorCount!.Value);
@@ -766,6 +840,17 @@ namespace BalanceConfigurator.Plugin
                 SafeSetField<DraftCost>(draftCosts[8], "costRange", new Vector2Int(draftCostRareEnhancerMin!.Value, draftCostRareEnhancerMax!.Value));
                 SafeSetField<DraftCost>(draftCosts[9], "costRange", new Vector2Int(draftCostChampionRelicMin!.Value, draftCostChampionRelicMax!.Value));
             }
+
+            BalanceData.RegionRunSoulOptionsData regionRunSoulOptionsData = new()
+            {
+                unlocksForRunStartSelectButton2 = unlocksForRunStartSelectButton2!.Value,
+                unlocksForRunStartSelectButton3 = unlocksForRunStartSelectButton3!.Value,
+                draftRerollCount = draftRerollCount!.Value,
+                draftRerollUnlocksForBonus1 = draftRerollUnlocksForBonus1!.Value,
+                draftRerollUnlocksForBonus2 = draftRerollUnlocksForBonus2!.Value,
+                draftRerollUnlocksForBonus3 = draftRerollUnlocksForBonus3!.Value
+            };
+            SafeSetField<BalanceData>(balanceData, "regionRunSoulOptions", regionRunSoulOptionsData);
 
             IReadOnlyDictionary<string, ConfigEntry<int>?> storyConfig = new Dictionary<string, ConfigEntry<int>?> {
                 ["CultOfTheLambEvent"] = cultOfTheLambEvent,

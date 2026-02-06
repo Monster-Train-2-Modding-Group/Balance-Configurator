@@ -1,6 +1,13 @@
 ## v3.0.0
 - Updated for Destiny of the Railforged
 - Ability to modify Boss Relic costs in Soul Savior mode.
+- Ability to modify many Soul Savior unlock conditions and rerolls.
+- Add Unit Max Upgrade Slots
+- Add Spell Max Upgrade Slots
+- Add Equipment Max Upgrade Slots
+- Rename option Unit Upgrade Slots -> Unit Initial Upgrade Slots
+- Rename option Spell Upgrade Slots -> Spell Initial Upgrade Slots
+- Rename option Equipment Initial Upgrade Slots -> Equipment Initial Upgrade Slots
 
 ## v2.3.2
 - Update Chinese translations
