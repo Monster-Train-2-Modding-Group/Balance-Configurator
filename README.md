@@ -65,6 +65,7 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 * (New 1.4.0) Enable Card Mastery for all run types (Can master cards from Dimensional Challenges, Mutators, and Community Challenges)
 * (New 2.2.0) Options for default Deck Sort / Persistent Deck Sort.
 * (New 2.3.0) Option to sort deck by deployment phase hand.
+* (New 3.0.0) Option to modify boss relics in Soul Savior mode.
 
 ## Usage
 

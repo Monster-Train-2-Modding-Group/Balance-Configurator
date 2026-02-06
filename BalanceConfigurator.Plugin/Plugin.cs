@@ -124,6 +124,8 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<int>? draftCostUncommonRelicMax;
         ConfigEntry<int>? draftCostRareRelicMin;
         ConfigEntry<int>? draftCostRareRelicMax;
+        ConfigEntry<int>? draftCostChampionRelicMin;
+        ConfigEntry<int>? draftCostChampionRelicMax;
 
         ConfigEntry<int>? draftCostCommonEnhancerMin;
         ConfigEntry<int>? draftCostCommonEnhancerMax;
@@ -552,8 +554,21 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "(Unused) Maximum cost of a rare artifact.",
-                    Chinese = "（未使用）修改稀有神器的最高价格。"
+                    Chinese = ""
                 }.ToString());
+            draftCostChampionRelicMin = Config.Bind<int>("Relic Draft Costs", "Minimum Cost Champion Relic", 600,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Minimum cost of a champion artifact (boss relics in soul savior mode).",
+                    Chinese = "（未使用）修改稀有神器的最低价格。"
+                }.ToString());
+            draftCostChampionRelicMax = Config.Bind<int>("Relic Draft Costs", "Maximum Cost Champion Relic", 600,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Maximum cost of a rare artifact (boss relics in soul savior mode).",
+                    Chinese = ""
+                }.ToString());
+
 
 
             draftCostCommonEnhancerMin = Config.Bind<int>("Enhancer (Shop Upgrade) Draft Costs", "Minimum Cost Common Enhancer", 15,
@@ -749,6 +764,7 @@ namespace BalanceConfigurator.Plugin
                 SafeSetField<DraftCost>(draftCosts[6], "costRange", new Vector2Int(draftCostCommonEnhancerMin!.Value, draftCostCommonEnhancerMax!.Value));
                 SafeSetField<DraftCost>(draftCosts[7], "costRange", new Vector2Int(draftCostUncommonEnhancerMin!.Value, draftCostUncommonEnhancerMax!.Value));
                 SafeSetField<DraftCost>(draftCosts[8], "costRange", new Vector2Int(draftCostRareEnhancerMin!.Value, draftCostRareEnhancerMax!.Value));
+                SafeSetField<DraftCost>(draftCosts[9], "costRange", new Vector2Int(draftCostChampionRelicMin!.Value, draftCostChampionRelicMax!.Value));
             }
 
             IReadOnlyDictionary<string, ConfigEntry<int>?> storyConfig = new Dictionary<string, ConfigEntry<int>?> {

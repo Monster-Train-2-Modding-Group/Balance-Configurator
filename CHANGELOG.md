@@ -1,3 +1,7 @@
+## v3.0.0
+- Updated for Destiny of the Railforged
+- Ability to modify Boss Relic costs in Soul Savior mode.
+
 ## v2.3.2
 - Update Chinese translations
 
