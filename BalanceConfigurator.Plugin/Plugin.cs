@@ -295,7 +295,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum amount of unit upgrade slots.",
-                    Chinese = ""
+                    Chinese = "修改单位的最大升级栏位数量。"
                 }.ToString());
             spellUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Spell Initial Upgrade Slots", 2,
                 new ConfigDescriptionBuilder
@@ -307,19 +307,19 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum amount of spell upgrade slots.",
-                    Chinese = ""
+                    Chinese = "修改法术的最大升级栏位数量。"
                 }.ToString());
             equipmentUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Equipment Initial Upgrade Slots", 2,
                 new ConfigDescriptionBuilder
                 {
                     English = "Initial amount of equipment upgrade slots available.",
-                    Chinese = "修改装备的初始升级栏位数量（目前装备无法升级）。"
+                    Chinese = "修改装备的初始升级栏位数量。"
                 }.ToString());
             equipmentMaxUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Equipment Max Upgrade Slots", 4,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum amount of equipment upgrade slots.",
-                    Chinese = ""
+                    Chinese = "修改装备的最大升级栏位数量。"
                 }.ToString());
             championUpgradesShown = Config.Bind<int>("Upgrades and Slots", "Champion Upgrades Shown", 2,
                 new ConfigDescriptionBuilder
@@ -583,19 +583,19 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "(Unused) Maximum cost of a rare artifact.",
-                    Chinese = ""
+                    Chinese = "（未使用）修改稀有神器的最高价格。"
                 }.ToString());
             draftCostChampionRelicMin = Config.Bind<int>("Relic Draft Costs", "Minimum Cost Champion Relic", 600,
                 new ConfigDescriptionBuilder
                 {
                     English = "Minimum cost of a champion artifact (boss relics in soul savior mode).",
-                    Chinese = "（未使用）修改稀有神器的最低价格。"
+                    Chinese = "（灵魂救星模式）修改大首领神器的最低价格。"
                 }.ToString());
             draftCostChampionRelicMax = Config.Bind<int>("Relic Draft Costs", "Maximum Cost Champion Relic", 600,
                 new ConfigDescriptionBuilder
                 {
-                    English = "Maximum cost of a rare artifact (boss relics in soul savior mode).",
-                    Chinese = ""
+                    English = "Maximum cost of a champion artifact (boss relics in soul savior mode).",
+                    Chinese = "（灵魂救星模式）修改大首领神器的最高价格。"
                 }.ToString());
 
 
@@ -749,42 +749,42 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "Soul Unlocks Required For 2 At Run Start.",
-                    Chinese = ""
+                    Chinese = "修改解锁第2个初始灵魂选择的灵魂需求数量。"
                 }.ToString(), new AcceptableValueRange<int>(2, 33)));
 
             unlocksForRunStartSelectButton3 = Config.Bind<int>("Soul Savior Options", "Upgrade Selection 2", 33,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "Soul Unlocks Required For 3 At Run Start.",
-                    Chinese = ""
+                    Chinese = "修改解锁第3个初始灵魂选择的灵魂需求数量。"
                 }.ToString(), new AcceptableValueRange<int>(3, 33)));
 
             draftRerollCount = Config.Bind<int>("Soul Savior Options", "Draft Reroll Count", 1,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "Base number of rerolls for soul drafting.",
-                    Chinese = ""
+                    Chinese = "修改自选灵魂的基础刷新次数。"
                 }.ToString()));
 
             draftRerollUnlocksForBonus1 = Config.Bind<int>("Soul Savior Options", "Upgrade Rerolls 1", 5,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "Number of souls unlocked to get 1 extra reroll.",
-                    Chinese = ""
+                    Chinese = "修改解锁第2次自选灵魂刷新的灵魂需求数量。"
                 }.ToString()));
 
             draftRerollUnlocksForBonus2 = Config.Bind<int>("Soul Savior Options", "Upgrade Rerolls 2", 15,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "Number of souls unlocked to get 2 extra rerolls.",
-                    Chinese = ""
+                    Chinese = "修改解锁第3次自选灵魂刷新的灵魂需求数量。"
                 }.ToString()));
 
             draftRerollUnlocksForBonus3 = Config.Bind<int>("Soul Savior Options", "Upgrade Rerolls 3", 25,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "Number of souls unlocked to get 3 extra rerolls.",
-                    Chinese = ""
+                    Chinese = "修改解锁第4次自选灵魂刷新的灵魂需求数量。"
                 }.ToString()));
         }
 
