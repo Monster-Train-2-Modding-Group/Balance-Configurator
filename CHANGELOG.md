@@ -1,3 +1,11 @@
+## v3.1.0
+- Added "Allow Endless from Any Single Player Run" Mutator runs, and Malicka Challenge runs.
+- Fix for SargeT3 (Unit Max Upgrade Slots / Spell Max Upgrade Slots correctly default to 5)
+- Unit Max Upgrade Slots renamed -> Unit Maximum Upgrade Slots
+- Spell Max Upgrade Slots renamed -> Spell Maximum Upgrade Slots
+- Equipment Max Upgrade Slots renamed - Equipment Maximum Upgrade Slots
+- Added configuration versioning to prevent having to rename fields to change their default.
+
 ## v3.0.1
 - Update Chinese translations
 

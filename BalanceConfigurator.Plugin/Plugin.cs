@@ -178,11 +178,14 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<int>? draftRerollUnlocksForBonus2;
         ConfigEntry<int>? draftRerollUnlocksForBonus3;
 
+        // Class Options
+
         // Miscellaneous
         ConfigEntry<bool>? eliminateRunRarityFloor;
         ConfigEntry<bool>? eliminateRarityFloorArmsShop;
         //ConfigEntry<bool>? allowPurgingChampionAtUnstableVortex;
         ConfigEntry<bool>? allowCardMasteryForAllRunTypes;
+        ConfigEntry<bool>? allowEndlessForAllSinglePlayerRunTypes;
         ConfigEntry<ConfigSortOption>? deckSortDefaultOption;
         ConfigEntry<bool>? persistentDeckSort;
         ConfigEntry<bool>? defaultDeployableSort;
@@ -291,7 +294,7 @@ namespace BalanceConfigurator.Plugin
                     English = "Initial amount of unit upgrade slots available.",
                     Chinese = "修改单位的初始升级栏位数量。"
                 }.ToString());
-            unitMaxUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Unit Max Upgrade Slots", 4,
+            unitMaxUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Unit Maximum Upgrade Slots", 5,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum amount of unit upgrade slots.",
@@ -303,7 +306,7 @@ namespace BalanceConfigurator.Plugin
                     English = "Initial amount of spell upgrade slots available.",
                     Chinese = "修改法术的初始升级栏位数量。"
                 }.ToString());
-            spellMaxUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Spell Max Upgrade Slots", 4,
+            spellMaxUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Spell Maximum Upgrade Slots", 5,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum amount of spell upgrade slots.",
@@ -315,7 +318,7 @@ namespace BalanceConfigurator.Plugin
                     English = "Initial amount of equipment upgrade slots available.",
                     Chinese = "修改装备的初始升级栏位数量。"
                 }.ToString());
-            equipmentMaxUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Equipment Max Upgrade Slots", 4,
+            equipmentMaxUpgradeSlots = Config.Bind<int>("Upgrades and Slots", "Equipment Maximum Upgrade Slots", 4,
                 new ConfigDescriptionBuilder
                 {
                     English = "Maximum amount of equipment upgrade slots.",
@@ -745,6 +748,14 @@ namespace BalanceConfigurator.Plugin
                 }.ToString());
             PatchCardMastery.OverrideCardMasteryRuns = allowCardMasteryForAllRunTypes.Value;
 
+            allowEndlessForAllSinglePlayerRunTypes = Config.Bind<bool>("Endless Mode", "Allow Endless from Any Single Player Run", false,
+                new ConfigDescriptionBuilder
+                {
+                    English = "Allow Endless mode to start from any single player non-online run type (Excludes Soul Savior).",
+                    Chinese = ""
+                }.ToString());
+            PatchEndlessMode.OverrideEndlessRuns = allowEndlessForAllSinglePlayerRunTypes.Value;
+
             unlocksForRunStartSelectButton2 = Config.Bind<int>("Soul Savior Options", "Upgrade Selection 1", 11,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
@@ -786,6 +797,13 @@ namespace BalanceConfigurator.Plugin
                     English = "Number of souls unlocked to get 3 extra rerolls.",
                     Chinese = "修改解锁第4次自选灵魂刷新的灵魂需求数量。"
                 }.ToString()));
+
+            var cfgVersion = Config.Bind("zzz_Internal", "ConfigVersion", 1,
+                new ConfigDescriptionBuilder
+                {
+                    English = "DO NOT EDIT.",
+                    Chinese = "请勿编辑。"
+                }.ToString());
         }
 
         private void ReconfigureBalance(AllGameData allGameData)
@@ -1039,6 +1057,9 @@ namespace BalanceConfigurator.Plugin
         }
     }
 
+    /// <summary>
+    /// Card Mastery Patch
+    /// </summary>
     [HarmonyPatch(typeof(RunTypeUtil), nameof(RunTypeUtil.AllowCardMastery))]
     class PatchCardMastery
     {
@@ -1048,6 +1069,24 @@ namespace BalanceConfigurator.Plugin
             if (OverrideCardMasteryRuns)
             {
                 __result = true;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Endless Mode Patch
+    /// </summary>
+    [HarmonyPatch(typeof(RunTypeUtil), nameof(RunTypeUtil.AllowEndless))]
+    class PatchEndlessMode
+    {
+        public static bool OverrideEndlessRuns = false;
+        public static bool Prefix(ref bool __result, RunType runType)
+        {
+            if (OverrideEndlessRuns)
+            {
+                __result = runType == RunType.Class || runType == RunType.Custom || runType == RunType.MalickaChallenge;
                 return false;
             }
             return true;
