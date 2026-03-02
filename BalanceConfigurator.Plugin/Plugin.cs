@@ -752,7 +752,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Allow Endless mode to start from any single player non-online run type (Excludes Soul Savior).",
-                    Chinese = ""
+                    Chinese = "修改所有的（带转变器的）单人本地非灵魂救星模式的游戏是否都可以开始无尽模式。"
                 }.ToString());
             PatchEndlessMode.OverrideEndlessRuns = allowEndlessForAllSinglePlayerRunTypes.Value;
 
