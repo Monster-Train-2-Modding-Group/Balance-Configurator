@@ -1,3 +1,6 @@
+## v3.1.1
+- Update Chinese translations
+
 ## v3.1.0
 - Added "Allow Endless from Any Single Player Run" Mutator runs, and Malicka Challenge runs.
 - Fix for SargeT3 (Unit Max Upgrade Slots / Spell Max Upgrade Slots correctly default to 5)
