@@ -69,6 +69,7 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 * (New 3.0.0) Option to modify maximum card upgrade slots
 * (New 3.0.0) Option to modify various Soul Savior options (# of souls for 2-3 souls at start, rerolls).
 * (New 3.1.0) Option to start an endless run from a run with mutators or malicka's challenge.
+* (New 3.2.0) Option to enable lore tooltip display for Artifacts, Cards, and Characters.
 
 ## Usage
 
@@ -98,6 +99,7 @@ The only ***probably safe*** fields you can modify without giving an yourself an
 - Card Mastery for other run types
 - Deck sort options
 - Soul savior specific fields
+- lore options
 
 ### **Important**
 

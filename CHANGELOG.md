@@ -1,3 +1,6 @@
+## v3.2.0
+- Added options for lore tooltip display
+
 ## v3.1.1
 - Update Chinese translations
 

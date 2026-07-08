@@ -190,6 +190,11 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<bool>? persistentDeckSort;
         ConfigEntry<bool>? defaultDeployableSort;
 
+        // UI Options
+        ConfigEntry<bool>? allowLoreForRelics;
+        ConfigEntry<bool>? allowLoreForCharacters;
+        ConfigEntry<bool>? allowLoreForCards;
+
         ConfigEntry<int>? runHistoryMaxEntries;
 
         public void Awake()
@@ -798,6 +803,30 @@ namespace BalanceConfigurator.Plugin
                     Chinese = "修改解锁第4次自选灵魂刷新的灵魂需求数量。"
                 }.ToString()));
 
+            allowLoreForRelics = Config.Bind<bool>("Lore Tooltip Options", "Allow Lore in Relic Tooltips", false,
+                            new ConfigDescription(new ConfigDescriptionBuilder
+                            {
+                                English = "Allow showing lore in Artifact tooltips.",
+                                Chinese = ""
+                            }.ToString()));
+            EnableRelicTooltipsPatch.Enable = allowLoreForRelics.Value;
+
+            allowLoreForCharacters = Config.Bind<bool>("Lore Tooltip Options", "Allow Lore in Character Tooltips", false,
+                            new ConfigDescription(new ConfigDescriptionBuilder
+                            {
+                                English = "Allow showing lore in Character tooltips.",
+                                Chinese = ""
+                            }.ToString()));
+            EnableCharacterTooltipsPatch.Enable = allowLoreForCharacters.Value;
+
+            allowLoreForCards = Config.Bind<bool>("Lore Tooltip Options", "Allow Lore in Card Tooltips", false,
+                            new ConfigDescription(new ConfigDescriptionBuilder
+                            {
+                                English = "Allow showing lore in Card tooltips.",
+                                Chinese = ""
+                            }.ToString()));
+            EnableCardTooltipsPatch.Enable = allowLoreForCards.Value;
+
             var cfgVersion = Config.Bind("zzz_Internal", "ConfigVersion", 1,
                 new ConfigDescriptionBuilder
                 {
@@ -1202,6 +1231,77 @@ namespace BalanceConfigurator.Plugin
                 }
             }
             return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(RelicIconUI), "tooltipFlags", MethodType.Getter)]
+    public static class EnableRelicTooltipsPatch
+    {
+        public static bool Enable = false;
+        public static void Postfix(ref TooltipGenerator.OptionalFlags __result)
+        {
+            if (!Enable) return;
+            __result |= TooltipGenerator.OptionalFlags.ForceLore;
+        }
+    }
+
+    [HarmonyPatch(typeof(CharacterTooltipHelper), "GetTooltipContentsImpl")]
+    public static class EnableCharacterTooltipsPatch
+    {
+        public static bool Enable = false;
+        public static IEnumerable<(TooltipContent content, bool allowDuplicates)> Postfix(IEnumerable<(TooltipContent content, bool allowDuplicates)> __result, CharacterState characterState)
+        {
+            foreach (var item in __result)
+            {
+                yield return item;
+            }
+            if (!Enable) yield break;
+            var key = characterState.GetCharacterLoreTooltipKeys().FirstOrDefault();
+            if (!key.IsNullOrEmpty())
+            {
+                yield return (new TooltipContent(null, key.Localize(), TooltipDesigner.TooltipDesignType.LoreHerzal, key), false);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(TooltipGenerator), nameof(TooltipGenerator.GetCharacterPreviewTooltips))]
+    public static class EnableCharacterTooltipsPatch2
+    {
+        public static void Postfix(List<TooltipContent> __result, CharacterData characterData)
+        {
+            if (!EnableCharacterTooltipsPatch.Enable) return;
+            var key = characterData.GetCharacterLoreTooltipKeys().FirstOrDefault();
+            if (!key.IsNullOrEmpty())
+            {
+                __result.Add(new TooltipContent(null, key.Localize(), TooltipDesigner.TooltipDesignType.LoreHerzal, key));
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(CardTooltipContainer), "AddTooltipsForCardState")]
+    public static class EnableCardTooltipsPatch
+    {
+        public static bool Enable = false;
+        public static void Postfix(CardTooltipContainer __instance, CardState cardState)
+        {
+            if (!Enable) return;
+            var key = cardState.GetCardLoreTooltipKeys().FirstOrDefault();
+            if (!key.IsNullOrEmpty())
+            {
+                TooltipContent tooltipContent = new(null, key.Localize(), TooltipDesigner.TooltipDesignType.LoreHerzal, key);
+                __instance.ShowTooltip(tooltipContent);
+            }
+            CharacterData? spawnCharacterData = cardState.GetSpawnCharacterData();
+            if (spawnCharacterData == null)
+            {
+                return;
+            }
+            key = spawnCharacterData.GetCharacterLoreTooltipKeys().FirstOrDefault();
+            if (!key.IsNullOrEmpty())
+            {
+                TooltipContent tooltipContent2 = new(null, key.Localize(), TooltipDesigner.TooltipDesignType.LoreHerzal, key);
+                __instance.ShowTooltip(tooltipContent2);
+            }
         }
     }
 }
