@@ -28,7 +28,7 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 ![card_draft](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/card_draft.png)
 <sub>Reward for skipping card drafts can also be adjusted</sub>
 
-![bog_wurm](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/bogwurm.jpg)
+![bog_wurm](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/bogwurm.png)
 <sub>Additional QoL stats for displaying the capacities per floor if bogwurm's growth pyre is used</sub>
 
 ## Features
