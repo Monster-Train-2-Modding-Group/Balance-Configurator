@@ -28,6 +28,9 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 ![card_draft](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/card_draft.png)
 <sub>Reward for skipping card drafts can also be adjusted</sub>
 
+![bog_wurm](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/bogwurm.png)
+<sub>Additional QoL stats for displaying the capacities per floor if bogwurm's growth pyre is used</sub>
+
 ## Features
 
  Ability to edit particular starting details of runs among other things:
@@ -70,17 +73,62 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 * (New 3.0.0) Option to modify various Soul Savior options (# of souls for 2-3 souls at start, rerolls).
 * (New 3.1.0) Option to start an endless run from a run with mutators or malicka's challenge.
 * (New 3.2.0) Option to enable lore tooltip display for Artifacts, Cards, and Characters.
+* (New 3.3.0) Option to display the room capacity increases per floor when using Bogwurm's Growth Pyre.
 
-## Usage
+## Installation / Initial Setup
 
 It is **highly** recommended to use a mod manager (Thunderstore Mod Manager, Gale Mod Manager, or r2modman) to install this mod. If installing manually, then [Trainworks Reloaded](https://github.com/Monster-Train-2-Modding-Group/Trainworks-Reloaded) must be installed as well.
 
-Once installed via mod manager or manually. The file to edit is `BalanceConfigurator.Plugin.cfg`. The default values are those used within the game. Edit to your liking.
+If you don't know which mod manager to choose, then Gale Mod Manager or r2modman are preferred. Gale gives a more modern interface while r2modman UI's is similar to Thunderstore Mod Manager without the advertisements. For more information on how to install mods visit the [wiki tutorial page](https://github.com/Monster-Train-2-Modding-Group/Trainworks-Reloaded/wiki/Installing-Mods)
 
-* If installed via a Mod Manager. The file can be edited in the config editor
+Once installed via mod manager or manually. You will need to run the game once with mods enabled (there should be a button in the mod manager to run modded) to generate the configuration. Close the game afterward.
 
-* If installed manually it should be placed where you installed BepinEx. Normally such an install would be placed in the same directory as the game's executable.
-  `C:\Program Files (x86)\Steam\steamapps\common\Monster Train 2\BepInEx\config\BalanceConfigurator.Plugin.cfg`
+
+### Config editing via your mod manager
+The file to edit is `BalanceConfigurator.Plugin.cfg`. The default values for each configuration option are those used within the game.
+
+
+#### Thunderstore Mod Manager
+
+Hit the "Edit Config" button on the left panel, once you chosen Monster Train 2 and your modding profile. You will be presented with several configuration files.
+
+Under `BepInEx/config/BalanceConfigurator.Plugin.cfg` select `Edit Config` and you will be presented with this screen.
+
+![tmm](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/tmm.png)
+
+You can click on a Section to view the configuration options relevant to the section or your simply scroll down to view all of the configuration options.
+
+#### r2modman
+
+After selecting Monster Train 2 and your profile. in the left panel, under `Other` select `Config editor`. You will be presented with all of the configuration files.
+
+Select `BepInEx/config/BalanceConfigurator.Plugin.cfg`. Then Press `Edit Config` and you will be presented with this screen
+
+![r2modman](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/r2modman.png)
+
+You can click on a Section to view the configuration options relevant to the section or your simply scroll down to view all of the configuration options.
+
+#### Gale Mod Manager
+
+After selecting Monster Train 2 and your profile. in the left panel, click the page button with a gear int he bottom right hand corner (3rd button down) You will be presented with the mod names with dropdowns.
+
+Expand `BalanceConfigurator.Plugin` You will be presented with each configuration section upon expansion. Click on the relevant configuration section to see th options available to that section.
+
+Afterwards you can edit the configuration options
+
+![gale](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/gale.png)
+
+#### Manual editing of config
+
+If installed manually it should be placed where you installed BepinEx. Normally such an install would be placed in the same directory as the game's executable.
+
+Relative to the BepInEx folder the file will be placed in the `config` directory.
+
+For instance in my computer the file is located at `C:\Program Files (x86)\Steam\steamapps\common\Monster Train 2\BepInEx\config\BalanceConfigurator.Plugin.cfg`
+
+The file can be edited in any text editor, I suggest your favorite text editor. Note that the configuration options are available in Chinese so if you see any weird characters your text editor doesn't support additional languages.
+
+![manual](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/manual.png)
 
 ## Warning
 

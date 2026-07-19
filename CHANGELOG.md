@@ -1,3 +1,7 @@
+## v3.3.0
+- Fixed artifact lore tooltips not displaying in various places (Merchants, Reward Options, Unlock Screen).
+- Added option "UI Enhancements"/"Display Bogwurm Pyre Room Increasees"
+
 ## v3.2.0
 - Added options for lore tooltip display
 

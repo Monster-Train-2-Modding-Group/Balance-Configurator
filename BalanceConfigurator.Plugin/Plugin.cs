@@ -2,9 +2,11 @@
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
+using I2.Loc;
 using Malee;
 using ShinyShoe;
 using System.Text;
+using TMPro;
 using TrainworksReloaded.Base;
 using TrainworksReloaded.Core;
 using UnityEngine;
@@ -194,6 +196,8 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<bool>? allowLoreForRelics;
         ConfigEntry<bool>? allowLoreForCharacters;
         ConfigEntry<bool>? allowLoreForCards;
+
+        ConfigEntry<bool>? enableBogwurmPyreRoomStats;
 
         ConfigEntry<int>? runHistoryMaxEntries;
 
@@ -827,6 +831,14 @@ namespace BalanceConfigurator.Plugin
                             }.ToString()));
             EnableCardTooltipsPatch.Enable = allowLoreForCards.Value;
 
+            enableBogwurmPyreRoomStats = Config.Bind<bool>("UI Enhancements", "Display Bogwurm Pyre Room Increasees", false,
+            new ConfigDescription(new ConfigDescriptionBuilder
+            {
+                English = "Allow Train Stats UI to display Room Capacity Per floor when playing with Bogwurm's Growth Pyre",
+                Chinese = ""
+            }.ToString()));
+            BogwurmInfo_TrainStatsUIInitializePatch.Enable = enableBogwurmPyreRoomStats.Value;
+
             var cfgVersion = Config.Bind("zzz_Internal", "ConfigVersion", 1,
                 new ConfigDescriptionBuilder
                 {
@@ -1234,17 +1246,18 @@ namespace BalanceConfigurator.Plugin
         }
     }
 
-    [HarmonyPatch(typeof(RelicIconUI), "tooltipFlags", MethodType.Getter)]
+    [HarmonyPatch(typeof(TooltipGenerator), "GetRelicTooltips")]
     public static class EnableRelicTooltipsPatch
     {
         public static bool Enable = false;
-        public static void Postfix(ref TooltipGenerator.OptionalFlags __result)
+        public static void Prefix(ref TooltipGenerator.OptionalFlags flags)
         {
             if (!Enable) return;
-            __result |= TooltipGenerator.OptionalFlags.ForceLore;
+            flags |= TooltipGenerator.OptionalFlags.ForceLore;
         }
     }
 
+    
     [HarmonyPatch(typeof(CharacterTooltipHelper), "GetTooltipContentsImpl")]
     public static class EnableCharacterTooltipsPatch
     {
@@ -1278,6 +1291,18 @@ namespace BalanceConfigurator.Plugin
         }
     }
 
+    /*
+    [HarmonyPatch(typeof(CardTooltipContainer), "AddTooltipsForCardState")]
+    public static class EnableCardTooltipsPatch
+    {
+        public static bool Enable = false;
+        public static void Prefix(CardTooltipContainer __instance)
+        {
+            if (!Enable) return;
+            __instance.includeLoreTooltips = CardTooltipContainer.LoreTooltipSetting.Always;
+        }
+    }*/
+
     [HarmonyPatch(typeof(CardTooltipContainer), "AddTooltipsForCardState")]
     public static class EnableCardTooltipsPatch
     {
@@ -1301,6 +1326,107 @@ namespace BalanceConfigurator.Plugin
             {
                 TooltipContent tooltipContent2 = new(null, key.Localize(), TooltipDesigner.TooltipDesignType.LoreHerzal, key);
                 __instance.ShowTooltip(tooltipContent2);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(TrainStatsUI), "Start")]
+    class BogwurmInfo_TrainStatsUIInitializePatch
+    {
+        public static List<GameObject> CapStats = [];
+        public static bool Enable = false;
+
+        public static void Postfix(TrainStatsUI __instance, GameObject ___contentRoot)
+        {
+            if (!Enable) return;
+            char[] vals = ['T', 'M', 'B'];
+            int[] offsets = [5, 8, 6];
+            var capStat = ___contentRoot.transform.Find("Capacity per floor stat").gameObject;
+            for (int i = 0; i < 3; i++)
+            {
+                var floorStat = GameObject.Instantiate(capStat);
+                floorStat.transform.parent = ___contentRoot.transform;
+                floorStat.name = $"Capacity per floor {3 - i} stat";
+                var label = GameObject.Instantiate(capStat.transform.Find("Capacity per floor label").gameObject, floorStat.transform.Find("Icon"), false);
+                label.transform.SetLocalPosition(offsets[i], 0, 0);
+                var textLabel = label.GetComponent<TextMeshProUGUI>();
+                textLabel.SetText(vals[i].ToString());
+                textLabel.fontSize = 22;
+                textLabel.fontSizeMin = 22;
+                textLabel.fontSizeMax = 22;
+                textLabel.color = Color.cyan;
+
+                CapStats.Add(floorStat);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(TrainStatsUI), nameof(TrainStatsUI.SetCapacityPerFloor))]
+    class BogwurmInfo_TrainStatsUI_SetCapacity_Patch
+    {
+        static Color defaultTextColor = Color.white;
+        static Color increasedTextColor = Color.green;
+        static Color decreasedTextColor = new Color32(0xFF, 0x4D, 0x4D, 0xFF);
+        static SaveManager? saveManager;
+
+        public static void Prefix(TrainStatsUI __instance, int baseValue, int modifiedValue)
+        {
+            if (BogwurmInfo_TrainStatsUIInitializePatch.CapStats.IsNullOrEmpty())
+                return;
+
+            if (saveManager == null)
+            {
+                saveManager = AllGameManagers.Instance!.GetSaveManager();
+            }
+            SetLabel(GetLabel(0), 0, saveManager.GetRelicPersistentState().GetAdditionalCapacity(2));
+            SetLabel(GetLabel(1), 0, saveManager.GetRelicPersistentState().GetAdditionalCapacity(1));
+            SetLabel(GetLabel(2), 0, saveManager.GetRelicPersistentState().GetAdditionalCapacity(0));
+        }
+
+        public static TMP_Text? GetLabel(int i)
+        {
+            return BogwurmInfo_TrainStatsUIInitializePatch.CapStats[i]?.transform.Find("Capacity per floor label")?.GetComponent<TextMeshProUGUI>();
+        }
+
+        private static void SetLabel(TMP_Text? label, int baseValue, int modifiedValue)
+        {
+            if (label == null) return;
+#pragma warning disable Harmony003 // Harmony non-ref patch parameters modified
+            label.SetTextSafe(modifiedValue.ToString("+0;-0;0", LocalizationManager.CurrentCulture));
+#pragma warning restore Harmony003 // Harmony non-ref patch parameters modified
+            Color color = defaultTextColor;
+            if (modifiedValue > baseValue)
+            {
+                color = increasedTextColor;
+            }
+            else if (modifiedValue < baseValue)
+            {
+                color = decreasedTextColor;
+            }
+            label.color = color;
+        }
+    }
+
+    [HarmonyPatch(typeof(TrainStatsUI), "ToggleVisibility")]
+    class BogwurmInfo_TrainStatsUI_ToggleVisibility_Patch
+    {
+        public static void Prefix(GameObject ___capacityPerFloorLabel, bool show)
+        {
+            if (!show || BogwurmInfo_TrainStatsUIInitializePatch.CapStats.IsNullOrEmpty()) return;
+            var characterId = AllGameManagers.Instance!.GetSaveManager().GetActiveSavePyreCharacterData()?.GetID();
+            if (characterId == "c2636669-3937-40a2-8cdc-278e4ff76d87")
+            {
+                //___capacityPerFloorLabel?.transform.parent.gameObject.SetActive(false);
+                BogwurmInfo_TrainStatsUIInitializePatch.CapStats[0].SetActive(true);
+                BogwurmInfo_TrainStatsUIInitializePatch.CapStats[1].SetActive(true);
+                BogwurmInfo_TrainStatsUIInitializePatch.CapStats[2].SetActive(true);
+            }
+            else
+            {
+                //___capacityPerFloorLabel?.transform.parent.gameObject.SetActive(true);
+                BogwurmInfo_TrainStatsUIInitializePatch.CapStats[0].SetActive(false);
+                BogwurmInfo_TrainStatsUIInitializePatch.CapStats[1].SetActive(false);
+                BogwurmInfo_TrainStatsUIInitializePatch.CapStats[2].SetActive(false);
             }
         }
     }
