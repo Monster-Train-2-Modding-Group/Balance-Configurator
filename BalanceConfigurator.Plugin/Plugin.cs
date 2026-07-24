@@ -811,7 +811,7 @@ namespace BalanceConfigurator.Plugin
                             new ConfigDescription(new ConfigDescriptionBuilder
                             {
                                 English = "Allow showing lore in Artifact tooltips.",
-                                Chinese = ""
+                                Chinese = "修改是否在神器的提示信息中显示故事。"
                             }.ToString()));
             EnableRelicTooltipsPatch.Enable = allowLoreForRelics.Value;
 
@@ -819,7 +819,7 @@ namespace BalanceConfigurator.Plugin
                             new ConfigDescription(new ConfigDescriptionBuilder
                             {
                                 English = "Allow showing lore in Character tooltips.",
-                                Chinese = ""
+                                Chinese = "修改是否在单位的提示信息中显示故事。"
                             }.ToString()));
             EnableCharacterTooltipsPatch.Enable = allowLoreForCharacters.Value;
 
@@ -827,7 +827,7 @@ namespace BalanceConfigurator.Plugin
                             new ConfigDescription(new ConfigDescriptionBuilder
                             {
                                 English = "Allow showing lore in Card tooltips.",
-                                Chinese = ""
+                                Chinese = "修改是否在卡牌的提示信息中显示故事。"
                             }.ToString()));
             EnableCardTooltipsPatch.Enable = allowLoreForCards.Value;
 
@@ -835,7 +835,7 @@ namespace BalanceConfigurator.Plugin
             new ConfigDescription(new ConfigDescriptionBuilder
             {
                 English = "Allow Train Stats UI to display Room Capacity Per floor when playing with Bogwurm's Growth Pyre",
-                Chinese = ""
+                Chinese = "修改在薪火选择帕格乌的生长时，左上角火车属性UI是否显示每层的容量增加量。"
             }.ToString()));
             BogwurmInfo_TrainStatsUIInitializePatch.Enable = enableBogwurmPyreRoomStats.Value;
 
