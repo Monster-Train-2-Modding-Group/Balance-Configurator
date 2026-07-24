@@ -28,6 +28,9 @@
 ![card_draft](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/card_draft.png)
 <sub>也可以修改跳过自选卡牌时获得的金钱</sub>
 
+![bog_wurm](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/bogwurm.png)
+<sub>在薪火选择帕格乌的生长时，左上角火车属性UI额外显示了每层的容量增加量</sub>
+
 ## 功能
 
 可以修改下方这些在开始一轮游戏时的初始情况或数值：
@@ -67,16 +70,26 @@
 * (3.0.0 版本新增) 各种卡牌的最大升级栏位数量
 * (3.0.0 版本新增) 灵魂救星模式的相关内容（初始灵魂选择的解锁需求、自选灵魂刷新）
 * (3.1.0 版本新增) 所有的（带转变器的）单人本地非灵魂救星模式的游戏是否都可以开始无尽模式
+* (3.2.0 版本新增) 是否在神器、单位、卡牌的提示信息中显示故事
+* (3.3.0 版本新增) 在薪火选择帕格乌的生长时，左上角火车属性UI是否显示每层的容量增加量
 
-## 使用方法
+## 安装方法
 
 **强烈**建议使用一个模组管理器（Thunderstore Mod Manager、Gale Mod Manager或r2modman）来安装这个模组。如果手动安装，则需要同时安装[Trainworks Reloaded](https://github.com/Monster-Train-2-Modding-Group/Trainworks-Reloaded)。
 
 使用模组管理器安装或者手动安装之后，将通过编辑 `BalanceConfigurator.Plugin.cfg` 文件来修改游戏内数值，默认数值是游戏原版所使用的数值。
 
+![tmm](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/tmm.png)
+
+![r2modman](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/r2modman.png)
+
+![gale](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/gale.png)
+
 * 如果使用模组管理器安装，可以在 config editor 里编辑该文件。
 
 * 如果手动安装，该文件正常会出现在游戏根目录的 BepInEx 文件夹内，一般该文件的位置在类似于 `C:\Program Files (x86)\Steam\steamapps\common\Monster Train 2\BepInEx\config\BalanceConfigurator.Plugin.cfg` 的地方
+
+![manual](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/manual.png)
 
 ## 警告
 
@@ -95,6 +108,7 @@
 - 位面挑战、自定义游戏和社区挑战是否也会精通卡牌
 - 默认采用的/游戏本体“默认”选项对应的卡组排序方式
 - 灵魂救星模式的相关内容
+- 故事的相关内容
 
 ### **重要内容**
 
