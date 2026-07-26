@@ -70,7 +70,8 @@ jobs:
       - name: Extract Release Notes
         shell: bash
         run: |
-          awk "/^## v$TAG_NAME/,/^## /" CHANGELOG.md | sed '$d' > RELEASE_NOTES.md
+          TAG_VERSION="${{ github.ref_name }}"
+          awk "/^## v$TAG_VERSION/,/^## /" CHANGELOG.md | sed '$d' > RELEASE_NOTES.md
 
       - name: Release
         uses: softprops/action-gh-release@v2
