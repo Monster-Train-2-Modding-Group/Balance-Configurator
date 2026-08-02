@@ -1,3 +1,6 @@
+## v3.4.0
+- Several Merchant cost control options added (Reroll costs, Purge costs, Duplicator costs, Equipment Merge Costs, Deployable costs)
+
 ## v3.3.1
 - Update Chinese translations
 

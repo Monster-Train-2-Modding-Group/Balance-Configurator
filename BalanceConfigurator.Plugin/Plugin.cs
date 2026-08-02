@@ -10,6 +10,7 @@ using TMPro;
 using TrainworksReloaded.Base;
 using TrainworksReloaded.Core;
 using UnityEngine;
+using System.Linq;
 using static BalanceData;
 using static DeckScreen;
 using static PoolRewardData;
@@ -180,6 +181,15 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<int>? draftRerollUnlocksForBonus2;
         ConfigEntry<int>? draftRerollUnlocksForBonus3;
 
+        // Merchant Options
+        ConfigEntry<string>? merchantRerollBaseCosts;
+        ConfigEntry<string>? merchantEquipmentMergeBaseCosts;
+        ConfigEntry<string>? merchantEquipmentDeployableBaseCosts;
+        ConfigEntry<string>? merchantLifemotherDuplicatorBaseCosts;
+        ConfigEntry<string>? merchantMutatorDuplicatorBaseCosts;
+        ConfigEntry<string>? merchantPurgeCov0BaseCosts;
+        ConfigEntry<string>? merchantPurgeCov3BaseCosts;
+
         // Class Options
 
         // Miscellaneous
@@ -200,6 +210,11 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<bool>? enableBogwurmPyreRoomStats;
 
         ConfigEntry<int>? runHistoryMaxEntries;
+
+        const string PURGE_COSTS = "40,50,75,100,125,150,200,225,250";
+        const string PURGE_SECONDARY_COSTS = "40,60,90,120,160,200,250,300";
+        const string LIFEMOTHER_DUPLICATOR_COSTS = "50,75,100,150,200,250";
+        const string DUPLICATOR_COSTS = "75,125,175,225,300,375";
 
         public void Awake()
         {
@@ -718,6 +733,50 @@ namespace BalanceConfigurator.Plugin
             purifyingFlame      = Config.Bind<int>("Story Ticket Counts", "Purifying Flame",        10, genericDescription);
             purgeChampion       = Config.Bind<int>("Story Ticket Counts", "Purge Champion",         10, genericDescription);
 
+            // Merchants
+            merchantRerollBaseCosts = Config.Bind<string>("Merchant Options", "Merchant Reroll Base Costs", "50",
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "List of successive costs to reroll at a merchant. Each type of merchant has its own separate purchase counter. Covenant 3 will increase the price by 50% rounded up.",
+                    Chinese = ""
+                }.ToString()));
+            merchantEquipmentMergeBaseCosts = Config.Bind<string>("Merchant Options", "Equipment Merge Base Costs", "75",
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "List of successive costs to merge equipment at an equipment merchant.",
+                    Chinese = ""
+                }.ToString()));
+            merchantEquipmentDeployableBaseCosts = Config.Bind<string>("Merchant Options", "Deployable Base Costs", "75",
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "List of successive costs to apply Deployable at an equipment merchant.",
+                    Chinese = ""
+                }.ToString()));
+            merchantLifemotherDuplicatorBaseCosts = Config.Bind<string>("Merchant Options", "Lifemother Pyre Duplicator Base Costs", LIFEMOTHER_DUPLICATOR_COSTS,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "List of successive costs to duplicate a card at a merchant (w/ Lifemother's Pyre).",
+                    Chinese = ""
+                }.ToString()));
+            merchantMutatorDuplicatorBaseCosts = Config.Bind<string>("Merchant Options", "Duplicator Base Costs", DUPLICATOR_COSTS,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "List of successive costs to duplicate a card at a merchant (w/ Buying Power Mutator).",
+                    Chinese = ""
+                }.ToString()));
+            merchantPurgeCov0BaseCosts = Config.Bind<string>("Merchant Options", "Purge (Covenant 0-2) Base Costs", PURGE_COSTS,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "List of successive costs to purge a card at a merchant (Covenant 0-2).",
+                    Chinese = ""
+                }.ToString()));
+            merchantPurgeCov3BaseCosts = Config.Bind<string>("Merchant Options", "Purge (Covenant 3+) Base Costs", PURGE_SECONDARY_COSTS,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "List of successive costs to purge a card at a merchant (Covenant 3-10).",
+                    Chinese = ""
+                }.ToString()));
+
             // Banner Drafts
             shatteredHaloAffectsBanners = Config.Bind<bool>("Unit Banner Drafts", "Shattered Halo Applies To Banner Drafts", false,
                 new ConfigDescriptionBuilder
@@ -997,6 +1056,40 @@ namespace BalanceConfigurator.Plugin
                 SafeSetField<CardPoolRewardData>(equipmentReward, "rarityFilter", GrantableRarity.Common | GrantableRarity.Uncommon | GrantableRarity.Rare);
                 SafeSetField<CardPoolRewardData>(roomReward, "rarityFilter", GrantableRarity.Common | GrantableRarity.Uncommon | GrantableRarity.Rare);
             }
+            
+            // Merchant options
+            // Rerolls
+            var reroll1 = allGameData.FindRewardDataByName("RerollSpellMerchantRewardData");
+            var reroll2 = allGameData.FindRewardDataByName("RerollUnitMerchantRewardData");
+            var reroll3 = allGameData.FindRewardDataByName("RerollMerchantRewardDataArtifactOnly");
+            var reroll4 = allGameData.FindRewardDataByName("RerollEquipmentMerchantRewardData");
+            SafeSetField<RewardData>(reroll1, "costs", GetIntArray(merchantRerollBaseCosts!));
+            SafeSetField<RewardData>(reroll2, "costs", GetIntArray(merchantRerollBaseCosts!));
+            SafeSetField<RewardData>(reroll3, "costs", GetIntArray(merchantRerollBaseCosts!));
+            SafeSetField<RewardData>(reroll4, "costs", GetIntArray(merchantRerollBaseCosts!));
+
+            // Equipment Merge
+            var merge1 = allGameData.FindRewardDataByName("EquipmentMergeRewardMerchant");
+            var merge2 = allGameData.FindRewardDataByName("SoulSavior_EquipmentMergeRewardMerchant_Upgraded");
+            SafeSetField<RewardData>(merge1, "costs", GetIntArray(merchantEquipmentMergeBaseCosts!));
+            SafeSetField<RewardData>(merge2, "costs", GetIntArray(merchantEquipmentMergeBaseCosts!));
+
+            // Deployable
+            var deployable1 = allGameData.FindRewardDataByName("FrontlineRewardData");
+            var deployable2 = allGameData.FindRewardDataByName("SoulSavior_FrontlineRewardData_Upgraded");
+            SafeSetField<RewardData>(deployable1, "costs", GetIntArray(merchantEquipmentDeployableBaseCosts!));
+            SafeSetField<RewardData>(deployable2, "costs", GetIntArray(merchantEquipmentDeployableBaseCosts!));
+            
+            // Duplicator
+            var duplicator1 = allGameData.FindRewardDataByName("DuplicatorGenericMerchant");
+            var duplicator2 = allGameData.FindRewardDataByName("PyreHeartAddDuplicateReward");
+            SafeSetField<RewardData>(duplicator1, "costs", GetIntArray(merchantMutatorDuplicatorBaseCosts!));
+            SafeSetField<RewardData>(duplicator2, "costs", GetIntArray(merchantLifemotherDuplicatorBaseCosts!));
+
+            // Purge
+            var purgeReward = allGameData.FindRewardDataByName("PurgeRewardMerchant") as PurgeRewardData;
+            SafeSetField<RewardData>(purgeReward, "costs", GetIntArray(merchantPurgeCov0BaseCosts!));
+            SafeSetField<PurgeRewardData>(purgeReward, "secondaryCosts", GetIntArray(merchantPurgeCov3BaseCosts!));
         }
 
         /// <summary>
@@ -1074,6 +1167,27 @@ namespace BalanceConfigurator.Plugin
                 purge                = goldSkipPurge!.Value,
                 levelUpUnit          = goldSkipLevelUpUnit!.Value
             };
+        }
+
+        private int[] GetIntArray(ConfigEntry<string> config)
+        {
+             
+            var values = config.Value.Split(',');
+            int[] array = new int[values.Length];
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (!int.TryParse(values[i], out var parsed))
+                {
+                    string context = $"{config.Definition.Section}/{config.Definition.Key}";
+                    string fallback = (config.DefaultValue as string)!;
+                    Logger.LogError($"Failed to parse option {context}. Invalid integer {values[i]} found in input. Using fallback {fallback}");
+                    return [.. fallback.Split(',').Select(int.Parse)];
+                }
+                array[i] = parsed;
+            }
+
+            return array;
         }
     }
 

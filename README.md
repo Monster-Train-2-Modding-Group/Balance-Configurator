@@ -56,24 +56,25 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 * Subclass Xp factor
 * Alternate champion unlock level
 * Gold for skipping rewards.
-* (New 1.2.0) Chance of optional outpost dialogue after a run
-* (New 1.2.0) Fast dialogue multiplier
-* (New 1.2.0) Costs of items in shops by rarity (Cards, Enhancers, and Artifacts)
-* (New 1.3.0) Maximum number of entries present in Run History
-* (New 1.4.0) Story priority ticket counts
-* (New 1.4.0) Enable Shattered Halo forcing rares for Banner Drafts
-* (New 1.4.0) Number of options for Clan Banner Drafts
-* (New 1.4.0) Eliminate Run Rarity Floors (Allow Common Drafts to be found past ring 2)
-* (New 1.4.0) Eliminate Run Rarity Floor For Equipment Merchant (Equipment Merchant sells common equipment/rooms)
-* (New 1.4.0) Enable Card Mastery for all run types (Can master cards from Dimensional Challenges, Mutators, and Community Challenges)
-* (New 2.2.0) Options for default Deck Sort / Persistent Deck Sort.
-* (New 2.3.0) Option to sort deck by deployment phase hand.
-* (New 3.0.0) Option to modify boss relics costs in Soul Savior mode.
-* (New 3.0.0) Option to modify maximum card upgrade slots
-* (New 3.0.0) Option to modify various Soul Savior options (# of souls for 2-3 souls at start, rerolls).
-* (New 3.1.0) Option to start an endless run from a run with mutators or malicka's challenge.
-* (New 3.2.0) Option to enable lore tooltip display for Artifacts, Cards, and Characters.
-* (New 3.3.0) Option to display the room capacity increases per floor when using Bogwurm's Growth Pyre.
+* (1.2.0) Chance of optional outpost dialogue after a run
+* (1.2.0) Fast dialogue multiplier
+* (1.2.0) Costs of items in shops by rarity (Cards, Enhancers, and Artifacts)
+* (1.3.0) Maximum number of entries present in Run History
+* (1.4.0) Story priority ticket counts
+* (1.4.0) Enable Shattered Halo forcing rares for Banner Drafts
+* (1.4.0) Number of options for Clan Banner Drafts
+* (1.4.0) Eliminate Run Rarity Floors (Allow Common Drafts to be found past ring 2)
+* (1.4.0) Eliminate Run Rarity Floor For Equipment Merchant (Equipment Merchant sells common equipment/rooms)
+* (1.4.0) Enable Card Mastery for all run types (Can master cards from Dimensional Challenges, Mutators, and Community Challenges)
+* (2.2.0) Options for default Deck Sort / Persistent Deck Sort.
+* (2.3.0) Option to sort deck by deployment phase hand.
+* (3.0.0) Option to modify boss relics costs in Soul Savior mode.
+* (3.0.0) Option to modify maximum card upgrade slots
+* (3.0.0) Option to modify various Soul Savior options (# of souls for 2-3 souls at start, rerolls).
+* (3.1.0) Option to start an endless run from a run with mutators or malicka's challenge.
+* (3.2.0) Option to enable lore tooltip display for Artifacts, Cards, and Characters.
+* (3.3.0) Option to display the room capacity increases per floor when using Bogwurm's Growth Pyre.
+* (3.4.0) Various Merchant service cost options added (Rerolls, Equipment Merge, Deployable, Duplicator, Purge)
 
 ## Installation / Initial Setup
 
@@ -147,7 +148,7 @@ The only ***probably safe*** fields you can modify without giving an yourself an
 - Card Mastery for other run types
 - Deck sort options
 - Soul savior specific fields
-- lore options
+- Lore options
 
 ### **Important**
 
