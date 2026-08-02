@@ -737,43 +737,43 @@ namespace BalanceConfigurator.Plugin
             merchantRerollBaseCosts = Config.Bind<string>("Merchant Options", "Merchant Reroll Base Costs", "50",
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
-                    English = "List of successive costs to reroll at a merchant. Each type of merchant has its own separate purchase counter. Covenant 3 will increase the price by 50% rounded up.",
+                    English = "List of successive costs (comma separated) to reroll at a merchant. Each type of merchant has its own separate purchase counter. Covenant 3 will increase the price by 50% rounded up.",
                     Chinese = ""
                 }.ToString()));
             merchantEquipmentMergeBaseCosts = Config.Bind<string>("Merchant Options", "Equipment Merge Base Costs", "75",
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
-                    English = "List of successive costs to merge equipment at an equipment merchant.",
+                    English = "List of successive costs (comma separated) to merge equipment at an equipment merchant.",
                     Chinese = ""
                 }.ToString()));
             merchantEquipmentDeployableBaseCosts = Config.Bind<string>("Merchant Options", "Deployable Base Costs", "75",
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
-                    English = "List of successive costs to apply Deployable at an equipment merchant.",
+                    English = "List of successive costs (comma separated) to apply Deployable at an equipment merchant.",
                     Chinese = ""
                 }.ToString()));
             merchantLifemotherDuplicatorBaseCosts = Config.Bind<string>("Merchant Options", "Lifemother Pyre Duplicator Base Costs", LIFEMOTHER_DUPLICATOR_COSTS,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
-                    English = "List of successive costs to duplicate a card at a merchant (w/ Lifemother's Pyre).",
+                    English = "List of successive costs (comma separated) to duplicate a card at a merchant (w/ Lifemother's Pyre).",
                     Chinese = ""
                 }.ToString()));
             merchantMutatorDuplicatorBaseCosts = Config.Bind<string>("Merchant Options", "Duplicator Base Costs", DUPLICATOR_COSTS,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
-                    English = "List of successive costs to duplicate a card at a merchant (w/ Buying Power Mutator).",
+                    English = "List of successive costs (comma separated) to duplicate a card at a merchant (w/ Buying Power Mutator).",
                     Chinese = ""
                 }.ToString()));
             merchantPurgeCov0BaseCosts = Config.Bind<string>("Merchant Options", "Purge (Covenant 0-2) Base Costs", PURGE_COSTS,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
-                    English = "List of successive costs to purge a card at a merchant (Covenant 0-2).",
+                    English = "List of successive costs (comma separated) to purge a card at a merchant (Covenant 0-2).",
                     Chinese = ""
                 }.ToString()));
             merchantPurgeCov3BaseCosts = Config.Bind<string>("Merchant Options", "Purge (Covenant 3+) Base Costs", PURGE_SECONDARY_COSTS,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
-                    English = "List of successive costs to purge a card at a merchant (Covenant 3-10).",
+                    English = "List of successive costs (comma separated) to purge a card at a merchant (Covenant 3-10).",
                     Chinese = ""
                 }.ToString()));
 
@@ -1177,11 +1177,12 @@ namespace BalanceConfigurator.Plugin
 
             for (int i = 0; i < values.Length; i++)
             {
-                if (!int.TryParse(values[i], out var parsed))
+                string value = values[i].Trim();
+                if (!int.TryParse(value, out var parsed))
                 {
                     string context = $"{config.Definition.Section}/{config.Definition.Key}";
                     string fallback = (config.DefaultValue as string)!;
-                    Logger.LogError($"Failed to parse option {context}. Invalid integer {values[i]} found in input. Using fallback {fallback}");
+                    Logger.LogError($"Failed to parse option {context}. Invalid integer {value} found in input. Using fallback {fallback}");
                     return [.. fallback.Split(',').Select(int.Parse)];
                 }
                 array[i] = parsed;
