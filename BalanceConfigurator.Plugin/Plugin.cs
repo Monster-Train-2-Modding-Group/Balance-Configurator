@@ -403,25 +403,25 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Number of tickets that will produce a common card when drafting a card. (Rings 1 & 2 only, non banner drafts)",
-                    Chinese = "修改自选卡牌时，普通卡牌出现的权重。出现的几率为该权重占权重总和中的比例。（仅前2层区域的除战旗以外的自选卡牌）"
+                    Chinese = "修改自选卡牌中，普通卡牌出现的权重。出现的几率为该权重占权重总和中的比例。（仅前2层区域的除战旗以外的自选卡牌）"
                 }.ToString());
             cardRarityTicketUncommon = Config.Bind<int>("Card Rarity Ticket Counts", "Uncommon", 55,
                 new ConfigDescriptionBuilder
                 {
                     English = "Number of tickets that will produce a uncommon card when drafting a card.",
-                    Chinese = "修改自选卡牌时，高级卡牌出现的权重。出现的几率为该权重占权重总和中的比例。"
+                    Chinese = "修改自选卡牌中，高级卡牌出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
             cardRarityTicketRare = Config.Bind<int>("Card Rarity Ticket Counts", "Rare", 5,
                 new ConfigDescriptionBuilder
                 {
                     English = "Number of tickets that will produce a rare card when drafting a card.",
-                    Chinese = "修改自选卡牌时，稀有卡牌出现的权重。出现的几率为该权重占权重总和中的比例。"
+                    Chinese = "修改自选卡牌中，稀有卡牌出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
             cardRarityTicketChampion = Config.Bind<int>("Card Rarity Ticket Counts", "Champion", 0,
                 new ConfigDescriptionBuilder
                 {
                     English = "(Unused) number of tickets that will produce a champion card in a card draft.",
-                    Chinese = "（未使用）修改自选卡牌时，勇者卡牌出现的权重。出现的几率为该权重占权重总和中的比例。"
+                    Chinese = "（未使用）修改自选卡牌中，勇者卡牌出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
 
 
@@ -430,25 +430,25 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Number of tickets that will produce a common enhancer when finding an enhancer.",
-                    Chinese = "修改商店升级时，普通升级石出现的权重。出现的几率为该权重占权重总和中的比例。"
+                    Chinese = "修改商店升级中，普通升级石出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
             enhancerRarityTicketUncommon = Config.Bind<int>("Enhancer (Shop Upgrade) Rarity Ticket Counts", "Uncommon", 30,
                 new ConfigDescriptionBuilder
                 {
                     English = "Number of tickets that will produce a uncommon enhancer when finding an enhancer.",
-                    Chinese = "修改商店升级时，高级升级石出现的权重。出现的几率为该权重占权重总和中的比例。"
+                    Chinese = "修改商店升级中，高级升级石出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
             enhancerRarityTicketRare = Config.Bind<int>("Enhancer (Shop Upgrade) Rarity Ticket Counts", "Rare", 0,
                 new ConfigDescriptionBuilder
                 {
                     English = "Number of tickets that will produce a rare enhancer when finding an enhancer.",
-                    Chinese = "修改商店升级时，稀有升级石出现的权重。出现的几率为该权重占权重总和中的比例。"
+                    Chinese = "修改商店升级中，稀有升级石出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
             enhancerRarityTicketChampion = Config.Bind<int>("Enhancer (Shop Upgrade) Rarity Ticket Counts", "Champion", 0,
                 new ConfigDescriptionBuilder
                 {
                     English = "(Unused) number of tickets that will produce a champion enhancer when finding an enhancer.",
-                    Chinese = "（未使用）修改商店升级时，勇者升级石出现的权重。出现的几率为该权重占权重总和中的比例。"
+                    Chinese = "（未使用）修改商店升级中，勇者升级石出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
 
 
@@ -457,25 +457,25 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescriptionBuilder
                 {
                     English = "Number of tickets that will produce a common relic when drafting a relic.",
-                    Chinese = "修改自选神器时，普通神器出现的权重。出现的几率为该权重占权重总和中的比例。"
+                    Chinese = "修改自选神器中，普通神器出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
             relicRarityTicketUncommon = Config.Bind<int>("Relic Rarity Ticket Counts", "Uncommon", 20,
                 new ConfigDescriptionBuilder
                 {
                     English = "Number of tickets that will produce a uncommon relic when drafting a relic.",
-                    Chinese = "修改自选神器时，高级神器出现的权重。出现的几率为该权重占权重总和中的比例。"
+                    Chinese = "修改自选神器中，高级神器出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
             relicRarityTicketRare = Config.Bind<int>("Relic Rarity Ticket Counts", "Rare", 0,
                 new ConfigDescriptionBuilder
                 {
                     English = "Number of tickets that will produce a rare relic when drafting a relic.",
-                    Chinese = "修改自选神器时，稀有神器出现的权重。出现的几率为该权重占权重总和中的比例。"
+                    Chinese = "修改自选神器中，稀有神器出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
             relicRarityTicketChampion = Config.Bind<int>("Relic Rarity Ticket Counts", "Champion", 0,
                 new ConfigDescriptionBuilder
                 {
                     English = "Unused no chance of finding a champion relic in a relic draft.",
-                    Chinese = "（未使用）修改自选神器时，勇者神器出现的权重。出现的几率为该权重占权重总和中的比例。"
+                    Chinese = "（未使用）修改自选神器中，勇者神器出现的权重。出现的几率为该权重占权重总和中的比例。"
                 }.ToString());
 
 
@@ -738,43 +738,43 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "List of successive costs (comma separated) to reroll at a merchant. Each type of merchant has its own separate purchase counter. Covenant 3 will increase the price by 50% rounded up.",
-                    Chinese = ""
+                    Chinese = "修改刷新商店的基础价格，请输入一个数字或者用英文逗号分隔的一组从小到大排列的数字。（每种商店有各自的购买次数计数器，契约3会使价格提高50%）"
                 }.ToString()));
             merchantEquipmentMergeBaseCosts = Config.Bind<string>("Merchant Options", "Equipment Merge Base Costs", "75",
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "List of successive costs (comma separated) to merge equipment at an equipment merchant.",
-                    Chinese = ""
+                    Chinese = "修改融合装备的基础价格，请输入一个数字或者用英文逗号分隔的一组从小到大排列的数字。"
                 }.ToString()));
             merchantEquipmentDeployableBaseCosts = Config.Bind<string>("Merchant Options", "Deployable Base Costs", "75",
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "List of successive costs (comma separated) to apply Deployable at an equipment merchant.",
-                    Chinese = ""
+                    Chinese = "修改可部署升級的基础价格，请输入一个数字或者用英文逗号分隔的一组从小到大排列的数字。"
                 }.ToString()));
             merchantLifemotherDuplicatorBaseCosts = Config.Bind<string>("Merchant Options", "Lifemother Pyre Duplicator Base Costs", LIFEMOTHER_DUPLICATOR_COSTS,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "List of successive costs (comma separated) to duplicate a card at a merchant (w/ Lifemother's Pyre).",
-                    Chinese = ""
+                    Chinese = "修改生命之母薪火的复制卡牌的基础价格，请输入一个数字或者用英文逗号分隔的一组从小到大排列的数字。"
                 }.ToString()));
             merchantMutatorDuplicatorBaseCosts = Config.Bind<string>("Merchant Options", "Duplicator Base Costs", DUPLICATOR_COSTS,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "List of successive costs (comma separated) to duplicate a card at a merchant (w/ Buying Power Mutator).",
-                    Chinese = ""
+                    Chinese = "修改购买力转变器的复制卡牌的基础价格，请输入一个数字或者用英文逗号分隔的一组从小到大排列的数字。"
                 }.ToString()));
             merchantPurgeCov0BaseCosts = Config.Bind<string>("Merchant Options", "Purge (Covenant 0-2) Base Costs", PURGE_COSTS,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "List of successive costs (comma separated) to purge a card at a merchant (Covenant 0-2).",
-                    Chinese = ""
+                    Chinese = "修改0-2契约移除卡牌的基础价格，请输入一个数字或者用英文逗号分隔的一组从小到大排列的数字。"
                 }.ToString()));
             merchantPurgeCov3BaseCosts = Config.Bind<string>("Merchant Options", "Purge (Covenant 3+) Base Costs", PURGE_SECONDARY_COSTS,
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "List of successive costs (comma separated) to purge a card at a merchant (Covenant 3-10).",
-                    Chinese = ""
+                    Chinese = "修改3-10契约移除卡牌的基础价格，请输入一个数字或者用英文逗号分隔的一组从小到大排列的数字。"
                 }.ToString()));
 
             // Banner Drafts
