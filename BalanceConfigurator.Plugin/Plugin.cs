@@ -5,13 +5,14 @@ using HarmonyLib;
 using I2.Loc;
 using Malee;
 using ShinyShoe;
+using System.Linq;
 using System.Text;
 using TMPro;
 using TrainworksReloaded.Base;
 using TrainworksReloaded.Core;
 using UnityEngine;
-using System.Linq;
 using static BalanceData;
+using static CharacterState;
 using static DeckScreen;
 using static PoolRewardData;
 
@@ -207,8 +208,9 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<bool>? allowLoreForCharacters;
         ConfigEntry<bool>? allowLoreForCards;
 
+        // QoL
         ConfigEntry<bool>? enableBogwurmPyreRoomStats;
-
+        ConfigEntry<bool>? killCountIndicator;
         ConfigEntry<int>? runHistoryMaxEntries;
 
         const string PURGE_COSTS = "40,50,75,100,125,150,200,225,250";
@@ -898,6 +900,14 @@ namespace BalanceConfigurator.Plugin
             }.ToString()));
             BogwurmInfo_TrainStatsUIInitializePatch.Enable = enableBogwurmPyreRoomStats.Value;
 
+            killCountIndicator = Config.Bind<bool>("UI Enhancements", "Display Kill Count for Slay Trigger", false,
+            new ConfigDescription(new ConfigDescriptionBuilder
+            {
+                English = "Enabling showing a kill count with all Slay triggers.",
+                Chinese = ""
+            }.ToString()));
+            SlayIndicator_CharacterState_FireTriggers_Patch.Enable = killCountIndicator.Value;
+
             var cfgVersion = Config.Bind("zzz_Internal", "ConfigVersion", 1,
                 new ConfigDescriptionBuilder
                 {
@@ -1542,6 +1552,128 @@ namespace BalanceConfigurator.Plugin
                 BogwurmInfo_TrainStatsUIInitializePatch.CapStats[0].SetActive(false);
                 BogwurmInfo_TrainStatsUIInitializePatch.CapStats[1].SetActive(false);
                 BogwurmInfo_TrainStatsUIInitializePatch.CapStats[2].SetActive(false);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(CharacterState), nameof(CharacterState.FireTriggers))]
+    public static class SlayIndicator_CharacterState_FireTriggers_Patch
+    {
+        // Map of CheatID (which is unique) => SlayCount 
+        public static IDictionary<int, int> MonsterSlayCount = new Dictionary<int, int>();
+        public static IDictionary<int, int> HeroSlayCount = new Dictionary<int, int>();
+        public static bool Enable = false;
+
+        public static void Prefix(CharacterState __instance, CharacterTriggerData.Trigger trigger, bool canFireTriggers, int triggerCount, bool fromRunningTriggerQueue, SaveManager ___saveManager, CombatManager ___combatManager)
+        {
+            if (!Enable)
+                return;
+
+            if (___combatManager.CombatPreviewState != CharacterState.CombatPreviewState.Calculating)
+                return;
+
+            if (trigger != CharacterTriggerData.Trigger.OnKill || canFireTriggers == false || triggerCount == 0 || (___combatManager.IsRunningTriggerQueue && !fromRunningTriggerQueue))
+                return;
+
+            var dict = (__instance.GetTeamType() == Team.Type.Monsters) ? MonsterSlayCount : HeroSlayCount;
+            int old = dict.GetValueOrDefault(__instance.CheatId, 0);
+            dict[__instance.CheatId] = dict.GetValueOrDefault(__instance.CheatId, 0) + triggerCount;
+            __instance.GetCharacterUI().SetTriggersDirty();
+        }
+
+        public static int GetSlayCount(this CharacterState character)
+        {
+            var dict = (character.GetTeamType() == Team.Type.Monsters) ? MonsterSlayCount : HeroSlayCount;
+            return dict.GetValueOrDefault(character.CheatId, 0);
+        }
+    }
+
+    [HarmonyPatch(typeof(CombatManager), "SetCharacterPreviewState")]
+    class CombatManager_SetCharacterPreviewState_Patch
+    {
+        public static void Prefix(CharacterState.CombatPreviewState previewState)
+        {
+            if (previewState == CombatPreviewState.Calculating)
+            {
+                SlayIndicator_CharacterState_FireTriggers_Patch.HeroSlayCount.Clear();
+                SlayIndicator_CharacterState_FireTriggers_Patch.MonsterSlayCount.Clear();
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(DisplayIconUI), nameof(DisplayIconUI.Set))]
+    class DisplayIconUI_DIsplaySlayCount_Patch
+    {
+        static TMP_FontAsset? countFont;
+        static Material? countMaterial;
+
+        public static void Postfix(DisplayIconUI __instance, StatusEffectsDisplayData.IconDisplayData data, int index = 0)
+        {
+            if (!SlayIndicator_CharacterState_FireTriggers_Patch.Enable) return;
+
+            if (countFont == null)
+            {
+                countFont = Resources.FindObjectsOfTypeAll<TMP_FontAsset>().FirstOrDefault(f => f.creationSettings.sourceFontFileGUID == "0278b1f68e1d6494cbe9cf58d1e99df6");
+                countMaterial = Resources.FindObjectsOfTypeAll<Material>().FirstOrDefault(m => m.name.StartsWith(countFont.name) && m.name.Contains("Outline"));
+            }
+
+            if (data.colorType != ColorDisplayData.ColorType.Trigger &&
+                data.colorType != ColorDisplayData.ColorType.StateModifier)
+                return;
+
+            var indicatorText = __instance.transform.Find("Indicator Text");
+            TextMeshProUGUI? label = indicatorText?.GetComponent<TextMeshProUGUI>();
+            if (indicatorText == null)
+            {
+                var indicatorGO = new GameObject("Indicator Text")
+                {
+                    layer = LayerMask.NameToLayer("UI")
+                };
+                indicatorGO.transform.SetParent(__instance.transform, false);
+                indicatorText = indicatorGO.transform;
+
+                indicatorGO.AddComponent<Localize>();
+                label = indicatorGO.AddComponent<TextMeshProUGUI>();
+                label.font = countFont;
+                label.fontSharedMaterial = countMaterial;
+                label.alignment = TextAlignmentOptions.BottomRight;
+                label.enableAutoSizing = true;
+                label.fontSize = 0.45f;
+                label.fontSizeMin = 0.45f;
+                label.fontSizeMax = 0.45f;
+                label.vertexBufferAutoSizeReduction = true;
+                label.enableWordWrapping = false;
+
+                label.transform.localPosition = new Vector3(0.025f, -0.14f, 0);
+                label.color = Color.white;
+                label.faceColor = Color.white;
+                label.outlineColor = Color.black;
+                label.outlineWidth = 0.425f;
+
+                var rectTransform = indicatorGO.GetComponent<RectTransform>();
+                rectTransform.anchorMin = Vector2.zero;
+                rectTransform.anchorMax = Vector2.one;
+                rectTransform.pivot = new Vector2(0.5f, 0.5f);
+                rectTransform.sizeDelta = new Vector2(0.05f, 0.08f);
+                rectTransform.anchoredPosition = new Vector2(0.025f, -0.14f);
+            }
+
+            var characterState = __instance
+                .transform?.parent?.parent?.parent?.parent?.parent?
+                .GetComponent<CharacterState>();
+            int amount = characterState?.GetSlayCount() ?? 0;
+
+            bool isOnKill = data.iconSprite?.name == "OnKill";
+            bool shouldShow = AllGameManagers.Instance!.GetCombatManager()!.CombatPreviewState == CharacterState.CombatPreviewState.On
+                               && isOnKill
+                               && characterState != null && amount > 0;
+            if (label == null) return;
+            
+            label.gameObject.SetActive(shouldShow);
+
+            if (shouldShow)
+            {
+                label.SetText(amount.ToString());
             }
         }
     }
