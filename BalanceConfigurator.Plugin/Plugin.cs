@@ -699,7 +699,7 @@ namespace BalanceConfigurator.Plugin
                 }.ToString());
             DeckScreenHandleDeployableSort.DefaultIsDeployableSort = defaultDeployableSort.Value;
 
-            // story ticket counts
+            // Story ticket counts
             ConfigDescription genericDescription = new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = $"Number of tickets that will produce this event.",
@@ -869,27 +869,27 @@ namespace BalanceConfigurator.Plugin
                 }.ToString()));
 
             allowLoreForRelics = Config.Bind<bool>("Lore Tooltip Options", "Allow Lore in Relic Tooltips", false,
-                            new ConfigDescription(new ConfigDescriptionBuilder
-                            {
-                                English = "Allow showing lore in Artifact tooltips.",
-                                Chinese = "修改是否在神器的提示信息中显示故事。"
-                            }.ToString()));
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Allow showing lore in Artifact tooltips.",
+                    Chinese = "修改是否在神器的提示信息中显示故事。"
+                }.ToString()));
             EnableRelicTooltipsPatch.Enable = allowLoreForRelics.Value;
 
             allowLoreForCharacters = Config.Bind<bool>("Lore Tooltip Options", "Allow Lore in Character Tooltips", false,
-                            new ConfigDescription(new ConfigDescriptionBuilder
-                            {
-                                English = "Allow showing lore in Character tooltips.",
-                                Chinese = "修改是否在单位的提示信息中显示故事。"
-                            }.ToString()));
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Allow showing lore in Character tooltips.",
+                    Chinese = "修改是否在单位的提示信息中显示故事。"
+                }.ToString()));
             EnableCharacterTooltipsPatch.Enable = allowLoreForCharacters.Value;
 
             allowLoreForCards = Config.Bind<bool>("Lore Tooltip Options", "Allow Lore in Card Tooltips", false,
-                            new ConfigDescription(new ConfigDescriptionBuilder
-                            {
-                                English = "Allow showing lore in Card tooltips.",
-                                Chinese = "修改是否在卡牌的提示信息中显示故事。"
-                            }.ToString()));
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Allow showing lore in Card tooltips.",
+                    Chinese = "修改是否在卡牌的提示信息中显示故事。"
+                }.ToString()));
             EnableCardTooltipsPatch.Enable = allowLoreForCards.Value;
 
             enableBogwurmPyreRoomStats = Config.Bind<bool>("UI Enhancements", "Display Bogwurm Pyre Room Increasees", false,
