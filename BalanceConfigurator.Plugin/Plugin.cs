@@ -210,7 +210,7 @@ namespace BalanceConfigurator.Plugin
 
         // QoL
         ConfigEntry<bool>? enableBogwurmPyreRoomStats;
-        ConfigEntry<bool>? killCountIndicator;
+        ConfigEntry<bool>? triggerCountIndicator;
         ConfigEntry<int>? runHistoryMaxEntries;
 
         const string PURGE_COSTS = "40,50,75,100,125,150,200,225,250";
@@ -900,13 +900,13 @@ namespace BalanceConfigurator.Plugin
             }.ToString()));
             BogwurmInfo_TrainStatsUIInitializePatch.Enable = enableBogwurmPyreRoomStats.Value;
 
-            killCountIndicator = Config.Bind<bool>("UI Enhancements", "Display Kill Count for Slay Trigger", false,
+            triggerCountIndicator = Config.Bind<bool>("UI Enhancements", "Display Base Fire Count for Triggers", false,
             new ConfigDescription(new ConfigDescriptionBuilder
             {
-                English = "Enabling showing a kill count with all Slay triggers.",
+                English = "Enabling showing a base fire count with all triggers (Currently Slay only).",
                 Chinese = ""
             }.ToString()));
-            SlayIndicator_CharacterState_FireTriggers_Patch.Enable = killCountIndicator.Value;
+            SlayIndicator_CharacterState_FireTriggers_Patch.Enable = triggerCountIndicator.Value;
 
             var cfgVersion = Config.Bind("zzz_Internal", "ConfigVersion", 1,
                 new ConfigDescriptionBuilder
