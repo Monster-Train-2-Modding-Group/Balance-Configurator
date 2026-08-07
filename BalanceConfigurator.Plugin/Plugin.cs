@@ -893,19 +893,19 @@ namespace BalanceConfigurator.Plugin
             EnableCardTooltipsPatch.Enable = allowLoreForCards.Value;
 
             enableBogwurmPyreRoomStats = Config.Bind<bool>("UI Enhancements", "Display Bogwurm Pyre Room Increasees", false,
-            new ConfigDescription(new ConfigDescriptionBuilder
-            {
-                English = "Allow Train Stats UI to display Room Capacity Per floor when playing with Bogwurm's Growth Pyre",
-                Chinese = "修改在薪火选择帕格乌的生长时，左上角火车属性UI是否显示每层的容量增加量。"
-            }.ToString()));
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Allow Train Stats UI to display Room Capacity Per floor when playing with Bogwurm's Growth Pyre",
+                    Chinese = "修改在薪火选择帕格乌的生长时，左上角火车属性UI是否显示每层的容量增加量。"
+                }.ToString()));
             BogwurmInfo_TrainStatsUIInitializePatch.Enable = enableBogwurmPyreRoomStats.Value;
 
             triggerCountIndicator = Config.Bind<bool>("UI Enhancements", "Display Base Fire Count for Triggers", false,
-            new ConfigDescription(new ConfigDescriptionBuilder
-            {
-                English = "Enabling showing a base fire count with all triggers (Currently Slay only).",
-                Chinese = ""
-            }.ToString()));
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Enabling showing a base fire count with all triggers (Currently Slay only).",
+                    Chinese = ""
+                }.ToString()));
             SlayIndicator_CharacterState_FireTriggers_Patch.Enable = triggerCountIndicator.Value;
 
             var cfgVersion = Config.Bind("zzz_Internal", "ConfigVersion", 1,
