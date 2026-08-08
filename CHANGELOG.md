@@ -1,3 +1,7 @@
+## v3.5.0
+- Added Display Base Fire Count for Triggers (Slay only)
+- Update Chinese translations
+
 ## v3.4.0
 - Several Merchant cost control options added (Reroll costs, Purge costs, Duplicator costs, Equipment Merge Costs, Deployable costs)
 

@@ -31,6 +31,9 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 ![bog_wurm](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/bogwurm.png)
 <sub>Additional QoL stats for displaying the capacities per floor if bogwurm's growth pyre is used</sub>
 
+![kill count indictor](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/kill_indicator.png)
+<sub>Display an kill count indicator for Slay triggers</sub>
+
 ## Features
 
  Ability to edit particular starting details of runs among other things:
@@ -75,6 +78,7 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 * (3.2.0) Option to enable lore tooltip display for Artifacts, Cards, and Characters.
 * (3.3.0) Option to display the room capacity increases per floor when using Bogwurm's Growth Pyre.
 * (3.4.0) Various Merchant service cost options added (Rerolls, Equipment Merge, Deployable, Duplicator, Purge)
+* (3.5.0) Kill count indicator for the slay trigger. (Display Base Fire Count for Triggers)
 
 ## Installation / Initial Setup
 
@@ -149,6 +153,7 @@ The only ***probably safe*** fields you can modify without giving an yourself an
 - Deck sort options
 - Soul savior specific fields
 - Lore options
+- Display Base Fire Count for Triggers
 
 ### **Important**
 
