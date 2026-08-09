@@ -31,7 +31,7 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 ![bog_wurm](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/bogwurm.png)
 <sub>Additional QoL stats for displaying the capacities per floor if bogwurm's growth pyre is used</sub>
 
-![kill count indictor](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/kill_indicator.png)
+![kill count indictor](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/kill_indicator.png)<br/>
 <sub>Display an kill count indicator for Slay triggers</sub>
 
 ## Features
