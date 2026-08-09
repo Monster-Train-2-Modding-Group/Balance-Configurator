@@ -79,6 +79,7 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 * (3.3.0) Option to display the room capacity increases per floor when using Bogwurm's Growth Pyre.
 * (3.4.0) Various Merchant service cost options added (Rerolls, Equipment Merge, Deployable, Duplicator, Purge)
 * (3.5.0) Kill count indicator for the slay trigger. (Display Base Fire Count for Triggers)
+* (3.6.0) More permissive equipment merging (i.e. Can self merge / banned combo merges) (Does not allow enemy equipment merge / merged equipment merge / merge equipment that both have abilities)
 
 ## Installation / Initial Setup
 

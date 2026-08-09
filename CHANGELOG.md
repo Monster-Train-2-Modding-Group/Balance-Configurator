@@ -1,3 +1,6 @@
+## v3.6.0
+- Added Permissive Equipment Merge.
+
 ## v3.5.0
 - Added Display Base Fire Count for Triggers (Slay only)
 - Update Chinese translations

@@ -190,6 +190,7 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<string>? merchantMutatorDuplicatorBaseCosts;
         ConfigEntry<string>? merchantPurgeCov0BaseCosts;
         ConfigEntry<string>? merchantPurgeCov3BaseCosts;
+        ConfigEntry<bool>? equipmentMerchantAllowAnyMerge;
 
         // Class Options
 
@@ -778,6 +779,14 @@ namespace BalanceConfigurator.Plugin
                     English = "List of successive costs (comma separated) to purge a card at a merchant (Covenant 3-10).",
                     Chinese = "修改3-10契约移除卡牌的基础价格，请输入一个数字或者用英文逗号分隔的一组从小到大排列的数字。"
                 }.ToString()));
+
+            equipmentMerchantAllowAnyMerge = Config.Bind<bool>("Merchant Options", "Permissive Equipment Merge", false,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Allows more combinations of equipment to be merged. This includes merging with self, \"banned\" combo merge. Does not include (Merged Equipment, Enemy Equipment, Two Equipment with Abilities).",
+                    Chinese = ""
+                }.ToString()));
+            EquipmentMergeDisableInvalidComboPatch.Enable = equipmentMerchantAllowAnyMerge.Value;
 
             // Banner Drafts
             shatteredHaloAffectsBanners = Config.Bind<bool>("Unit Banner Drafts", "Shattered Halo Applies To Banner Drafts", false,
@@ -1675,6 +1684,22 @@ namespace BalanceConfigurator.Plugin
             {
                 label.SetText(amount.ToString());
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(DeckScreen), nameof(DeckScreen.Setup))]
+    class EquipmentMergeDisableInvalidComboPatch
+    {
+        public static bool Enable = false;
+        public static void Prefix(ref Params setParams)
+        {
+            if (!Enable)
+                return;
+
+            if (setParams.mode != Mode.SpellMergeSelection)
+                return;
+
+            setParams.filterFunc = ((CardState cardState) => false);
         }
     }
 }
