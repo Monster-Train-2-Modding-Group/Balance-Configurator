@@ -1,3 +1,6 @@
+## v3.6.1
+- no-op. Added link to github discussions in mod readme.
+
 ## v3.6.0
 - Added Permissive Equipment Merge.
 
