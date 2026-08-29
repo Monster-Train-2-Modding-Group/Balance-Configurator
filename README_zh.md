@@ -1,6 +1,7 @@
 # 平衡性数值编辑
 
 [![GitHub Release](https://img.shields.io/github/v/release/Monster-Train-2-Modding-Group/Balance-Configurator?color=4CAF50&label=latest)](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/releases)
+[![GitHub Discussions](https://img.shields.io/github/discussions/Monster-Train-2-Modding-Group/Balance-Configurator?repo=Balance-Configurator&logo=github&color=D4AC0D)](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/discussions)
 [![Trainworks Reloaded](https://img.shields.io/badge/framework-Trainworks--Reloaded-blue?logo=github)](https://github.com/Monster-Train-2-Modding-Group/Trainworks-Reloaded)
 [![License](https://img.shields.io/github/license/Monster-Train-2-Modding-Group/Balance-Configurator?color=lightgrey)](https://github.com/Monster-Train-2-Modding-Group/Balance-Configurator/blob/main/LICENSE)
 [![Donate](https://img.shields.io/badge/Ko--Fi-brandonandzeus-F16061?color=F16061&logo=ko-fi&style=flat&labelColor=?color=4E4E4E&logoColor=FFFFFF)](https://ko-fi.com/brandonandzeus)
@@ -30,6 +31,9 @@
 
 ![bog_wurm](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/bogwurm.png)
 <sub>在薪火选择帕格乌的生长时，左上角火车属性UI额外显示了每层的容量增加量</sub>
+
+![kill count indictor](https://raw.githubusercontent.com/Monster-Train-2-Modding-Group/Balance-Configurator/main/screenshots/kill_indicator.png)<br/>
+<sub>增加了预览杀戮触发器触发次数的计数器</sub>
 
 ## 功能
 
@@ -73,6 +77,8 @@
 * (3.2.0 版本新增) 是否在神器、单位、卡牌的提示信息中显示故事
 * (3.3.0 版本新增) 在薪火选择帕格乌的生长时，左上角火车属性UI是否显示每层的容量增加量
 * (3.4.0 版本新增) 商店各服务的价格（刷新商店、融合装备、可部署升級、复制卡牌、移除卡牌）
+* (3.5.0 版本新增) 是否显示触发器的预览触发次数（目前只有杀戮触发器）
+* (3.6.0 版本新增) 融合装备的限制条件（允许融合同种装备、原版中被“禁用”的特殊组合；但是仍然禁用多次融合装备、融合敌方装备、融合两次都带有能力的装备）
 
 ## 安装方法
 
@@ -110,6 +116,7 @@
 - 默认采用的/游戏本体“默认”选项对应的卡组排序方式
 - 灵魂救星模式的相关内容
 - 故事的相关内容
+- 是否显示触发器的预览触发次数
 
 ### **重要内容**
 
