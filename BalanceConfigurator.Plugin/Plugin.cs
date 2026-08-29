@@ -784,7 +784,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "Allows more combinations of equipment to be merged. This includes merging with self, \"banned\" combo merge. Does not include (Merged Equipment, Enemy Equipment, Two Equipment with Abilities).",
-                    Chinese = ""
+                    Chinese = "修改融合装备的限制条件。如果启用，则修改为允许融合同种装备、原版中被“禁用”的特殊组合；但是仍然禁用多次融合装备、融合敌方装备、融合两次都带有能力的装备。"
                 }.ToString()));
             EquipmentMergeDisableInvalidComboPatch.Enable = equipmentMerchantAllowAnyMerge.Value;
 
@@ -913,7 +913,7 @@ namespace BalanceConfigurator.Plugin
                 new ConfigDescription(new ConfigDescriptionBuilder
                 {
                     English = "Enabling showing a base fire count with all triggers (Currently Slay only).",
-                    Chinese = ""
+                    Chinese = "修改是否显示触发器的预览触发次数（目前只有杀戮触发器）。"
                 }.ToString()));
             SlayIndicator_CharacterState_FireTriggers_Patch.Enable = triggerCountIndicator.Value;
 
