@@ -1,3 +1,6 @@
+## v3.6.2
+- Update Chinese translations
+
 ## v3.6.1
 - no-op. Added link to github discussions in mod readme.
 
