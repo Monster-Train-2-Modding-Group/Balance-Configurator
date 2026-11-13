@@ -214,6 +214,11 @@ namespace BalanceConfigurator.Plugin
         ConfigEntry<bool>? triggerCountIndicator;
         ConfigEntry<int>? runHistoryMaxEntries;
 
+        // Monolith
+        ConfigEntry<int>? monolithDevotionFirstThreshold;
+        ConfigEntry<int>? monolithDevotionThresholdIncreasePerLevel;
+        ConfigEntry<int>? monolithDevotionPassiveStacksPerLevel;
+
         const string PURGE_COSTS = "40,50,75,100,125,150,200,225,250";
         const string PURGE_SECONDARY_COSTS = "40,60,90,120,160,200,250,300";
         const string LIFEMOTHER_DUPLICATOR_COSTS = "50,75,100,150,200,250";
@@ -917,6 +922,27 @@ namespace BalanceConfigurator.Plugin
                 }.ToString()));
             SlayIndicator_CharacterState_FireTriggers_Patch.Enable = triggerCountIndicator.Value;
 
+            monolithDevotionFirstThreshold = Config.Bind<int>("Monolith Options", "Devotion First Threshold", 3,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Amount of flat devotion points to get to level 1. (The B in this formula Devotion needed for level = A * level + B)",
+                    Chinese = ""
+                }.ToString()));
+
+            monolithDevotionThresholdIncreasePerLevel = Config.Bind<int>("Monolith Options", "Devotion Threshold Increase Per Level", 3,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "Amount of additional devotion points needed to get to the next level, scales with the level. (The A in this formula Devotion needed for level = A * level + B)",
+                    Chinese = ""
+                }.ToString()));
+
+            monolithDevotionPassiveStacksPerLevel = Config.Bind<int>("Monolith Options", "Zeal Gain For Devotion Level", 2,
+                new ConfigDescription(new ConfigDescriptionBuilder
+                {
+                    English = "The amount of zeal to gain per devotion level (Zeal Gain * Level)",
+                    Chinese = ""
+                }.ToString()));
+
             var cfgVersion = Config.Bind("zzz_Internal", "ConfigVersion", 1,
                 new ConfigDescriptionBuilder
                 {
@@ -934,34 +960,36 @@ namespace BalanceConfigurator.Plugin
             var relicTicketValues    =  GetRarityTicket(relicRarityTicketCommon!,       relicRarityTicketUncommon!,     relicRarityTicketRare!,     relicRarityTicketChampion!);
             var skipRewardValues     =  GetGoldForSkippingRewards();
 
-            SafeSetField<BalanceData>(balanceData, "cardRarityTicketValues",          cardTicketValues);
-            SafeSetField<BalanceData>(balanceData, "enhancerRarityTicketValues",      enhancerTicketValues);
-            SafeSetField<BalanceData>(balanceData, "relicRarityTicketValues",         relicTicketValues);
-            SafeSetField<BalanceData>(balanceData, "goldForSkippingRewards",          skipRewardValues);
-            SafeSetField<BalanceData>(balanceData, "startingGold",                    startingGold!.Value);
-            SafeSetField<BalanceData>(balanceData, "maxHandSize",                     maxHandSize!.Value);
-            SafeSetField<BalanceData>(balanceData, "startOfTurnEnergy",               startOfTurnEnergy!.Value);
-            SafeSetField<BalanceData>(balanceData, "startOfDeploymentPhaseEnergy",    startOfDeploymentPhaseEnergy!.Value);
-            SafeSetField<BalanceData>(balanceData, "maxEnergy",                       maxEnergy!.Value);
-            SafeSetField<BalanceData>(balanceData, "initialDragonsHoardCap",          initialDragonsHoardCap!.Value);
-            SafeSetField<BalanceData>(balanceData, "maxDragonsHoard",                 maxDragonsHoard!.Value);
-            SafeSetField<BalanceData>(balanceData, "startOfTurnCards",                startOfTurnCards!.Value);
-            SafeSetField<BalanceData>(balanceData, "unitUpgradeSlots",                unitUpgradeSlots!.Value);
-            SafeSetField<BalanceData>(balanceData, "unitMaxUpgradeSlots",             unitMaxUpgradeSlots!.Value);
-            SafeSetField<BalanceData>(balanceData, "spellUpgradeSlots",               spellUpgradeSlots!.Value);
-            SafeSetField<BalanceData>(balanceData, "spellMaxUpgradeSlots",            spellMaxUpgradeSlots!.Value);
-            SafeSetField<BalanceData>(balanceData, "equipmentUpgradeSlots",           equipmentUpgradeSlots!.Value);
-            SafeSetField<BalanceData>(balanceData, "equipmentMaxUpgradeSlots",        equipmentMaxUpgradeSlots!.Value);
-            SafeSetField<BalanceData>(balanceData, "numSpawnPointsPerFloor",          numSpawnPointsPerFloor!.Value);
-            SafeSetField<BalanceData>(balanceData, "characterCapacityPerFloor",       characterCapacityPerFloor!.Value);
-            SafeSetField<BalanceData>(balanceData, "maxMutatorCount",                 maxMutatorCount!.Value);
-            SafeSetField<BalanceData>(balanceData, "championUpgradesShown",           championUpgradesShown!.Value);
-            SafeSetField<BalanceData>(balanceData, "mainClanXpFactor",                mainClanXpFactor!.Value);
-            SafeSetField<BalanceData>(balanceData, "subClanXpFactor",                 subClanXpFactor!.Value);
-            SafeSetField<BalanceData>(balanceData, "alternateChampionUnlockLevel",    alternateChampionUnlockLevel!.Value);
-            SafeSetField<BalanceData>(balanceData, "chanceOfOptionalOutpostDialogue", chanceOfOptionalOutpostDialogue!.Value);
-            SafeSetField<BalanceData>(balanceData, "fastDialogueMultiplier",          fastDialogueMultiplier!.Value);
-
+            SafeSetField<BalanceData>(balanceData, "cardRarityTicketValues",                    cardTicketValues);
+            SafeSetField<BalanceData>(balanceData, "enhancerRarityTicketValues",                enhancerTicketValues);
+            SafeSetField<BalanceData>(balanceData, "relicRarityTicketValues",                   relicTicketValues);
+            SafeSetField<BalanceData>(balanceData, "goldForSkippingRewards",                    skipRewardValues);
+            SafeSetField<BalanceData>(balanceData, "startingGold",                              startingGold!.Value);
+            SafeSetField<BalanceData>(balanceData, "maxHandSize",                               maxHandSize!.Value);
+            SafeSetField<BalanceData>(balanceData, "startOfTurnEnergy",                         startOfTurnEnergy!.Value);
+            SafeSetField<BalanceData>(balanceData, "startOfDeploymentPhaseEnergy",              startOfDeploymentPhaseEnergy!.Value);
+            SafeSetField<BalanceData>(balanceData, "maxEnergy",                                 maxEnergy!.Value);
+            SafeSetField<BalanceData>(balanceData, "initialDragonsHoardCap",                    initialDragonsHoardCap!.Value);
+            SafeSetField<BalanceData>(balanceData, "maxDragonsHoard",                           maxDragonsHoard!.Value);
+            SafeSetField<BalanceData>(balanceData, "startOfTurnCards",                          startOfTurnCards!.Value);
+            SafeSetField<BalanceData>(balanceData, "unitUpgradeSlots",                          unitUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "unitMaxUpgradeSlots",                       unitMaxUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "spellUpgradeSlots",                         spellUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "spellMaxUpgradeSlots",                      spellMaxUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "equipmentUpgradeSlots",                     equipmentUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "equipmentMaxUpgradeSlots",                  equipmentMaxUpgradeSlots!.Value);
+            SafeSetField<BalanceData>(balanceData, "numSpawnPointsPerFloor",                    numSpawnPointsPerFloor!.Value);
+            SafeSetField<BalanceData>(balanceData, "characterCapacityPerFloor",                 characterCapacityPerFloor!.Value);
+            SafeSetField<BalanceData>(balanceData, "maxMutatorCount",                           maxMutatorCount!.Value);
+            SafeSetField<BalanceData>(balanceData, "championUpgradesShown",                     championUpgradesShown!.Value);
+            SafeSetField<BalanceData>(balanceData, "mainClanXpFactor",                          mainClanXpFactor!.Value);
+            SafeSetField<BalanceData>(balanceData, "subClanXpFactor",                           subClanXpFactor!.Value);
+            SafeSetField<BalanceData>(balanceData, "alternateChampionUnlockLevel",              alternateChampionUnlockLevel!.Value);
+            SafeSetField<BalanceData>(balanceData, "chanceOfOptionalOutpostDialogue",           chanceOfOptionalOutpostDialogue!.Value);
+            SafeSetField<BalanceData>(balanceData, "fastDialogueMultiplier",                    fastDialogueMultiplier!.Value);
+            SafeSetField<BalanceData>(balanceData, "monolithDevotionFirstThreshold",            monolithDevotionFirstThreshold!.Value);
+            SafeSetField<BalanceData>(balanceData, "monolithDevotionThresholdIncreasePerLevel", monolithDevotionThresholdIncreasePerLevel!.Value);
+            SafeSetField<BalanceData>(balanceData, "monolithDevotionPassiveStacksPerLevel",     monolithDevotionPassiveStacksPerLevel!.Value);
 
             DraftCost[]? draftCosts = SafeGetField<BalanceData>(balanceData, "draftCosts") as DraftCost[];
             if (draftCosts != null)

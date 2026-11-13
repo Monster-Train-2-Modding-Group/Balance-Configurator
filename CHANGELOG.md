@@ -1,3 +1,6 @@
+## v4.0.0
+- Added options for Punished Monolith configuration. 
+
 ## v3.6.2
 - Update Chinese translations
 

@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>BalanceConfigurator.Plugin</RootNamespace>
     <LangVersion>latest</LangVersion>
-    <Version>3.6.2</Version>
+    <Version>4.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,9 +14,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MonsterTrain2.Api" Version="4.*" />
+    <PackageReference Include="MonsterTrain2.Api" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
-    <PackageReference Include="TrainworksReloaded.Base" Version="0.7.*" />
+    <PackageReference Include="TrainworksReloaded.Base" Version="0.8.*" />
   </ItemGroup>
 
   <ItemGroup>

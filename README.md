@@ -81,6 +81,7 @@ Non-cosmetic mod that allows one to edit fields from BalanceData, and as an exam
 * (3.4.0) Various Merchant service cost options added (Rerolls, Equipment Merge, Deployable, Duplicator, Purge)
 * (3.5.0) Kill count indicator for the slay trigger. (Display Base Fire Count for Triggers)
 * (3.6.0) More permissive equipment merging (i.e. Can self merge / banned combo merges) (Does not allow enemy equipment merge / merged equipment merge / merge equipment that both have abilities)
+* (4.0.0) Options ot modify Punish monolith (required Devotion points per level / zeal gain per level)
 
 ## Installation / Initial Setup
 
