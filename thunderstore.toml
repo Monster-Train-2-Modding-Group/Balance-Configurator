@@ -27,4 +27,4 @@ repository = "https://thunderstore.io"
 communities = [ "monster-train-2" ]
 
 [publish.categories]
-monster-train-2 = ["misc", "mods", "tools"]
+monster-train-2 = ["mods", "balance", "battles", "mercahnts", "quality-of-life", "mutators", "events"]
